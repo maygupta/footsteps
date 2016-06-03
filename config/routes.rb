@@ -6,6 +6,9 @@ Rails.application.routes.draw do
     collection do
       get :get_or_create
     end
+    member do
+      get :positions
+    end
   end
 
   resources :skills
