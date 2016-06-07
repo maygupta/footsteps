@@ -1,7 +1,13 @@
 class UsersController < ApplicationController
+
+  def index 
+    users = User.all
+    render :json => users, status: 200
+  end
+
 	def show
-		users = User.all
-		render :json => users, status: 200
+		user = User.find params[:id]
+		render :json => user, status: 200
 	end
 
   def get_or_create
@@ -25,6 +31,21 @@ class UsersController < ApplicationController
     if user.present?
       render :json => user.positions.to_json, status: 200
     else
+      render :json => [], status: 200
+    end
+  end
+
+  def mentors
+    begin
+      user = User.find params[:id]
+      if user.present?
+        recommendations = user.get_recommendations
+        render :json => recommendations.to_json, status: 200
+      else
+        render :json => [], status: 200
+      end
+    rescue => e
+      Rails.logger.error "Unable to generate mentors recommendations due to #{e.message}"
       render :json => [], status: 200
     end
   end

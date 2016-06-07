@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
 	has_many :mentors, :class_name => 'User'
   has_many :positions
 
+  include UsersHelper
+
   def self.create_user_from_linkedin(access_token)
     url = "https://api.linkedin.com/v1/people/"
     url += "~:(positions,summary,id,num-connections,picture-url,location,industry,specialties,headline,first-name,last-name)"
@@ -45,6 +47,46 @@ class User < ActiveRecord::Base
       raise "There was an error connecting to Linked in #{response.error}"
     end
     user
+  end
+
+  def compare(other_user)
+    match = {
+      :is_mentor => false
+    }
+
+    match[:positions] = {
+      :score => 0.0,
+      :companies => []
+    }
+    
+    self.positions.each do |pos|
+      other_user.positions.each do |other_pos|
+        if pos.company_name == other_pos.company_name
+          match[:positions][:score] += 0.1
+          match[:positions][:companies].push({
+            :name => pos.company_name
+          })
+          match[:is_mentor] = true
+        end
+      end
+    end
+
+    match[:industry] = {
+      :score => 0.0,
+      :value => nil
+    }
+
+    if self.industry == other_user.industry
+      match[:industry][:score] += 1.0
+      match[:industry][:value] = self.industry
+      match[:is_mentor] = true
+    end
+
+    return match
+  end
+
+  def get_recommendations
+    UsersHelper.get_recommendations(self)
   end
 
 end

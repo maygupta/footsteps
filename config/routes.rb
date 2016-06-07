@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     end
     member do
       get :positions
+      get :mentors
     end
   end
 
