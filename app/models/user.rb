@@ -51,7 +51,9 @@ class User < ActiveRecord::Base
 
   def compare(other_user)
     match = {
-      :is_mentor => false
+      :user_id => other_user.id,
+      :is_mentor => false,
+      :total_score => 0.0
     }
 
     match[:positions] = {
@@ -62,7 +64,7 @@ class User < ActiveRecord::Base
     self.positions.each do |pos|
       other_user.positions.each do |other_pos|
         if pos.company_name == other_pos.company_name
-          match[:positions][:score] += 0.1
+          match[:positions][:score] += 1.0
           match[:positions][:companies].push({
             :name => pos.company_name
           })
@@ -82,11 +84,15 @@ class User < ActiveRecord::Base
       match[:is_mentor] = true
     end
 
+    match[:total_score] += match[:positions][:score] + match[:industry][:score]
+
     return match
   end
 
   def get_recommendations
-    UsersHelper.get_recommendations(self)
+    recommendations = UsersHelper.get_recommendations(self)
+    # Sort in decreasing order of score
+    recommendations.sort {|a,b| b[:total_score] <=> a[:total_score] }
   end
 
 end
