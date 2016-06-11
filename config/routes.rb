@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :benchmark
+
   resources :skills
 
   # You can have the root of your site routed with "root"

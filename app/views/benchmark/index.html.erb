@@ -1,0 +1,18 @@
+<h2> Benchmark results </h2>
+
+<table class="table" border="1">
+  <th>Strategy1</th>
+  <% User.all.each do |user| %>
+    <th><%=user.name%></th>
+  <%end%>
+
+  <% User.all.each do |user1| %>
+    <tr>
+      <th><%=user1.name%></th>
+      <% User.all.each do |user2| %>
+        <td><%=@data[user1.name][user2.name]%></td>
+      <%end%>
+    </tr>
+  <%end%>  
+
+</table>
