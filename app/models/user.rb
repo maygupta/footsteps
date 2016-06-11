@@ -81,11 +81,16 @@ class User < ActiveRecord::Base
     if self.industry == other_user.industry
       match[:industry][:score] += 1.0
       match[:industry][:value] = self.industry
-      match[:is_mentor] = true
+    else
+      match[:industry][:score] = 0.1
     end
 
-    match[:total_score] += match[:positions][:score] + match[:industry][:score]
+    match[:total_score] = match[:positions][:score] * match[:industry][:score]
 
+    if match[:total_score] > 0.0
+      match[:is_mentor] = true
+    end
+    
     return match
   end
 
