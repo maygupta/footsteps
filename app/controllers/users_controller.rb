@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_filter  :verify_authenticity_token
 
   def index 
     users = User.all
@@ -17,6 +18,16 @@ class UsersController < ApplicationController
         skill_record = Skill.create(:name => skill)
       end
       user.skills.push(skill_record)
+    end
+  end
+
+  def update
+    user = User.find(params[:id])
+    if user.present?
+      user.update_attributes(user_params)
+      render :json => user.to_json, status: 200
+    else
+      render :json => "User not found", status: 404
     end
   end
 
@@ -49,8 +60,8 @@ class UsersController < ApplicationController
     begin
       user = User.find params[:id]
       if user.present?
-        recommendations = user.get_recommendations
-        render :json => {recommendations: recommendations}.to_json, status: 200
+        recommendations_json = { recommendations: user.get_recommendations}.to_json
+        render :json => recommendations_json, status: 200
       else
         render :json => [], status: 200
       end
@@ -58,6 +69,16 @@ class UsersController < ApplicationController
       Rails.logger.error "Unable to generate mentors recommendations due to #{e.message}"
       render :json => [], status: 200
     end
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:maiden_name,:formatted_name,:phonetic_first_name,
+      :phonetic_last_name,:formatted_phonetic_name,:num_connections,:num_connections_capped,
+      :specialties,:public_profile_url,:last_modified_timestamp,:proposal_comments,
+      :interests,:languages,:date_of_birth,:jid,:login_type,:gender,:bg_image_url,
+      :presence_status,:is_mentor,:is_verified,:mentor_rating,:normal_rating)
   end
 
 end
