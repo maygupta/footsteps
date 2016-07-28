@@ -49,6 +49,20 @@ class User < ActiveRecord::Base
     user
   end
 
+  def upsert(records, new_record)
+    found = false
+    records.each do |record|
+      if record[:school] == new_record[:school]
+        record[:score] += 1.0
+        found = true
+      end
+    end
+    if !found
+      records.push(new_record)
+    end
+    records
+  end
+
   def compare(other_user)
     match = {
       :user => other_user,
@@ -61,7 +75,7 @@ class User < ActiveRecord::Base
     self.positions.each do |pos|
       other_user.positions.each do |other_pos|
         if pos.company_name == other_pos.company_name
-          match[:matched_records].push({
+          match[:matched_records] = upsert(match[:matched_records], {
             :id => "SchoolIdentifierConstant",
             :score => 1.0,
             :school => pos.company_name
