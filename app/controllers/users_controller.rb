@@ -10,6 +10,16 @@ class UsersController < ApplicationController
 		render :json => user, status: 200
 	end
 
+  def add_skills
+    params[:skills].each do |skill|
+      skill_record = Skill.find_by_name(skill)
+      if !skill_record.present?
+        skill_record = Skill.create(:name => skill)
+      end
+      user.skills.push(skill_record)
+    end
+  end
+
   def get_or_create
     if params[:id].present?
       user = User.find(params[:id])
@@ -40,7 +50,7 @@ class UsersController < ApplicationController
       user = User.find params[:id]
       if user.present?
         recommendations = user.get_recommendations
-        render :json => recommendations.to_json, status: 200
+        render :json => {recommendations: recommendations}.to_json, status: 200
       else
         render :json => [], status: 200
       end

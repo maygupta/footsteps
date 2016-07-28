@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     member do
       get :positions
       get :mentors
+      post :add_skills
     end
   end
 

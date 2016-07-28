@@ -51,41 +51,47 @@ class User < ActiveRecord::Base
 
   def compare(other_user)
     match = {
-      :user_id => other_user.id,
+      :user => other_user,
       :is_mentor => false,
       :total_score => 0.0
     }
 
-    match[:positions] = {
-      :score => 0.0,
-      :companies => []
-    }
+    match[:matched_records] = []
     
     self.positions.each do |pos|
       other_user.positions.each do |other_pos|
         if pos.company_name == other_pos.company_name
-          match[:positions][:score] += 1.0
-          match[:positions][:companies].push({
-            :name => pos.company_name
+          match[:matched_records].push({
+            :id => "SchoolIdentifierConstant",
+            :score => 1.0,
+            :school => pos.company_name
           })
-          match[:is_mentor] = true
+          match[:total_score] += 1.0
         end
       end
     end
 
-    match[:industry] = {
-      :score => 0.0,
-      :value => nil
-    }
-
-    if self.industry == other_user.industry
-      match[:industry][:score] += 1.0
-      match[:industry][:value] = self.industry
-    else
-      match[:industry][:score] = 0.1
+    self.skills.each do |skill|
+      other_user.skills.each do |other_skill|
+        if skill.name == other_skill.name
+          match[:matched_records].push({
+            :id => "SkillIdentifierConstant",
+            :score => 1.0,
+            :school => skill.name
+          })
+          match[:total_score] += 1.0
+        end
+      end
     end
 
-    match[:total_score] = match[:positions][:score] * match[:industry][:score]
+    if self.industry == other_user.industry
+      match[:matched_records].push({
+        :id => "IndustryIdentifierConstant",
+        :score => 1.0,
+        :industry => self.industry
+      })
+      match[:total_score] += 1.0
+    end
 
     if match[:total_score] > 0.0
       match[:is_mentor] = true
@@ -97,7 +103,8 @@ class User < ActiveRecord::Base
   def get_recommendations
     recommendations = UsersHelper.get_recommendations(self)
     # Sort in decreasing order of score
-    recommendations.sort {|a,b| b[:total_score] <=> a[:total_score] }
+    recommendations[:recommended_users].sort! {|a,b| b[:total_score] <=> a[:total_score] }
+    recommendations
   end
 
 end
