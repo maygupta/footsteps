@@ -13,6 +13,10 @@ Rails.application.routes.draw do
     end
   end
 
+  scope '/recommender' do
+    resources :recommendations
+  end
+
   resources :benchmark
 
   resources :skills

@@ -22,6 +22,11 @@ class UsersController < ApplicationController
   end
 
   def update
+    if !is_authorized?
+      render :json => "Unauthorized", status: 422
+      return
+    end
+
     user = User.find(params[:id])
     if user.present?
       user.update_attributes(user_params)

@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 	has_many :skills
 	has_many :mentors, :class_name => 'User'
   has_many :positions
+  has_many :recommendations
 
   include UsersHelper
 
@@ -117,7 +118,7 @@ class User < ActiveRecord::Base
   def get_recommendations
     recommendations = UsersHelper.get_recommendations(self)
     # Sort in decreasing order of score
-    recommendations[:recommended_users].sort! {|a,b| b[:total_score] <=> a[:total_score] }
+    recommendations[:recommended_users].sort! {|a,b| b["total_score"] <=> a["total_score"] }
     recommendations
   end
 
