@@ -11,8 +11,6 @@ module UsersHelper
       #   recommendations[:recommended_users].push(result) if result[:is_mentor]
       # end
       # recommendations
-
-      recommendations
     end
 
 end

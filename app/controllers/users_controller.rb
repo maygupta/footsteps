@@ -63,13 +63,7 @@ class UsersController < ApplicationController
 
   def mentors
     begin
-      user = User.find params[:id]
-      if user.present?
-        recommendations_json = { recommendations: user.get_recommendations}.to_json
-        render :json => recommendations_json, status: 200
-      else
-        render :json => [], status: 200
-      end
+      render :json => [], status: 200
     rescue => e
       Rails.logger.error "Unable to generate mentors recommendations due to #{e.message}"
       render :json => [], status: 200

@@ -6,24 +6,29 @@ class RecommendationsController < ApplicationController
       render :json => "Unauthorized", status: 422
       return
     end
-    if params[:user_email].present?
-      user = User.find_by_email(params[:user_email])
-    elsif params[:user_id].present?
-      user = User.find(params[:user_id])
-    else
-      render :json => "Unable to find user".to_json, :status => 404
-    end
 
-    recommendations_json = { 
-      recommendations: get_recommendations(user, params[:page], params[:per_page])
-    }.to_json
-    render :json => recommendations_json, status: 200
-        
+    begin
+      if params[:user_email].present?
+        user = User.find_by_email(params[:user_email])
+      elsif params[:user_id].present?
+        user = User.find(params[:user_id])
+      else
+        render :json => "Unable to find user".to_json, :status => 404
+      end
+
+      recommendations_json = { 
+        recommendations: get_recommendations(user, params[:page], params[:per_page])
+      }.to_json
+      render :json => recommendations_json, status: 200
+    rescue => e
+      Rails.logger.error "Unable to generate recommendations due to #{e.message}"
+      render :json => [], status: 500
+    end
   end
 
   private
 
-  def get_recommendations(user, page = 1, per_page = 5)
+  def get_recommendations(user, page = 1, per_page = 20)
     recommendations = {
         :category => "role",
         :category_text => "role wise recommendations",
