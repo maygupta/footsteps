@@ -2,6 +2,10 @@ class UsersController < ApplicationController
   skip_before_filter  :verify_authenticity_token
 
   def index 
+    if !is_authorized?
+      render :json => "Unauthorized", status: 422
+      return
+    end
     users = User.all
     render :json => users, status: 200
   end
