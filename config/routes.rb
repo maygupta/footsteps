@@ -14,7 +14,11 @@ Rails.application.routes.draw do
   end
 
   scope '/recommender' do
-    resources :recommendations
+    resources :recommendations do
+      collection do
+        get :run
+      end
+    end
   end
 
   resources :benchmark
