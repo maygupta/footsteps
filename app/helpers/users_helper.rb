@@ -1,16 +1,16 @@
 module UsersHelper
 
   COLLEGE_COEF = {
-    :name => 1,
+    :name => 4,
     :degree => 2,
-    :field => 4
+    :field => 1
   }
 
   COMPANY_COEF = {
-    :industry => 1,
-    :name => 2,
-    :role => 4,
-    :position => 8
+    :name => 8,
+    :industry => 4,
+    :role => 2,
+    :position => 1
   }
 
   def self.get_recommendations(user, page = 1, per_page = 5)
@@ -28,16 +28,18 @@ module UsersHelper
 
   def self.calculate(user1, user2)
     experience_total_score = 0
+    index = 0
     # 1. College match 
     education_match = []
     if user1["educations"].present? and user2["educations"].present?
       user1["educations"]["values"].each do |e1|
         user2["educations"]["values"].each do |e2|
           if e1["schoolName"] == e2["schoolName"]
-            education_match.push(self.compare_college(e1, e2))
+            education_match.push(self.compare_college(e1, e2, 2**index))
             experience_total_score += education_match.last[:score]
           end
         end
+        index += 1
       end
     end
 
@@ -47,10 +49,11 @@ module UsersHelper
       user1["positions"]["values"].each do |e1|
         user2["positions"]["values"].each do |e2|
           if e1["company"]["industry"].present? and e1["company"]["industry"] == e2["company"]["industry"]
-            comany_match.push(self.compare_company(e1, e2))
+            comany_match.push(self.compare_company(e1, e2, 2**index))
             experience_total_score += comany_match.last[:score]
           end
         end
+        index += 1
       end
     end
 
@@ -82,7 +85,7 @@ module UsersHelper
 
   end
 
-  def self.compare_college(c1, c2)
+  def self.compare_college(c1, c2, college_score)
     a = 1
     if c1["degree"].present? and c2["degree"].present? and c1["degree"] == c2["degree"]
       b = 1
@@ -97,22 +100,23 @@ module UsersHelper
     x1 = COLLEGE_COEF[:name]
     x2 = COLLEGE_COEF[:degree]
     x3 = COLLEGE_COEF[:field]
-    score = a * (x1 + x2*b + x3*c)
+    score = college_score * (a*x1 + x2*b + x3*c)
     {
       :name => c1["schoolName"],
       :score => score,
       :a => a,
       :b => b,
-      :c => c
+      :c => c,
+      :A => college_score
     }
   end
 
-  def self.compare_company(c1, c2)
-    p = 1
+  def self.compare_company(c1, c2, company_score)
+    q = 1
     if c1["company"]["name"].present? and c2["company"]["name"].present? and c1["company"]["name"] == c2["company"]["name"]
-      q = 1
+      p = 1
     else
-      q = 0
+      p = 0
     end
     if c1["title"].present? and c2["title"].present? and c1["title"] == c2["title"]
       r = 1
@@ -122,11 +126,11 @@ module UsersHelper
 
     s = 0
 
-    y1 = COMPANY_COEF[:industry]
-    y2 = COMPANY_COEF[:name]
+    y1 = COMPANY_COEF[:name]
+    y2 = COMPANY_COEF[:industry]
     y3 = COMPANY_COEF[:role]
     y4 = COMPANY_COEF[:position]
-    score = (p + q) * (y1 + y2 + y3*r + y4*s)
+    score = company_score * (p*y1 + q*y2 + y3*r + y4*s)
     {
       :industry => c1["industry"],
       :company => c1["company"]["name"],
@@ -134,7 +138,8 @@ module UsersHelper
       :p => p,
       :q => q,
       :r => r,
-      :s => s
+      :s => s,
+      :B => company_score
     }
   end
 

@@ -6769,4 +6769,8 @@ button.close {
     display: none !important;
   }
 }
+
+.center {
+  margin-left: 20px;
+}
 /*# sourceMappingURL=bootstrap.css.map */

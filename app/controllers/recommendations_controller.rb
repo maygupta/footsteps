@@ -10,7 +10,7 @@ class RecommendationsController < ApplicationController
 
     begin
       if params[:user_email].present?
-        render :json => NewRecommendation.find_by_user_email(params[:user_email]), status: 200 
+        render :json => NewRecommendation.where(:user_email => params[:user_email]).paginate(:page => page, :per_page => per_page), status: 200 
       else
         render :json => "User not found", status: 200 
       end
@@ -81,6 +81,14 @@ class RecommendationsController < ApplicationController
   end
 
   private
+
+  def page
+    params[:page] || 1
+  end
+
+  def per_page
+    params[:per_page] || 20
+  end
 
   def get_recommendations(user, page = 1, per_page = 20)
     recommendations = {
