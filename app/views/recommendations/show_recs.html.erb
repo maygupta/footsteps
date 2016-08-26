@@ -1,0 +1,51 @@
+<table class="table">
+<thead>
+  <th>User</th>
+  <th>Mentor</th>
+  <th>Score</th>
+  <th>Skills</th>
+  <th>Skills Score</th>
+  <th>Companies</th>
+  <th>Colleges</th>
+  <th>Experience Score</th>
+</thead>
+<% NewRecommendation.all.each do |r| %>
+<tr>
+<td>
+<%= r.user_email %>
+</td>
+
+<td>
+<%= r.mentor_email %>
+</td>
+
+<td>
+<%= r.score %>
+</td>
+
+<td>
+<%= r.preferences["skills"].map {|s| s["skill"]["name"]} %>
+</td>
+
+<td>
+<%= r.preferences["skills_total_score"] %>
+</td>
+
+<td>
+<%= r.preferences["companies"] %>
+</td>
+
+<td>
+<%= r.preferences["educations"] %>
+</td>
+
+<td>
+<%= r.preferences["experience_total_score"] %>
+</td>
+
+
+</tr>
+
+
+<% end %>
+</table>

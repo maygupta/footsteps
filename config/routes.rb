@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     resources :recommendations do
       collection do
         get :run
+        get :run_new
+        get :show_recs
       end
     end
   end

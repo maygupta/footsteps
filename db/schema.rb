@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160729033309) do
+ActiveRecord::Schema.define(version: 20160826102559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "new_recommendations", force: :cascade do |t|
+    t.string   "user_email"
+    t.string   "mentor_email"
+    t.decimal  "score"
+    t.jsonb    "preferences",  default: {}, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "new_recommendations", ["mentor_email"], name: "index_new_recommendations_on_mentor_email", using: :btree
+  add_index "new_recommendations", ["user_email"], name: "index_new_recommendations_on_user_email", using: :btree
 
   create_table "positions", force: :cascade do |t|
     t.string   "company_name"

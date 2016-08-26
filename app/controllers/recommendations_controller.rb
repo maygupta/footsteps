@@ -1,5 +1,6 @@
 class RecommendationsController < ApplicationController
   skip_before_filter  :verify_authenticity_token
+  include UsersHelper
 
   def index
     if !is_authorized?
@@ -9,18 +10,10 @@ class RecommendationsController < ApplicationController
 
     begin
       if params[:user_email].present?
-        user = User.find_by_email(params[:user_email])
-      elsif params[:user_id].present?
-        user = User.find(params[:user_id])
+        render :json => NewRecommendation.find_by_user_email(params[:user_email]), status: 200 
       else
-        render :json => "Unable to find user".to_json, :status => 404
-        return
+        render :json => "User not found", status: 200 
       end
-
-      recommendations_json = { 
-        recommendations: get_recommendations(user, params[:page], params[:per_page])
-      }.to_json
-      render :json => recommendations_json, status: 200
     rescue => e
       Rails.logger.error "Unable to generate recommendations due to #{e.message}"
       render :json => [], status: 500
@@ -41,6 +34,41 @@ class RecommendationsController < ApplicationController
     rescue => e
       render :json => e.message.to_json, status: 500
     end
+  end
+
+  def run_new
+    begin 
+      response = Typhoeus.get("http://52.89.249.132:8080/QuickConnect-0.0.1/users",
+        headers: { 'Content-Type' => "application/json"})
+      users = JSON.parse(response.body)
+      users.each do |first_user|
+        users.each do |other_user|
+          begin
+            #next if first_user["emailAddress"] == other_user["emailAddress"]
+            result = UsersHelper.calculate(first_user, other_user)
+
+            if result[:score] > 0
+              re = NewRecommendation.find_or_create_by(
+                :user_email => first_user["emailAddress"],
+                :mentor_email => other_user["emailAddress"])
+
+              re.preferences = result[:preferences]
+              re.score = result[:score]
+              re.save
+            end
+          rescue => e
+            Rails.logger.error(e.message)
+          end
+        end
+      end
+      render :json => NewRecommendation.all.to_json, status: 200
+    rescue => e
+      render :json => e.message.to_json, status: 500
+    end
+  end
+
+  def show_recs
+
   end
 
   def already_exists?(existing, user_id)
