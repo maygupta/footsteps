@@ -29,13 +29,16 @@ module UsersHelper
   def self.calculate(user1, user2)
     experience_total_score = 0
     index = 0
-    # 1. College match 
+    total_indexes = 0
+    total_indexes = user1["educations"]["values"].count if user1["educations"].present?
+
+    # 1. College match
     education_match = []
     if user1["educations"].present? and user2["educations"].present?
       user1["educations"]["values"].each do |e1|
         user2["educations"]["values"].each do |e2|
           if e1["schoolName"] == e2["schoolName"]
-            education_match.push(self.compare_college(e1, e2, 2**index))
+            education_match.push(self.compare_college(e1, e2, 2*(total_indexes - index - 1) ))
             experience_total_score += education_match.last[:score]
           end
         end
@@ -43,13 +46,15 @@ module UsersHelper
       end
     end
 
+    index = 0
+    total_indexes = user1["positions"]["values"].count if user1["positions"]["values"].present?
     # 2. Company match 
     comany_match = []
     if user1["positions"].present? and user2["positions"].present?
       user1["positions"]["values"].each do |e1|
         user2["positions"]["values"].each do |e2|
           if e1["company"]["industry"].present? and e1["company"]["industry"] == e2["company"]["industry"]
-            comany_match.push(self.compare_company(e1, e2, 2**index))
+            comany_match.push(self.compare_company(e1, e2, 2*(total_indexes - index - 1) ))
             experience_total_score += comany_match.last[:score]
           end
         end
