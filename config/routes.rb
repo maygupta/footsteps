@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -12,6 +13,10 @@ Rails.application.routes.draw do
       post :add_skills
     end
   end
+
+  resources :darshans
+  resources :medias
+  resources :announcements
 
   scope '/recommender' do
     resources :recommendations do
