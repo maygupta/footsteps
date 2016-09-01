@@ -1,7 +1,7 @@
 class DarshansController < ApplicationController
 
   def index
-    render :json => Darshan.all, :status => 200
+    render :json => Darshan.order(id: :desc).all, :status => 200
   end
 
 end
