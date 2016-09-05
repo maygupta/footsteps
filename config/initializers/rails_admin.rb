@@ -3,9 +3,11 @@ RailsAdmin.config do |config|
   ### Popular gems integration
 
   ## == Devise ==
-  # config.authenticate_with do
-  #   warden.authenticate! scope: :user
-  # end
+  config.authenticate_with do
+    authenticate_or_request_with_http_basic('Site Message') do |username, password|
+      username == 'iskconpb' && password == 'radhikaraman'
+    end
+  end
   # config.current_user_method(&:current_user)
 
   ## == Cancan ==
@@ -35,3 +37,5 @@ RailsAdmin.config do |config|
     # history_show
   end
 end
+
+
