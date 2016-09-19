@@ -1,7 +1,7 @@
 class AnnouncementsController < ApplicationController
 
   def index
-    render :json => Announcement.all.reverse, :status => 200
+    render :json => Announcement.order(id: :desc).all, :status => 200
   end
 
 end
