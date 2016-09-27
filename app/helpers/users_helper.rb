@@ -28,6 +28,8 @@ module UsersHelper
 
   def self.calculate(user1, user2)
     experience_total_score = 0
+    education_score = 0
+    company_score = 0
     index = 0
     total_indexes = 0
     total_indexes = user1["educations"]["values"].count if user1["educations"].present?
@@ -39,7 +41,7 @@ module UsersHelper
         user2["educations"]["values"].each do |e2|
           if e1["schoolName"] == e2["schoolName"]
             education_match.push(self.compare_college(e1, e2, 2*(total_indexes - index - 1) ))
-            experience_total_score += education_match.last[:score]
+            education_score += education_match.last[:score]
           end
         end
         index += 1
@@ -55,7 +57,7 @@ module UsersHelper
         user2["positions"]["values"].each do |e2|
           if e1["company"]["industry"].present? and e1["company"]["industry"] == e2["company"]["industry"]
             comany_match.push(self.compare_company(e1, e2, 2*(total_indexes - index - 1) ))
-            experience_total_score += comany_match.last[:score]
+            company_score += comany_match.last[:score]
           end
         end
         index += 1
@@ -75,6 +77,9 @@ module UsersHelper
         end
       end
     end
+    experience_total_score = company_score + education_score
+    category = experience_total_score > skills_total_score ? 
+    ( company_score > education_score ? "industry" : "education") : "skills"
 
     total_score = experience_total_score + skills_total_score
     {
@@ -85,7 +90,8 @@ module UsersHelper
         :experience_total_score => experience_total_score,
         :skills_total_score => skills_total_score
       },
-      score: total_score
+      score: total_score,
+      category: category
     }
 
   end
@@ -109,10 +115,6 @@ module UsersHelper
     {
       :name => c1["schoolName"],
       :score => score,
-      :a => a,
-      :b => b,
-      :c => c,
-      :A => college_score
     }
   end
 
@@ -140,11 +142,6 @@ module UsersHelper
       :industry => c1["industry"],
       :company => c1["company"]["name"],
       :score => score,
-      :p => p,
-      :q => q,
-      :r => r,
-      :s => s,
-      :B => company_score
     }
   end
 

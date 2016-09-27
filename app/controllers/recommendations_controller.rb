@@ -10,7 +10,9 @@ class RecommendationsController < ApplicationController
 
     begin
       if params[:user_email].present?
-        render :json => NewRecommendation.where(:user_email => params[:user_email]).paginate(:page => page, :per_page => per_page), status: 200 
+        recs = NewRecommendation.where(:user_email => params[:user_email])
+        recs = recs.where(:category => params[:category]) if params[:category].present?
+        render :json => recs.paginate(:page => page, :per_page => per_page), status: 200 
       else
         render :json => "User not found", status: 200 
       end
@@ -44,7 +46,11 @@ class RecommendationsController < ApplicationController
       users.each do |first_user|
         users.each do |other_user|
           begin
-            #next if first_user["emailAddress"] == other_user["emailAddress"]
+            if first_user["emailAddress"] == other_user["emailAddress"]
+              NewRecommendation.where(:user_email => first_user["emailAddress"], 
+                :mentor_email => other_user["emailAddress"]).destroy_all
+              next
+            end
             result = UsersHelper.calculate(first_user, other_user)
 
             if result[:score] > 0
@@ -54,6 +60,7 @@ class RecommendationsController < ApplicationController
 
               re.preferences = result[:preferences]
               re.score = result[:score]
+              re.category = result[:category]
               re.save
             end
           rescue => e

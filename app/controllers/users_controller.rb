@@ -6,8 +6,10 @@ class UsersController < ApplicationController
       render :json => "Unauthorized", status: 422
       return
     end
-    users = User.all
-    render :json => users, status: 200
+    response = Typhoeus.get("http://52.89.249.132:8080/QuickConnect-0.0.1/users",
+        headers: { 'Content-Type' => "application/json"})
+    users = JSON.parse(response.body)
+    render :json => users.to_json, status: 200
   end
 
 	def show
