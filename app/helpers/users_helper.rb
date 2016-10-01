@@ -33,6 +33,7 @@ module UsersHelper
     index = 0
     total_indexes = 0
     total_indexes = user1["educations"]["values"].count if user1["educations"].present?
+    matched_records = []
 
     # 1. College match
     education_match = []
@@ -40,12 +41,20 @@ module UsersHelper
       user1["educations"]["values"].each do |e1|
         user2["educations"]["values"].each do |e2|
           if e1["schoolName"] == e2["schoolName"]
-            education_match.push(self.compare_college(e1, e2, 2*(total_indexes - index - 1) ))
+            education_match.push(self.compare_college(e1, e2, 2*(total_indexes - index - 1) )[:name])
             education_score += education_match.last[:score]
           end
         end
         index += 1
       end
+    end
+
+    if education_match.count > 0
+      matched_records.push({
+        "field": "education",
+        "score": education_score,
+        "values": education_match       
+      })
     end
 
     index = 0
@@ -56,12 +65,20 @@ module UsersHelper
       user1["positions"]["values"].each do |e1|
         user2["positions"]["values"].each do |e2|
           if e1["company"]["industry"].present? and e1["company"]["industry"] == e2["company"]["industry"]
-            comany_match.push(self.compare_company(e1, e2, 2*(total_indexes - index - 1) ))
+            comany_match.push(self.compare_company(e1, e2, 2*(total_indexes - index - 1) )[:company])
             company_score += comany_match.last[:score]
           end
         end
         index += 1
       end
+    end
+
+    if comany_match.count > 0
+      matched_records.push({
+        "field": "experience",
+        "score": company_score,
+        "values": comany_match       
+      })
     end
 
     # 3. Skills match
@@ -71,22 +88,28 @@ module UsersHelper
       user1["skills"]["values"].each do |s1|
         user2["skills"]["values"].each do |s2|
           if s1["skill"].present? and s1["skill"] == s2["skill"]
-            skills_match.push({:skill => s1["skill"], :score => 1})
-            skills_total_score += skills_match.last[:score]
+            skills_match.push(s1["skill"]["name"])
+            skills_total_score += 1
           end
         end
       end
     end
+
+    if skills_match.count > 0
+      matched_records.push({
+        "field": "skills",
+        "score": skills_total_score,
+        "values": skills_match
+      })
+    end
+
     experience_total_score = company_score + education_score
-    category = experience_total_score > skills_total_score ? 
-    ( company_score > education_score ? "industry" : "education") : "skills"
+    category = "job"
 
     total_score = experience_total_score + skills_total_score
     {
       preferences: {
-        :educations => education_match,
-        :companies => comany_match,
-        :skills => skills_match,
+        :matched_records => matched_records,
         :experience_total_score => experience_total_score,
         :skills_total_score => skills_total_score
       },

@@ -58,6 +58,7 @@ class RecommendationsController < ApplicationController
                 :user_email => first_user["emailAddress"],
                 :mentor_email => other_user["emailAddress"])
 
+
               re.preferences = result[:preferences]
               re.score = result[:score]
               re.category = result[:category]
@@ -68,7 +69,7 @@ class RecommendationsController < ApplicationController
           end
         end
       end
-      render :json => NewRecommendation.all.to_json, status: 200
+      render :json => {:recommendations => NewRecommendation.all.select(:id, :score, :mentor_email, "preferences as score_details")}, status: 200
     rescue => e
       render :json => e.message.to_json, status: 500
     end
