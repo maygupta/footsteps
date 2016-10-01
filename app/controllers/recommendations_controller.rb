@@ -15,7 +15,7 @@ class RecommendationsController < ApplicationController
           recs = recs.where(:is_entrepreneur => true)  if params[:category] == "entrepreneur"
           recs = recs.where(:is_higher_education => true)  if params[:category] == "higher_education"
         end
-        render :json => recs.paginate(:page => page, :per_page => per_page), status: 200 
+        render :json => recs.select(:id, :score, :mentor_email, "preferences as score_details").paginate(:page => page, :per_page => per_page), status: 200 
       else
         render :json => "User not found", status: 200 
       end
