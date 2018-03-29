@@ -1,0 +1,97 @@
+<html> 
+
+<head> 
+  <title>Sadhna Card</title> 
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" />
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"></script>
+  <link rel="stylesheet" href="http://cdn.jtsage.com/datebox/latest/jqm-datebox.min.css"/>
+  <script type="text/javascript" src="http://cdn.jtsage.com/datebox/latest/jqm-datebox.core.min.js"></script>
+</head> 
+
+<body> 
+  <div data-role="page"> 
+    
+    <div data-role="header" data-theme="b">
+        <h1>Sadhna Card</h1>
+
+    </div> 
+
+    <div data-role="content">
+      <form action="/sadhna_cards" method="post">
+        <div data-role="fieldcontain">
+          <div class="ui-hide-label">
+            <label for="japa-rounds" class="select">Japa Rounds</label>
+            <select name="japa-rounds" id="japa-rounds">
+              <option value="one">1</option>
+              <option value="two">2</option>
+              <option value="three">3</option>
+              <option value="four">4</option>
+            </select>
+          </div>
+        </div>
+
+        <div data-role="fieldcontain">
+          <div class="ui-grid-c">
+              <div class = "ui-hide-label ui-block-a">
+                <label>CHAD</label>
+              </div>
+              <div class = "ui-hide-label ui-block-b">
+                  <label for="chad_chapter">Chapter</label>
+                  <input type="text" class="chad_input" name="chad_chapter">
+              </div>
+              <div class= "ui-hide-label ui-block-c">
+                  <label for="chad_start">Start</label>
+                  <input type="text" class="chad_input" name="chad_start">
+              </div>
+              <div class= "ui-hide-label ui-block-d">
+                  <label for="chad_end">End</label>
+                  <input type="text" class="chad_input" name="chad_end">
+              </div>
+          </div>
+        </div>
+
+        <div data-role="fieldcontain">
+          <label for="hearing">Hearing (mins)</label>
+          <input class="full_input" type="text" name="hearing" id="hearing" />
+        </div>  
+
+        <div data-role="fieldcontain">
+          <label for="service">Service (mins)</label>
+          <input class="full_input" type="text" name="service" id="service" />
+        </div>  
+
+        <div data-role="fieldcontain">
+          <label for="reading">Reading (mins)</label>
+            <input class="full_input" type="text" name="reading" id="reading" />
+          </div>
+        </div>  
+
+        <div class="ui-field-contain">
+          <label for="notifTime">Notification Time:</label>
+          <input name="notifTime" id="notifTime" type="text" data-role="datebox" data-options='{"mode":"timebox", "useNewStyle":true, "overrideTimeFormat": 12, "themeButton": "b", "themeInput": "a", "theme": "b", "themeHeader": "b"}' />
+        </div>
+
+
+        <div data-role="fieldcontain">
+          <label for="wake_up">Wake up</label>
+            <input class="full_input" type="datetime-local" name="wake_up" id="wake_up" />
+          </div>
+        </div>  
+
+        <fieldset>
+          <button type="submit">Save</button>
+        </fieldset>
+        
+        </div>
+
+      </form>
+
+    
+  </div> 
+</body>
+
+</html>

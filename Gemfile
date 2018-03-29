@@ -28,6 +28,9 @@ gem 'will_paginate'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'rails_admin' 
 
+gem 'bootstrap-timepicker-rails'
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

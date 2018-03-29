@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   resources :medias
   resources :announcements
 
+  resources :sadhna_cards
+
   scope '/recommender' do
     resources :recommendations do
       collection do

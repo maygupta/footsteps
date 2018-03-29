@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  </head>
+  <body>
+
+    <div class="container-fluid">
+
+      <!-- Content here -->
+      <h1>Sadhna Cards</h1>
+
+      <%= link_to 'New Sadhna card', new_sadhna_card_path %>
+
+      <ul class="list-group">
+        <% @sadhna_cards.each do |card| %>
+          <li class="list-group-item">
+
+            <%= link_to card.date, edit_sadhna_card_path(card) %>
+          </li>
+        <% end %>
+
+      </ul>
+
+    </div>
+    
+  </body>
+</html>
+
