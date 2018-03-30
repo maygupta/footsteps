@@ -7,7 +7,16 @@ class SadhnaCardsController < ApplicationController
   end  
 
   def index
-    @sadhna_cards = SadhnaCard.all.order(id: :desc)
+    print params
+    @sadhna_cards = SadhnaCard.all.order(date: :desc)
+    @years = []
+    count = 0
+    start = 1989
+    while count < 50
+      count += 1
+      @years.push(start + count)
+    end
+
   end
 
   def create
@@ -34,7 +43,7 @@ class SadhnaCardsController < ApplicationController
   def update
     @sadhna_card = SadhnaCard.find(params[:id])
    
-    if @sadhna_card.update(sadhna_card_params)
+    if @sadhna_card.update(sadhna_card_update_params)
       render :json => {id: @sadhna_card.id}, :status => :ok
     else
       render 'edit'
@@ -45,6 +54,7 @@ class SadhnaCardsController < ApplicationController
 
   def sadhna_card_update_params
     { 
+      :date => params[:date],
       :japa_rounds => params[:japa_rounds], 
       :hearing => params[:hearing], 
       :wakeup => params[:wake_up],
@@ -57,7 +67,7 @@ class SadhnaCardsController < ApplicationController
 
   def sadhna_card_params
     { 
-      :date => Time.zone.now.to_date,
+      :date => params[:date],
       :japa_rounds => params[:japa_rounds], 
       :hearing => params[:hearing], 
       :wakeup => params[:wake_up],

@@ -12,6 +12,7 @@ $(document).ready(function(){
 
   $("#update").click(function(e){
     data = {
+      date: $('input#date').val(),
       japa_rounds: $('input#japa_rounds').val(),
       service: $('input#service').val(),
       hearing: $('input#hearing').val(),
@@ -40,6 +41,7 @@ $(document).ready(function(){
 
   $('#create').click(function(e){
     data = {
+      date: $('input#date').val(),
       japa_rounds: $('input#japa_rounds').val(),
       service: $('input#service').val(),
       hearing: $('input#hearing').val(),

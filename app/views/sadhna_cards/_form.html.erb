@@ -15,11 +15,13 @@
       </div>
     <% end %>
 
-<!--     <% if @sadhna_card.id.present? %>
-      <label>Date</label>
-      <text><%= @sadhna_card.date %></text>
+    <label>Date</label>
+    <% if @sadhna_card.id.present? %>
+      <input type="date" value="<%= @sadhna_card.date %>" id="date"></input>
+    <% else %>
+      <input type="date" value="<%= Time.zone.now.to_date %>" id="date"></input>
     <% end %>
- -->
+
     <div class="form-group">
       <label for="japa_rounds">Japa rounds</label>
       <input type="text" class="form-control" id="japa_rounds" value="<%= @sadhna_card.japa_rounds %>">

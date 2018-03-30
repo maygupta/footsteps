@@ -12,14 +12,43 @@
     <div class="container-fluid">
 
       <!-- Content here -->
-      <h1>Sadhna Cards</h1>
 
-      <form action="/sadhna_cards/new">
-        <button type="submit" class="btn btn-primary">New Sadhna Card
+      <form class="" action="/sadhna_cards/new">
+        <button type="submit" class="btn btn-primary">Add Sadhna Card
         </button>
       </form>
+      <br>
 
-      <ul class="list-group">
+      <form action="/sadhna_cards/">
+        <div class="form-group">
+          <label for="month">Month:</label>
+          <select class="form-control" id="month">
+            <option val="1">Jan</option>
+            <option val="2">Feb</option>
+            <option val="3" >March</option>
+            <option val="4">April</option>
+            <option val="5">May</option>
+            <option val="6">June</option>
+            <option val="7">July</option>
+            <option val="8">August</option>
+            <option val="9">Sept</option>
+            <option val="10">Oct</option>
+            <option val="11">Nov</option>
+            <option val="12">Dec</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="year">Year:</label>
+          <select class="form-control" id="year">
+            <% @years.each do |year| %>
+            <option val="<%=year%>"><%=year%></option>
+            <% end %>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Load</button>
+      </form>
+
+      <ul class="sc_list list-group">
         <% @sadhna_cards.each do |card| %>
           <li class="list-group-item">
             <form action="/sadhna_cards/<%= card.id %>">
