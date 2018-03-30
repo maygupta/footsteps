@@ -26,7 +26,9 @@ class SadhnaCardsController < ApplicationController
   end
 
   def edit
+
     @sadhna_card = SadhnaCard.find(params[:id])
+    print @sadhna_card.wakeup.to_time
   end
 
   def update
@@ -55,7 +57,7 @@ class SadhnaCardsController < ApplicationController
 
   def sadhna_card_params
     { 
-      :date => Date.today,
+      :date => Time.zone.now.to_date,
       :japa_rounds => params[:japa_rounds], 
       :hearing => params[:hearing], 
       :wakeup => params[:wake_up],
