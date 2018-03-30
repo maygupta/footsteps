@@ -1,9 +1,11 @@
   <%= render 'header' %>
 <div class="container-fluid">
-  <h1>Edit Sadhna Card</h1> <h2><%= @sadhna_card.date %></h2>
+  <h3>Sadhna Card <%= @sadhna_card.date %></h3>
   <div id="sc_id" class="hidden"><%= @sadhna_card.id %></div>
+  <br>
   <%= render 'form' %>
   
+  <div>
   <button id="update" class="btn btn-primary">Update</button>
-  
+  </div>
 </div>

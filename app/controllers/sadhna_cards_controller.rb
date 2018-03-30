@@ -32,7 +32,6 @@ class SadhnaCardsController < ApplicationController
   end
 
   def create
-    print sadhna_card_params
     @sadhna_card = SadhnaCard.new(sadhna_card_params)
  
     if @sadhna_card.save
@@ -68,12 +67,12 @@ class SadhnaCardsController < ApplicationController
     { 
       :date => params[:date],
       :japa_rounds => params[:japa_rounds], 
-      :hearing => params[:hearing], 
+      :hearing => if params[:hearing_type] == "Mins" then params[:hearing] else params[:hearing].to_i*60 end,
       :wakeup => params[:wake_up],
       :rest_time => params[:slept_at],
-      :service => params[:service], 
+      :service => if params[:service_type] == "Mins" then params[:service] else params[:service].to_i*60 end, 
       :chad => params[:chad], 
-      :reading => params[:reading]
+      :reading => if params[:reading_type] == "Mins" then params[:reading] else params[:reading].to_i*60 end, 
     }
   end
 
@@ -81,12 +80,12 @@ class SadhnaCardsController < ApplicationController
     { 
       :date => params[:date],
       :japa_rounds => params[:japa_rounds], 
-      :hearing => params[:hearing], 
+      :hearing => params[:hearing_type] == "Mins" ? params[:hearing] : params[:hearing].to_i*60, 
       :wakeup => params[:wake_up],
       :rest_time => params[:slept_at],
-      :service => params[:service], 
+      :service => params[:service_type] == "Mins" ? params[:service] : params[:service].to_i*60, 
       :chad => params[:chad], 
-      :reading => params[:reading]
+      :reading => params[:reading_type] == "Mins" ? params[:reading] : params[:reading].to_i*60
     }
   end
 end
