@@ -7,6 +7,7 @@ class SadhnaCardsController < ApplicationController
   end  
 
   def index
+
     if params[:month].present? and params[:year].present?
       @month = params[:month]
       @year = params[:year]
@@ -15,7 +16,7 @@ class SadhnaCardsController < ApplicationController
       @year =  Date.today.strftime("%Y")
     end
 
-    @sadhna_cards = SadhnaCard.where('extract(year  from date) = ? AND extract(month  from date) = ? 
+    @sadhna_cards = current_user.sadhna_cards.where('extract(year  from date) = ? AND extract(month  from date) = ? 
       ', @year, @month).order(date: :desc)
 
     @months = [["01", "Jan"], ["02", "Feb"], ["03", "March"], ["04", "April"], 
@@ -85,7 +86,8 @@ class SadhnaCardsController < ApplicationController
       :rest_time => params[:slept_at],
       :service => params[:service_type] == "Mins" ? params[:service] : params[:service].to_i*60, 
       :chad => params[:chad], 
-      :reading => params[:reading_type] == "Mins" ? params[:reading] : params[:reading].to_i*60
+      :reading => params[:reading_type] == "Mins" ? params[:reading] : params[:reading].to_i*60,
+      :user_id => current_user.id
     }
   end
 end

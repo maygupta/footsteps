@@ -34,8 +34,20 @@ Rails.application.routes.draw do
 
   resources :skills
 
+  get 'sessions/new'
+
+  get 'users/new'
+
+  get    'login'   => 'sessions#new'
+  post   'login'   => 'sessions#create'
+  delete 'logout'  => 'sessions#destroy'
+  get    'logout'  => 'sessions#destroy'
+  resources :users
+
   # You can have the root of your site routed with "root"
   root 'sadhna_cards#index'
+
+  post '/storeauthcode' => 'sessions#sign_in'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

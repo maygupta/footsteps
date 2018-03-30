@@ -132,7 +132,10 @@ ActiveRecord::Schema.define(version: 20170202094643) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "service"
+    t.integer  "user_id"
   end
+
+  add_index "sadhna_cards", ["user_id"], name: "index_sadhna_cards_on_user_id", using: :btree
 
   create_table "skills", force: :cascade do |t|
     t.string   "name"
@@ -179,6 +182,9 @@ ActiveRecord::Schema.define(version: 20170202094643) do
     t.boolean  "is_verified"
     t.integer  "mentor_rating"
     t.integer  "normal_rating"
+    t.string   "email"
+    t.string   "encrypted_password"
+    t.string   "salt"
   end
 
 end
