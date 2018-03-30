@@ -12,17 +12,20 @@ $(document).ready(function(){
 
   $("#update").click(function(e){
     data = {
+      date: $('input#date').val(),
       japa_rounds: $('input#japa_rounds').val(),
       service: $('input#service').val(),
       hearing: $('input#hearing').val(),
-      chad: $('input#chad').val(),
       reading: $('input#reading').val(),
+      service_type: $('#service_type').val(),
+      hearing_type: $('#hearing_type').val(),
+      reading_type: $('#reading_type').val(),
+      chad: $('input#chad').val(),
       wake_up: $('input#wake_up').val(),
       slept_at: $('input#slept_at').val(),
       id: $("div#sc_id").text()
     }
 
-    console.log("sending data")
 
     $.ajax({
       url: "/sadhna_cards/" + data.id, 
@@ -40,16 +43,18 @@ $(document).ready(function(){
 
   $('#create').click(function(e){
     data = {
+      date: $('input#date').val(),
       japa_rounds: $('input#japa_rounds').val(),
       service: $('input#service').val(),
       hearing: $('input#hearing').val(),
-      chad: $('input#chad').val(),
       reading: $('input#reading').val(),
+      chad: $('input#chad').val(),
+      service_type: $('#service_type').val(),
+      hearing_type: $('#hearing_type').val(),
+      reading_type: $('#reading_type').val(),
       wake_up: $('input#wake_up').val(),
       slept_at: $('input#slept_at').val()
     }
-
-    console.log(data)
 
     $.ajax({
       url: "/sadhna_cards", 

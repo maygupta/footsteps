@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   resources :skills
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'sadhna_cards#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

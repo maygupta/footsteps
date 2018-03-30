@@ -15,38 +15,90 @@
       </div>
     <% end %>
 
-<!--     <% if @sadhna_card.id.present? %>
-      <label>Date</label>
-      <text><%= @sadhna_card.date %></text>
+    <label>Date</label>
+    <% if @sadhna_card.id.present? %>
+      <input type="date" value="<%= @sadhna_card.date %>" id="date"></input>
+    <% else %>
+      <input type="date" value="<%= Time.zone.now.to_date %>" id="date"></input>
     <% end %>
- -->
-    <div class="form-group">
-      <label for="japa_rounds">Japa rounds</label>
-      <input type="text" class="form-control" id="japa_rounds" value="<%= @sadhna_card.japa_rounds %>">
-    </div>
+
+    <br>
+    <br>
+
+    <form class="form-inline">
+      <div class="form-group">
+        <label for="japa_rounds">Japa rounds</label>
+        <input type="number" class="form-control" id="japa_rounds" value="<%= @sadhna_card.japa_rounds %>">
+      </div>
+    </form>
+
     <div class="form-group">
       <label for="reading">Reading</label>
-      <input type="text" class="form-control" id="reading" value="<%= @sadhna_card.reading %>">
+      <table class="row">
+        <td class="first_column">
+          <input type="number" class="form-control" id="reading" value="<%= @sadhna_card.reading %>">
+        </td>
+        <td class="second_column">
+          <!-- <input type="text" readonly value=""> -->
+          <select class="form-control" id="reading_type">
+            <option value="Mins">Mins</option>
+            <option value="Hrs">Hrs</option>
+          </select>
+        </td>
+      </table>
     </div>
+
     <div class="form-group">
       <label for="hearing">Hearing</label>
-      <input type="text" class="form-control" id="hearing" value="<%= @sadhna_card.hearing %>">
+      <table class="row">
+        <td class="first_column">
+          <input type="number" class="form-control" id="hearing" value="<%= @sadhna_card.hearing %>">
+        </td>
+        <td class="second_column">
+          <!-- <input type="text" readonly value=""> -->
+          <select class="form-control" id="hearing_type">
+            <option value="Mins">Mins</option>
+            <option value="Hrs">Hrs</option>
+          </select>
+        </td>
+      </table>
     </div>
+
     <div class="form-group">
       <label for="service">Service</label>
-      <input type="text" class="form-control" id="service" value="<%= @sadhna_card.service %>">
+      <table class="row">
+        <td class="first_column">
+          <input type="number" class="form-control" id="service" value="<%= @sadhna_card.service %>">
+        </td>
+        <td class="second_column">
+          <!-- <input type="text" readonly value=""> -->
+          <select class="form-control" id="service_type">
+            <option value="Mins">Mins</option>
+            <option value="Hrs">Hrs</option>
+          </select>
+        </td>
+      </table>
     </div>
+
     <div class="form-group">
       <label for="chad">CHAD</label>
       <input type="text" class="form-control" id="chad" value="<%= @sadhna_card.chad %>">
     </div>
     <div class="form-group">
       <label for="wake_up">Wake Up</label>
-      <input type="text" class="timepicker form-control" id="wake_up" value="<%= @sadhna_card.wakeup %>">
+      <% if @sadhna_card.wakeup.present? %>
+        <input type="time" class="form-control" id="wake_up" value="<%= @sadhna_card.wakeup.strftime("%H:%M") %>">
+      <% else %>
+        <input type="time" class=" form-control" id="wake_up">
+      <% end %>
     </div>
     <div class="form-group">
       <label for="slept_at">Slept at</label>
-      <input type="text" class="timepicker form-control" id="slept_at" value="<%= @sadhna_card.rest_time %>">
+      <% if @sadhna_card.rest_time.present? %>
+        <input type="time" class=" form-control" id="slept_at" value="<%= @sadhna_card.rest_time.strftime("%H:%M") %>">
+      <% else %>
+          <input type="time" class=" form-control" id="slept_at">
+      <% end %>
     </div>
 
   <% end %>
