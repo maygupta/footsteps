@@ -7,8 +7,20 @@ class SadhnaCardsController < ApplicationController
   end  
 
   def index
-    print params
-    @sadhna_cards = SadhnaCard.all.order(date: :desc)
+    if params[:month].present? and params[:year].present?
+      @month = params[:month]
+      @year = params[:year]
+    else
+      @month = Date.today.strftime("%m")
+      @year =  Date.today.strftime("%Y")
+    end
+
+    @sadhna_cards = SadhnaCard.where('extract(year  from date) = ? AND extract(month  from date) = ? 
+      ', @year, @month).order(date: :desc)
+
+    @months = [["01", "Jan"], ["02", "Feb"], ["03", "March"], ["04", "April"], 
+    ["05", "May"], ["06", "June"], ["07", "July"], ["08", "August"], ["09", "Sept"], 
+    ["10", "Oct"], ["11", "Nov"], ["12", "Dec"]]
     @years = []
     count = 0
     start = 1989

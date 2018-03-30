@@ -19,34 +19,33 @@
       </form>
       <br>
 
-      <form action="/sadhna_cards/">
+      <div>
         <div class="form-group">
           <label for="month">Month:</label>
           <select class="form-control" id="month">
-            <option val="1">Jan</option>
-            <option val="2">Feb</option>
-            <option val="3" >March</option>
-            <option val="4">April</option>
-            <option val="5">May</option>
-            <option val="6">June</option>
-            <option val="7">July</option>
-            <option val="8">August</option>
-            <option val="9">Sept</option>
-            <option val="10">Oct</option>
-            <option val="11">Nov</option>
-            <option val="12">Dec</option>
+            <% @months.each do |month| %>
+              <% if month[0].to_s == @month.to_s %>
+                <option selected value="<%=month[0]%>"><%=month[1]%></option>
+              <% else %>
+                <option value="<%=month[0]%>"><%=month[1]%></option>
+              <% end %>
+            <% end %>
           </select>
         </div>
         <div class="form-group">
           <label for="year">Year:</label>
           <select class="form-control" id="year">
             <% @years.each do |year| %>
-            <option val="<%=year%>"><%=year%></option>
+              <% if year.to_s == @year.to_s %>
+                <option selected value="<%=year%>"><%=year%></option>
+              <% else %>
+                <option value="<%=year%>"><%=year%></option>
+              <% end %>
             <% end %>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary">Load</button>
-      </form>
+        <button id="load" class="btn btn-primary">Load</button>
+      </div>
 
       <ul class="sc_list list-group">
         <% @sadhna_cards.each do |card| %>
@@ -66,3 +65,17 @@
   </body>
 </html>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $("#load").click(function(e){
+
+      data = {
+        month: $('#month').val(),
+        year: $('#year').val(),
+      }
+      // console.log(data)
+      window.location.href = "/sadhna_cards?month=" + data.month + "&year=" + data.year
+    })
+  })
+</script>
