@@ -15,35 +15,38 @@
       </div>
     <% end %>
 
+<!--     <% if @sadhna_card.id.present? %>
+      <label>Date</label>
+      <text><%= @sadhna_card.date %></text>
+    <% end %>
+ -->
     <div class="form-group">
       <label for="japa_rounds">Japa rounds</label>
-      <input type="text" class="form-control" id="japa_rounds" placeholder="16" value="<%= @sadhna_card.japa_rounds %>">
+      <input type="text" class="form-control" id="japa_rounds" value="<%= @sadhna_card.japa_rounds %>">
     </div>
     <div class="form-group">
       <label for="reading">Reading</label>
-      <input type="text" class="form-control" id="reading" placeholder="30 mins">
+      <input type="text" class="form-control" id="reading" value="<%= @sadhna_card.reading %>">
     </div>
     <div class="form-group">
       <label for="hearing">Hearing</label>
-      <input type="text" class="form-control" id="hearing" placeholder="30 mins">
+      <input type="text" class="form-control" id="hearing" value="<%= @sadhna_card.hearing %>">
     </div>
     <div class="form-group">
       <label for="service">Service</label>
-      <input type="text" class="form-control" id="service">
+      <input type="text" class="form-control" id="service" value="<%= @sadhna_card.service %>">
     </div>
     <div class="form-group">
       <label for="chad">CHAD</label>
-      <input type="text" class="form-control" id="chad_chapter" placeholder="Chapter">
-      <input type="text" class="form-control" id="Start" placeholder="Start">
-      <input type="text" class="form-control" id="End" placeholder="End">
+      <input type="text" class="form-control" id="chad" value="<%= @sadhna_card.chad %>">
     </div>
     <div class="form-group">
       <label for="wake_up">Wake Up</label>
-      <input type="text" class="timepicker form-control" id="wake_up">
+      <input type="text" class="timepicker form-control" id="wake_up" value="<%= @sadhna_card.wakeup %>">
     </div>
     <div class="form-group">
       <label for="slept_at">Slept at</label>
-      <input type="text" class="timepicker form-control" id="slept_at">
+      <input type="text" class="timepicker form-control" id="slept_at" value="<%= @sadhna_card.rest_time %>">
     </div>
 
   <% end %>

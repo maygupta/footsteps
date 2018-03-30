@@ -10,25 +10,53 @@ $(document).ready(function(){
     
   });
 
+  $("#update").click(function(e){
+    data = {
+      japa_rounds: $('input#japa_rounds').val(),
+      service: $('input#service').val(),
+      hearing: $('input#hearing').val(),
+      chad: $('input#chad').val(),
+      reading: $('input#reading').val(),
+      wake_up: $('input#wake_up').val(),
+      slept_at: $('input#slept_at').val(),
+      id: $("div#sc_id").text()
+    }
+
+    console.log("sending data")
+
+    $.ajax({
+      url: "/sadhna_cards/" + data.id, 
+      method: "put",
+      data: data,
+      success: function(data){
+        window.location.href = "/sadhna_cards/" + data.id
+      },
+      failure: function(e){
+        alert(e)
+      }
+    });
+
+  })
+
   $('#create').click(function(e){
     data = {
       japa_rounds: $('input#japa_rounds').val(),
       service: $('input#service').val(),
       hearing: $('input#hearing').val(),
-      chad_chapter: $('input#chad_chapter').val(),
-      chad_start: $('input#chad_start').val(),
-      chad_end: $('input#chad_end').val(),
+      chad: $('input#chad').val(),
       reading: $('input#reading').val(),
       wake_up: $('input#wake_up').val(),
       slept_at: $('input#slept_at').val()
     }
 
+    console.log(data)
+
     $.ajax({
       url: "/sadhna_cards", 
       method: "post",
       data: data,
-      sucess: function(e){
-        alert("saved")
+      success: function(data){
+        window.location.href = "/sadhna_cards/" + data.id
       },
       failure: function(e){
         alert(e)

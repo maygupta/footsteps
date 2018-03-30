@@ -1,3 +1,4 @@
+<%= render 'header' %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,13 +14,19 @@
       <!-- Content here -->
       <h1>Sadhna Cards</h1>
 
-      <%= link_to 'New Sadhna card', new_sadhna_card_path %>
+      <form action="/sadhna_cards/new">
+        <button type="submit" class="btn btn-primary">New Sadhna Card
+        </button>
+      </form>
 
       <ul class="list-group">
         <% @sadhna_cards.each do |card| %>
           <li class="list-group-item">
-
-            <%= link_to card.date, edit_sadhna_card_path(card) %>
+            <form action="/sadhna_cards/<%= card.id %>">
+              <button type="submit" class="btn"><%= card.date %>
+              </button>
+            </form>
+            
           </li>
         <% end %>
 

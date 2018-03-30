@@ -7,7 +7,7 @@ class SadhnaCardsController < ApplicationController
   end  
 
   def index
-    @sadhna_cards = SadhnaCard.all
+    @sadhna_cards = SadhnaCard.all.order(id: :desc)
   end
 
   def create
@@ -15,10 +15,14 @@ class SadhnaCardsController < ApplicationController
     @sadhna_card = SadhnaCard.new(sadhna_card_params)
  
     if @sadhna_card.save
-      redirect_to '/sadhna_cards'
+      render :json => {id: @sadhna_card.id}, :status => :ok
     else
       render 'new'
     end
+  end
+
+  def show
+    @sadhna_card = SadhnaCard.find(params[:id])
   end
 
   def edit
@@ -29,7 +33,7 @@ class SadhnaCardsController < ApplicationController
     @sadhna_card = SadhnaCard.find(params[:id])
    
     if @sadhna_card.update(sadhna_card_params)
-      redirect_to @sadhna_card
+      render :json => {id: @sadhna_card.id}, :status => :ok
     else
       render 'edit'
     end
@@ -37,15 +41,27 @@ class SadhnaCardsController < ApplicationController
 
   private
 
-  def sadhna_card_params
+  def sadhna_card_update_params
     { 
-      :date => Date.today.strftime("%Y-%M-%d"),
       :japa_rounds => params[:japa_rounds], 
       :hearing => params[:hearing], 
       :wakeup => params[:wake_up],
       :rest_time => params[:slept_at],
       :service => params[:service], 
-      :chad => params[:chad_chapter], 
+      :chad => params[:chad], 
+      :reading => params[:reading]
+    }
+  end
+
+  def sadhna_card_params
+    { 
+      :date => Date.today,
+      :japa_rounds => params[:japa_rounds], 
+      :hearing => params[:hearing], 
+      :wakeup => params[:wake_up],
+      :rest_time => params[:slept_at],
+      :service => params[:service], 
+      :chad => params[:chad], 
       :reading => params[:reading]
     }
   end
