@@ -1,0 +1,37 @@
+<%= render 'sadhna_cards/header' %>
+
+<div class="badges container-fluid">
+
+  <% if @unlocked_badges.count > 0 %>
+    <ul class="sc_list list-group">
+      <label>UnLocked Badges</label>
+      <% @unlocked_badges.each do |badge| %>
+        <li class="list-group-item unlocked">
+          <table>
+            <td>
+              <%= badge[0] %>
+            </td>
+            <td>
+              <span class="glyphicon glyphicon-star"></span>
+            </td>
+          </table>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <ul class="sc_list list-group">
+    <label>Locked Badges</label>
+    <% @locked_badges.each do |badge| %>
+      <li class="list-group-item locked">
+        <table>
+          <td>
+            <%= badge[0] %>
+          </td>
+          <td>
+            <span class="glyphicon glyphicon-star-empty"></span>
+          </td>
+        </table>
+      </li>
+    <% end %>
+  </ul>
