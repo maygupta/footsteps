@@ -4,8 +4,10 @@
     <div class="header navbar-header">
       <a class="navbar-brand" href="/sadhna_cards">Sadhna Cards</a>
       <% if current_user.present? %>
-        <a href="/logout" class="user_icon glyphicon glyphicon-off">
-        </a>  
+
+        <a href="/logout" class="user_icon">Logout</a>  
+        <span class="user_icon glyphicon glyphicon-user"> <%= current_user.name %> </span> 
+        
       <% end %>
     </div>
     <!-- <ul class="nav navbar-nav">
