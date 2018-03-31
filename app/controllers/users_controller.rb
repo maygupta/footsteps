@@ -26,9 +26,9 @@ class UsersController < ApplicationController
 
     sadhna_cards.each do |sc|
       @total_rounds += sc.japa_rounds
-      @total_service_hours += sc.service.to_i
-      @total_hearing_hours += sc.hearing.to_i
-      @total_reading_hours += sc.reading.to_i
+      @total_service_hours +=  if sc.service.present? then sc.service.to_i else 0 end
+      @total_hearing_hours += if sc.hearing.present? then sc.hearing.to_i else 0 end
+      @total_reading_hours += if sc.reading.present? then sc.reading.to_i else 0 end
     end
     @total_service_hours = (@total_service_hours/60).to_s + "h " +  (@total_service_hours % 60).to_s + "m"
     @total_reading_hours = (@total_reading_hours/60).to_s + "h " +  (@total_reading_hours % 60).to_s + "m"
@@ -37,9 +37,9 @@ class UsersController < ApplicationController
 
     current_month_sadhna_cards.each do |sc|
       @current_month_rounds += sc.japa_rounds
-      @current_month_service_hours += sc.service.to_i
-      @current_month_hearing_hours += sc.hearing.to_i
-      @current_month_reading_hours += sc.reading.to_i
+      @current_month_service_hours +=  if sc.service.present? then sc.service.to_i else 0 end
+      @current_month_hearing_hours += if sc.hearing.present? then sc.hearing.to_i else 0 end
+      @current_month_reading_hours += if sc.reading.present? then sc.reading.to_i else 0 end
     end
     @current_month_service_hours = (@current_month_service_hours/60).to_s + "h " +  (@current_month_service_hours % 60).to_s + "m"
     @current_month_reading_hours = (@current_month_reading_hours/60).to_s + "h " +  (@current_month_reading_hours % 60).to_s + "m"
