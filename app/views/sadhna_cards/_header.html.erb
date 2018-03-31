@@ -1,13 +1,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <nav class="navbar navbar-default">
   <div class="container-fluid">
-    <div class="navbar-header">
+    <div class="header navbar-header">
       <a class="navbar-brand" href="/sadhna_cards">Sadhna Cards</a>
+      <% if current_user.present? %>
+        <a href="/logout" class="user_icon glyphicon glyphicon-off">
+        </a>  
+      <% end %>
     </div>
     <!-- <ul class="nav navbar-nav">
       <li class="active"><a href="/">Today</a></li>
       <li><a href="#">Yesterday</a></li>
       <li><a href="#">Other Days</a></li>
     </ul> -->
+    
   </div>
 </nav>
