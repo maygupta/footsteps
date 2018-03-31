@@ -7,7 +7,9 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if !user
-      @user = User.new(email: params[:session][:email], encrypted_password: params[:session][:password])
+      @user = User.new(email: params[:session][:email], 
+        encrypted_password: params[:session][:password],
+        name: params[:session][:name])
       @user.save
       log_in @user
       redirect_to '/'
