@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(version: 20170202094643) do
     t.date     "date"
     t.integer  "japa_rounds"
     t.string   "reading"
-    t.string   "chad"
+    t.integer  "chad"
     t.time     "wakeup"
     t.time     "rest_time"
     t.string   "hearing"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 20170202094643) do
     t.datetime "updated_at"
     t.string   "service"
     t.integer  "user_id"
+    t.integer  "verses"
   end
 
   add_index "sadhna_cards", ["user_id"], name: "index_sadhna_cards_on_user_id", using: :btree

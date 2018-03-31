@@ -21,6 +21,7 @@ $(document).ready(function(){
       hearing_type: $('#hearing_type').val(),
       reading_type: $('#reading_type').val(),
       chad: $('input#chad').val(),
+      verses: $('input#verses').val(),
       wake_up: $('input#wake_up').val(),
       slept_at: $('input#slept_at').val(),
       id: $("div#sc_id").text()
@@ -49,6 +50,7 @@ $(document).ready(function(){
       hearing: $('input#hearing').val(),
       reading: $('input#reading').val(),
       chad: $('input#chad').val(),
+      verses: $('input#verses').val(),
       service_type: $('#service_type').val(),
       hearing_type: $('#hearing_type').val(),
       reading_type: $('#reading_type').val(),

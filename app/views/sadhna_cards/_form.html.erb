@@ -81,8 +81,16 @@
     </div>
 
     <div class="form-group">
-      <label for="chad">CHAD</label>
-      <input type="text" class="form-control" id="chad" value="<%= @sadhna_card.chad %>">
+      <table class="row">
+        <td class="first_column">
+          <label for="chad">CHAD</label>
+          <input type="number" placeholder="chapter" class="form-control" id="chad" value="<%= @sadhna_card.chad %>">
+        </td>
+        <td class="second_column">
+          <label for="verse">Verses</label>
+          <input type="number" placeholder="Number of Verses" class="form-control" id="verses" value="<%= @sadhna_card.verses %>">
+        </td>
+      </table>
     </div>
     <div class="form-group">
       <label for="wake_up">Wake Up</label>
