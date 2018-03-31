@@ -55,7 +55,7 @@ class SadhnaCardsController < ApplicationController
       end
     end
 
-    send_file filename
+    send_file filename, :disposition => 'attachment'
   end
 
   def index
