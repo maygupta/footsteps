@@ -6,6 +6,58 @@ class SadhnaCardsController < ApplicationController
     @custom_path = "/sadhna_cards"
   end  
 
+  def download
+    if params[:month].present? and params[:year].present?
+      @month = params[:month]
+      @year = params[:year]
+    else
+      @month = Date.today.strftime("%m")
+      @year =  Date.today.strftime("%Y")
+    end
+
+    valid_columns = ["date", 
+      "japa_rounds", 
+      "reading", 
+      "chad", 
+      "wakeup", 
+      "rest_time", 
+      "hearing", 
+      "service"]
+
+    @sadhna_cards = current_user.sadhna_cards.where('extract(year  from date) = ? AND extract(month  from date) = ? 
+      ', @year, @month).order(date: :desc)
+
+    filename = "sadhna_" + current_user.id.to_s + "_" + @month.to_s + "_" + @year.to_s + ".csv"
+    CSV.open(filename, "wb") do |csv|
+      csv << valid_columns
+      @sadhna_cards.each do |sc|
+        values = []
+        sc.attributes.each do |k,v|
+          if valid_columns.include? k
+            if k == "reading" || k == "hearing" || k == "service"
+              if !v
+                v = 0
+              end
+              values.push(v + " mins")
+            elsif k == "rest_time" || k == "wakeup"
+              if v
+                values.push(v.strftime("%I:%M%p"))
+              else
+                values.push(nil)
+              end
+            else
+              values.push(v)
+            end
+          end
+        end
+
+        csv << values
+      end
+    end
+
+    send_file filename
+  end
+
   def index
 
     if params[:month].present? and params[:year].present?
