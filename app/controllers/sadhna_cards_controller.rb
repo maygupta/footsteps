@@ -117,6 +117,18 @@ class SadhnaCardsController < ApplicationController
   private
 
   def sadhna_card_update_params
+    unless params[:hearing].present?
+      params[:hearing] = 0
+    end
+    unless params[:reading].present?
+      params[:reading] = 0
+    end
+    unless params[:service].present?
+      params[:service] = 0
+    end
+    unless params[:japa_rounds].present?
+      params[:japa_rounds] = 0
+    end
     { 
       :date => params[:date],
       :japa_rounds => params[:japa_rounds], 
@@ -130,6 +142,18 @@ class SadhnaCardsController < ApplicationController
   end
 
   def sadhna_card_params
+    unless params[:hearing].present?
+      params[:hearing] = 0
+    end
+    unless params[:reading].present?
+      params[:reading] = 0
+    end
+    unless params[:service].present?
+      params[:service] = 0
+    end
+    unless params[:japa_rounds].present?
+      params[:japa_rounds] = 0
+    end
     { 
       :date => params[:date],
       :japa_rounds => params[:japa_rounds], 
