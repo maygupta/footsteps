@@ -1,11 +1,15 @@
-  <%= render 'header' %>
+<%= render 'header' %>
 <div class="container-fluid">
-  <h3>Sadhna Card <%= @sadhna_card.date %></h3>
-  <div id="sc_id" class="hidden"><%= @sadhna_card.id %></div>
-  <br>
-  <%= render 'form' %>
-  
-  <div>
-  <button id="update" class="btn btn-primary">Update</button>
-  </div>
+  <% if current_user == @sadhna_card.user %>
+    <h3>Sadhna Card <%= @sadhna_card.date %></h3>
+    <div id="sc_id" class="hidden"><%= @sadhna_card.id %></div>
+    <br>
+    <%= render 'form' %>
+    
+    <div>
+    <button id="update" class="btn btn-primary">Update</button>
+    </div>
+  <% else %>
+    You don't have permission to view this Sadhna Card
+  <% end %>
 </div>

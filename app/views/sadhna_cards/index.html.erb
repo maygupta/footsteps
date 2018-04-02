@@ -13,12 +13,6 @@
 
       <!-- Content here -->
 
-      <form class="" action="/sadhna_cards/new">
-        <button type="submit" class="btn btn-primary">Add Sadhna Card
-        </button>
-      </form>
-      <br>
-
       <div>
         <div class="form-group">
           <label for="month">Month:</label>
@@ -46,18 +40,28 @@
         </div>
         <button id="load" class="btn btn-primary">Show</button>
         <button id="download" class="btn btn-primary">Download</button>
-        <a id="download_link" download="sadhna.csv">Download Link</a>
+        <a id="download_link" download>Download Link</a>
+        <form class="add_new_sc" action="/sadhna_cards/new">
+          <button type="submit" class="btn btn-success">Add Sadhna Card
+          </button>
+        </form>
       </div>
 
+      <br>
+
       <ul class="sc_list list-group">
-        <% @sadhna_cards.each do |card| %>
-          <li class="list-group-item">
-            <form action="/sadhna_cards/<%= card.id %>">
-              <button type="submit" class="btn"><%= card.date %>
-              </button>
-            </form>
-            
-          </li>
+        <% if @sadhna_cards.count > 0 %>
+          <% @sadhna_cards.each do |card| %>
+            <li class="list-group-item">
+              <form action="/sadhna_cards/<%= card.id %>">
+                <button type="submit" class="btn"><%= card.date %>
+                </button>
+              </form>
+              
+            </li>
+          <% end %>
+        <% else %>
+          <li class="list-group-item"> No Sadhna Cards found for selected month </li>          
         <% end %>
 
       </ul>
@@ -97,3 +101,10 @@
     })
   })
 </script>
+
+<style type="text/css">
+  
+  .add_new_sc {
+    float: right;
+  }
+</style>

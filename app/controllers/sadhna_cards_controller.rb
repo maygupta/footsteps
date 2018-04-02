@@ -18,11 +18,13 @@ class SadhnaCardsController < ApplicationController
     valid_columns = ["date", 
       "japa_rounds", 
       "reading", 
-      "chad", 
+      "chad",
       "wakeup", 
       "rest_time", 
       "hearing", 
-      "service"]
+      "service",
+      "verses"
+    ]
 
     @sadhna_cards = current_user.sadhna_cards.where('extract(year  from date) = ? AND extract(month  from date) = ? 
       ', @year, @month).order(date: :desc)
