@@ -2,23 +2,26 @@
 
 <div class="badges container-fluid">
 
-  <% if @unlocked_badges.count > 0 %>
     <ul class="sc_list list-group">
-      <label>UnLocked Badges</label>
-      <% @unlocked_badges.each do |badge| %>
-        <li class="list-group-item unlocked">
-          <table>
-            <td>
-              <%= badge[0] %>
-            </td>
-            <td>
-              <span class="glyphicon glyphicon-star"></span>
-            </td>
-          </table>
-        </li>
+      <label>Unlocked Badges</label>
+      <% if @unlocked_badges.count > 0 %>
+        <% @unlocked_badges.each do |badge| %>
+          <li class="list-group-item unlocked">
+            <table>
+              <td>
+                <%= badge[0] %>
+              </td>
+              <td>
+                <span class="glyphicon glyphicon-star"></span>
+              </td>
+            </table>
+          </li>
+        <% end %>
+      <% else %>
+        <li class="list-group-item unlocked"> No Unlocked badges yet</li>
       <% end %>
     </ul>
-  <% end %>
+  
 
   <ul class="sc_list list-group">
     <label>Locked Badges</label>

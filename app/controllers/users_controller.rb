@@ -61,6 +61,17 @@ class UsersController < ApplicationController
       ["Served more than 2 hours in one day", cards.where("CAST(service AS INT) > ?", 120).count > 0],
       ["Read more than 2 hours in one day", cards.where("CAST(reading AS INT) > ?", 120).count > 0],
       ["Heard more than 2 hours in one day", cards.where("CAST(hearing AS INT) > ?", 120).count > 0],
+      ["Recited 100 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 100],
+      ["Recited 1000 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 500]
+    ]
+
+    complex_badges = [
+      ["Chanted x rounds every day in a week"], 
+      ["Chanted x rounds every day in a month"],
+      ["Chanted x rounds every day in a year"], 
+      ["Read atleast 30mins every day in a week"], 
+      ["Read atleast 30mins every day in a month"],
+      ["Read atleast 30mins every day in a year"]
     ]
 
     all_badges.each do |badge|
