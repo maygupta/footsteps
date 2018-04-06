@@ -9,12 +9,14 @@ class UsersController < ApplicationController
     @total_hearing_hours = 0
     @total_service_hours = 0
     @total_sadhna_cards = 0
+    @total_verses = 0
 
     @current_month_rounds = 0
     @current_month_reading_hours = 0
     @current_month_hearing_hours = 0
     @current_month_service_hours = 0
     @current_month_sadhna_cards = 0
+    @current_month_verses = 0
 
     @month_name = Date.today.strftime("%B")
     @month = Date.today.strftime("%m")
@@ -29,6 +31,7 @@ class UsersController < ApplicationController
       @total_service_hours +=  if sc.service.present? then sc.service.to_i else 0 end
       @total_hearing_hours += if sc.hearing.present? then sc.hearing.to_i else 0 end
       @total_reading_hours += if sc.reading.present? then sc.reading.to_i else 0 end
+      @total_verses += if sc.verses.present? then sc.verses else 0 end
     end
     @total_service_hours = (@total_service_hours/60).to_s + "h " +  (@total_service_hours % 60).to_s + "m"
     @total_reading_hours = (@total_reading_hours/60).to_s + "h " +  (@total_reading_hours % 60).to_s + "m"
@@ -40,6 +43,7 @@ class UsersController < ApplicationController
       @current_month_service_hours +=  if sc.service.present? then sc.service.to_i else 0 end
       @current_month_hearing_hours += if sc.hearing.present? then sc.hearing.to_i else 0 end
       @current_month_reading_hours += if sc.reading.present? then sc.reading.to_i else 0 end
+      @current_month_verses += if sc.verses.present? then sc.verses else 0 end
     end
     @current_month_service_hours = (@current_month_service_hours/60).to_s + "h " +  (@current_month_service_hours % 60).to_s + "m"
     @current_month_reading_hours = (@current_month_reading_hours/60).to_s + "h " +  (@current_month_reading_hours % 60).to_s + "m"
