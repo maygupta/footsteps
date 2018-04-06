@@ -1,16 +1,9 @@
 <%= render 'sadhna_cards/header' %>
-<div class="login container-fluid">
+<div class="login container">
 
 	<% provide(:title, "Log in") %>
 
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-
-	<div class="row">
+	<div class="login_row row">
 	  <div class="col-md-6 col-md-offset-3 log_in">
 
 	    <%= form_for(:session, url: login_path) do |f| %>
@@ -55,31 +48,7 @@
 	    
 	  </div>
 
-	  <div>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
-	  	<br>
+	  <div class="login_bg">
 	  </div>
 	  	
 	</div> 
@@ -98,3 +67,23 @@ $(document).ready(function(){
 });
 
 </script>
+
+<style type="text/css">
+	@media (min-width:320px) {
+		.login_bg {
+			height: 350px;
+		}
+	}
+
+	@media (min-width:960px) {
+		.login_bg {
+			height: 800px;
+		}
+	}
+
+	.login_row {
+		margin-top: 250px;
+	}
+
+
+</style>
