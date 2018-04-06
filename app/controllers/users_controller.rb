@@ -56,17 +56,24 @@ class UsersController < ApplicationController
     @unlocked_badges = []
     @locked_badges = []
 
-    all_badges = [
-      ["Chanted 1000 total Japa Rounds", cards.sum(:japa_rounds) > 1000],
-      ["Read more than 1000 hours", cards.pluck(:reading).sum(&:to_i) > 60000],
-      ["Heard more than 1000 hours", cards.pluck(:hearing).sum(&:to_i) > 60000],
-      ["Served more than 1000 hours", cards.pluck(:service).sum(&:to_i)> 60000],
+    @level_1_badges = [
+      ["Chanted 100 total Japa Rounds", cards.sum(:japa_rounds) > 100],
+      ["Read more than 100 hours", cards.pluck(:reading).sum(&:to_i) > 6000],
+      ["Heard more than 100 hours", cards.pluck(:hearing).sum(&:to_i) > 6000],
+      ["Served more than 100 hours", cards.pluck(:service).sum(&:to_i) > 6000],
       ["Chanted more than 16 rounds in one day", cards.where("japa_rounds > 16").count > 0],
       ["Served more than 2 hours in one day", cards.where("CAST(service AS INT) > ?", 120).count > 0],
       ["Read more than 2 hours in one day", cards.where("CAST(reading AS INT) > ?", 120).count > 0],
       ["Heard more than 2 hours in one day", cards.where("CAST(hearing AS INT) > ?", 120).count > 0],
-      ["Recited 100 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 100],
-      ["Recited 1000 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 500]
+      ["Recited 100 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 100]
+    ]
+
+    @level_2_badges = [
+      ["Chanted 1000 total Japa Rounds", cards.sum(:japa_rounds) > 1000],
+      ["Read more than 1000 hours", cards.pluck(:reading).sum(&:to_i) > 60000],
+      ["Heard more than 1000 hours", cards.pluck(:hearing).sum(&:to_i) > 60000],
+      ["Served more than 1000 hours", cards.pluck(:service).sum(&:to_i)> 60000],
+      ["Recited 1000 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 1000]
     ]
 
     complex_badges = [
@@ -78,7 +85,15 @@ class UsersController < ApplicationController
       ["Read atleast 30mins every day in a year"]
     ]
 
-    all_badges.each do |badge|
+    @level_1_badges.each do |badge|
+      if badge[1] == true
+        @unlocked_badges.push(badge)
+      else
+        @locked_badges.push(badge)
+      end
+    end
+
+    @level_2_badges.each do |badge|
       if badge[1] == true
         @unlocked_badges.push(badge)
       else
