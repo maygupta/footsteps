@@ -11,7 +11,7 @@ module SadhnaCardHelper
       ["3", "Chapter 3", 43],
       ["3_1", "Chapter 3 (Verses 1-21)", 21],
       ["3_2", "Chapter 3 (Verses 22-43)", 22],
-      ["4", "Chapter 10", 42],
+      ["4", "Chapter 4", 42],
       ["4_1", "Chapter 4 (Verses 1-21)", 21],
       ["4_2", "Chapter 4 (Verses 22-42)", 21],
       ["5", "Chapter 5", 29],
