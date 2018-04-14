@@ -1,4 +1,5 @@
 class SadhnaCardsController < ApplicationController
+  include SadhnaCardHelper
 
   def new
     @sadhna_card = SadhnaCard.new
@@ -133,9 +134,9 @@ class SadhnaCardsController < ApplicationController
     end
     unless params[:chad].present?
       params[:chad] = 0
-    end
-    unless params[:verses].present?
       params[:verses] = 0
+    else
+      params[:verses] = get_verses(params[:chad])
     end
     { 
       :date => params[:date],
@@ -148,6 +149,15 @@ class SadhnaCardsController < ApplicationController
       :verses => params[:verses], 
       :reading => if params[:reading_type] == "Mins" then params[:reading] else params[:reading].to_i*60 end, 
     }
+  end
+
+  def get_verses(chapter_value)
+    chad_map.each do |ch|
+      if ch[0] == chapter_value
+        return ch[2]
+      end
+    end
+    return 0
   end
 
   def sadhna_card_params
@@ -166,8 +176,11 @@ class SadhnaCardsController < ApplicationController
     unless params[:chad].present?
       params[:chad] = 0
     end
-    unless params[:verses].present?
+    unless params[:chad].present?
+      params[:chad] = 0
       params[:verses] = 0
+    else
+      params[:verses] = get_verses(params[:chad])
     end
     { 
       :date => params[:date],

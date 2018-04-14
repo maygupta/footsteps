@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(version: 20170202094643) do
     t.date     "date"
     t.integer  "japa_rounds"
     t.string   "reading"
-    t.integer  "chad"
+    t.string   "chad"
     t.time     "wakeup"
     t.time     "rest_time"
     t.string   "hearing"

@@ -84,11 +84,16 @@
       <table class="row">
         <td class="first_column">
           <label for="chad">CHAD</label>
-          <input type="number" placeholder="chapter" class="form-control" id="chad" value="<%= @sadhna_card.chad %>">
-        </td>
-        <td class="second_column">
-          <label for="verse">Total Verses</label>
-          <input type="number" placeholder="# Verses" class="form-control" id="verses" value="<%= @sadhna_card.verses %>">
+          <select class="form-control" id="chad">
+            <option value="0">Select Chapter</option>
+            <% chad_map.each do |ch| %>
+              <% if @sadhna_card.chad == ch[0] %>
+                <option selected value="<%= ch[0] %>"><%= ch[1] %></option>
+              <% else %>
+                <option value="<%= ch[0] %>"><%= ch[1] %></option>
+              <% end %>
+            <% end %>
+          </select>
         </td>
       </table>
     </div>
