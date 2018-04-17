@@ -28,7 +28,7 @@
   
 
   <ul class="sc_list list-group">
-    <label class="level_1">Locked Badges (Level 1)</label>
+    <label class="level_1">Locked Badges (Level Mathura)</label>
     <br>
       <% @locked_badges.each do |badge| %>
         <% if @level_1_badges.include?(badge) %>
@@ -46,10 +46,29 @@
       <% end %>
     <br>
     <br>
-    <label class="level_2">Locked Badges (Level 2)</label>
+    <label class="level_2">Locked Badges (Level Goloka)</label>
 
       <% @locked_badges.each do |badge| %>
         <% if @level_2_badges.include?(badge) %>
+          <li class="list-group-item locked">
+            <table>
+              <td>
+                <%= badge[0] %>
+              </td>
+              <td>
+                <span class="glyphicon glyphicon-star-empty"></span>
+              </td>
+            </table>
+          </li>
+        <% end %>
+      <% end %>
+      
+     <br>
+     <br>
+      <label class="level_3">Locked Badges (Level Vrndavana)</label>
+
+      <% @locked_badges.each do |badge| %>
+        <% if @level_3_badges.include?(badge) %>
           <li class="list-group-item locked">
             <table>
               <td>
@@ -72,6 +91,10 @@
 
   .level_2{
     color: red;
+  }
+    
+  .level_3{
+    color: blue;
   }
 
 
