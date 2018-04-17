@@ -52,7 +52,12 @@ class UsersController < ApplicationController
   end
 
   def badges
-    cards = current_user.sadhna_cards
+    user = current_user
+    if params[:id].present? && current_user.id == 5
+      user = User.find(params[:id])
+    end
+      
+    cards = user.sadhna_cards
     @unlocked_badges = []
     @locked_badges = []
 
