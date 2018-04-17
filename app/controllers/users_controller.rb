@@ -58,9 +58,9 @@ class UsersController < ApplicationController
 
     @level_1_badges = [
       ["Chanted 108 total Japa Rounds", cards.sum(:japa_rounds) > 108],
-      ["Read more than 24 hours", cards.pluck(:reading).sum(&:to_i) > 6480],
-      ["Heard more than 24 hours", cards.pluck(:hearing).sum(&:to_i) > 6480],
-      ["Served more than 24 hours", cards.pluck(:service).sum(&:to_i) > 6480],
+      ["Read more than 24 hours", cards.pluck(:reading).sum(&:to_i) > 24*60],
+      ["Heard more than 24 hours", cards.pluck(:hearing).sum(&:to_i) > 24*60],
+      ["Served more than 24 hours", cards.pluck(:service).sum(&:to_i) > 24*60],
       ["Chanted more than 16 rounds in one day", cards.where("japa_rounds > 16").count > 0],
       ["Served more than 2 hours in one day", cards.where("CAST(service AS INT) > ?", 120).count > 0],
       ["Read more than 2 hours in one day", cards.where("CAST(reading AS INT) > ?", 120).count > 0],
@@ -70,17 +70,17 @@ class UsersController < ApplicationController
 
     @level_2_badges = [
       ["Chanted 1008 total Japa Rounds", cards.sum(:japa_rounds) > 1008],
-      ["Read more than 168 hours(1 week)", cards.pluck(:reading).sum(&:to_i) > 10080],
-      ["Heard more than 168 hours(1 week)", cards.pluck(:hearing).sum(&:to_i) > 10080],
-      ["Served more than 168 hours(1 week)", cards.pluck(:service).sum(&:to_i)> 10080],
+      ["Read more than 168 hours(1 week)", cards.pluck(:reading).sum(&:to_i) > 24*7*60],
+      ["Heard more than 168 hours(1 week)", cards.pluck(:hearing).sum(&:to_i) > 24*7*60],
+      ["Served more than 168 hours(1 week)", cards.pluck(:service).sum(&:to_i)> 24*7*60],
       ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 1008]
     ]
     
     @level_3_badges = [
       ["Chanted 10008 total Japa Rounds", cards.sum(:japa_rounds) > 10008],
-      ["Read more than 720 hours(1 month)", cards.pluck(:reading).sum(&:to_i) > 43200],
-      ["Heard more than 720 hours(1 month)", cards.pluck(:hearing).sum(&:to_i) > 43200],
-      ["Served more than 720 hours(1 month)", cards.pluck(:service).sum(&:to_i)> 43200],
+      ["Read more than 720 hours(1 month)", cards.pluck(:reading).sum(&:to_i) > 24*30*60],
+      ["Heard more than 720 hours(1 month)", cards.pluck(:hearing).sum(&:to_i) > 24*30*60],
+      ["Served more than 720 hours(1 month)", cards.pluck(:service).sum(&:to_i)> 24*30*60],
       ["Recited 10008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 10008]
     ]
 
