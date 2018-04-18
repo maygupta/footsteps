@@ -14,8 +14,10 @@
               <td>
                 <% if @level_1_badges.include?(badge) %>
                   <span class="level_1 glyphicon glyphicon-star"></span>
-                <% else %>
+                <% elsif @level_2_badges.include?(badge) %>
                   <span class="level_2 glyphicon glyphicon-star"></span>
+                <% else %>
+                  <span class="level_3 glyphicon glyphicon-star"></span>
                 <% end %>
               </td>
             </table>
@@ -96,6 +98,9 @@
   .level_3{
     color: blue;
   }
+
+  
+
 
 
 </style>
