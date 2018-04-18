@@ -63,8 +63,8 @@ $(document).ready(function(){
       success: function(data){
         window.location.href = "/sadhna_cards/" + data.id
       },
-      failure: function(e){
-        alert(e)
+      error: function(e){
+        alert(e.responseJSON.error)
       }
     });
 

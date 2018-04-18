@@ -88,12 +88,16 @@ class SadhnaCardsController < ApplicationController
   end
 
   def create
-    @sadhna_card = SadhnaCard.new(sadhna_card_params)
- 
-    if @sadhna_card.save
-      render :json => {id: @sadhna_card.id}, :status => :ok
+    if SadhnaCard.find_by_date(params[:date]).present?
+      render :json => {:error => "Sadhhna Card with this date exists"}, :status => 422
     else
-      render 'new'
+      @sadhna_card = SadhnaCard.new(sadhna_card_params)
+   
+      if @sadhna_card.save
+        render :json => {id: @sadhna_card.id}, :status => :ok
+      else
+        render 'new'
+      end
     end
   end
 
