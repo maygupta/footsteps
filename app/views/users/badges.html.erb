@@ -3,7 +3,7 @@
 <div class="badges container">
 
     <ul class="sc_list list-group">
-      <label>Unlocked Badges</label>
+      <label>Badges Awarded</label>
       <% if @unlocked_badges.count > 0 %>
         <% @unlocked_badges.each do |badge| %>
           <li class="list-group-item unlocked">
@@ -14,21 +14,23 @@
               <td>
                 <% if @level_1_badges.include?(badge) %>
                   <span class="level_1 glyphicon glyphicon-star"></span>
-                <% else %>
+                <% elsif @level_2_badges.include?(badge) %>
                   <span class="level_2 glyphicon glyphicon-star"></span>
+                <% else %>
+                  <span class="level_3 glyphicon glyphicon-star"></span>
                 <% end %>
               </td>
             </table>
           </li>
         <% end %>
       <% else %>
-        <li class="list-group-item unlocked"> No Unlocked badges yet</li>
+        <li class="list-group-item unlocked"> No badges awarded yet</li>
       <% end %>
     </ul>
   
 
   <ul class="sc_list list-group">
-    <label class="level_1">Locked Badges (Level 1)</label>
+    <label class="level_1">Level Mathura Badges</label>
     <br>
       <% @locked_badges.each do |badge| %>
         <% if @level_1_badges.include?(badge) %>
@@ -46,10 +48,29 @@
       <% end %>
     <br>
     <br>
-    <label class="level_2">Locked Badges (Level 2)</label>
+    <label class="level_2">Level Gokula Badges</label>
 
       <% @locked_badges.each do |badge| %>
         <% if @level_2_badges.include?(badge) %>
+          <li class="list-group-item locked">
+            <table>
+              <td>
+                <%= badge[0] %>
+              </td>
+              <td>
+                <span class="glyphicon glyphicon-star-empty"></span>
+              </td>
+            </table>
+          </li>
+        <% end %>
+      <% end %>
+      
+     <br>
+     <br>
+      <label class="level_3">Level Vrndavana Badges</label>
+
+      <% @locked_badges.each do |badge| %>
+        <% if @level_3_badges.include?(badge) %>
           <li class="list-group-item locked">
             <table>
               <td>
@@ -73,6 +94,13 @@
   .level_2{
     color: red;
   }
+    
+  .level_3{
+    color: blue;
+  }
+
+  
+
 
 
 </style>

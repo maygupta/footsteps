@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   post '/storeauthcode' => 'sessions#sign_in'
 
   get '/badges' => 'users#badges'
+  get '/badges/:id' => 'users#badges'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
