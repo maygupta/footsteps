@@ -60,7 +60,16 @@ module SadhnaCardHelper
       "Science of Self Realization",
       "Krsna, The Supreme Personality of Godhead", 
       "Teachings of Lord Caitanya",
-      "Sri Isopanisad"
+      "Sri Isopanisad",
+      "Journey of Self-Discovery",
+      "Path of Perfection",
+      "Perfect Questions Perfect Answers",
+      "Message of Godhead",
+      "Teachings of Queen Kunti",
+      "Teachings of Lord Kapila",
+      "Our Family Business",
+      "Life Comes from Life",
+      "On the Way to Krsna"
     ]
   end
 
