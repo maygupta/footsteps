@@ -160,40 +160,12 @@ ActiveRecord::Schema.define(version: 20170202094643) do
     t.string   "address"
     t.string   "country"
     t.string   "phone_number"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.text     "access_token"
-    t.string   "industry"
-    t.text     "headline"
-    t.text     "summary"
-    t.text     "picture_url"
-    t.string   "last_name"
-    t.string   "maiden_name"
-    t.string   "formatted_name"
-    t.string   "phonetic_first_name"
-    t.string   "phonetic_last_name"
-    t.string   "formatted_phonetic_name"
-    t.integer  "num_connections"
-    t.integer  "num_connections_capped"
-    t.text     "specialties"
-    t.text     "public_profile_url"
-    t.datetime "last_modified_timestamp"
-    t.text     "proposal_comments"
-    t.text     "interests"
-    t.text     "languages"
-    t.text     "date_of_birth"
-    t.text     "jid"
-    t.string   "login_type"
-    t.string   "gender"
-    t.text     "bg_image_url"
-    t.string   "presence_status"
-    t.boolean  "is_mentor"
-    t.boolean  "is_verified"
-    t.integer  "mentor_rating"
-    t.integer  "normal_rating"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "email"
     t.string   "encrypted_password"
     t.string   "salt"
+    t.integer  "target_rounds"
   end
 
 end

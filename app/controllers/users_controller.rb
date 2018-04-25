@@ -1,6 +1,15 @@
 class UsersController < ApplicationController
+  skip_before_filter :verify_authenticity_token  
+
   def new
     @user = User.new 
+  end
+
+  def update_rounds
+    current_user.target_rounds = params[:target_rounds]
+    current_user.save
+
+    redirect_to :back
   end
 
   def index
@@ -61,10 +70,7 @@ class UsersController < ApplicationController
     @unlocked_badges = []
     @locked_badges = []
 
-    japa_rounds = cards.where("japa_rounds > 0 and date > now() - Interval '30 days' ").pluck(:japa_rounds)
-    freq = japa_rounds.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-    usual_japa_rounds = japa_rounds.max_by { |v| freq[v] }
-    # usual_japa_rounds = 16
+    target_rounds = user.target_rounds
 
     @level_1_badges = [
       ["Chanted 108 total Japa Rounds", cards.sum(:japa_rounds) > 108],
@@ -76,7 +82,7 @@ class UsersController < ApplicationController
       ["Read more than 2 hours in one day", cards.where("CAST(reading AS INT) > ?", 120).count > 0],
       ["Heard more than 2 hours in one day", cards.where("CAST(hearing AS INT) > ?", 120).count > 0],
       ["Recited 108 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 108],
-      ["Chanted #{usual_japa_rounds} rounds every day in a week", chanted_minimum(user.sadhna_cards, usual_japa_rounds, 7)],
+      ["Chanted #{target_rounds} rounds every day in a week", chanted_minimum(user.sadhna_cards, target_rounds, 7)],
     ]
 
     @level_2_badges = [
@@ -85,7 +91,7 @@ class UsersController < ApplicationController
       ["Heard more than 168 hours(1 week)", cards.pluck(:hearing).sum(&:to_i) > 24*7*60],
       ["Served more than 168 hours(1 week)", cards.pluck(:service).sum(&:to_i)> 24*7*60],
       ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 1008],
-      ["Chanted #{usual_japa_rounds} rounds every day in a month", chanted_minimum(user.sadhna_cards, usual_japa_rounds, 30)],
+      ["Chanted #{target_rounds} rounds every day in a month", chanted_minimum(user.sadhna_cards, target_rounds, 30)],
     ]
     
     @level_3_badges = [
@@ -94,7 +100,7 @@ class UsersController < ApplicationController
       ["Heard more than 720 hours(1 month)", cards.pluck(:hearing).sum(&:to_i) > 24*30*60],
       ["Served more than 720 hours(1 month)", cards.pluck(:service).sum(&:to_i)> 24*30*60],
       ["Recited 10008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 10008],
-      ["Chanted #{usual_japa_rounds} rounds every day in a year", chanted_minimum(user.sadhna_cards, usual_japa_rounds, 365)],
+      ["Chanted #{target_rounds} rounds every day in a year", chanted_minimum(user.sadhna_cards, target_rounds, 365)],
     ]
 
     @level_1_badges.each do |badge|
@@ -170,6 +176,9 @@ class UsersController < ApplicationController
   end
 
   def chanted_minimum(cards, rounds, days)
+    unless rounds.present?
+      return false
+    end
     cards = cards.order(date: :desc)
 
     count = 0
