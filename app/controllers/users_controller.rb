@@ -71,6 +71,9 @@ class UsersController < ApplicationController
     @locked_badges = []
 
     target_rounds = user.target_rounds
+    if target_rounds == nil
+      target_rounds = 16
+    end
 
     @level_1_badges = [
       ["Chanted 108 total Japa Rounds", cards.sum(:japa_rounds) > 108],

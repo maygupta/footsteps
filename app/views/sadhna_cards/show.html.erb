@@ -1,7 +1,7 @@
 <%= render 'header' %>
 <div class="container">
   <% if current_user == @sadhna_card.user || current_user.email == 'nsit.mayankgupta@gmail.com' %>
-    <h3>Sadhna Card <%= @sadhna_card.date %></h3>
+    <h3>Sadhana Card <%= @sadhna_card.date %></h3>
     <div id="sc_id" class="hidden"><%= @sadhna_card.id %></div>
     <br>
     <%= render 'form' %>
@@ -10,7 +10,7 @@
     <button id="update" class="btn btn-primary">Update</button>
     </div>
   <% else %>
-    You don't have permission to view this Sadhna Card
+    You don't have permission to view this Sadhana Card
   <% end %>
 </div>
 
