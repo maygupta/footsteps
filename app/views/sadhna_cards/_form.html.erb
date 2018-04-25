@@ -34,6 +34,16 @@
 
     <div class="form-group">
       <label for="reading">Reading</label>
+      <select class="form-control" id="reading_book">
+        <option value="0">Select book</option>
+        <% books.each do |book| %>
+          <% if @sadhna_card.reading_book == book %>
+            <option selected value="<%=book%>"><%= book %></option>
+          <% else %>
+            <option value="<%=book%>"><%= book %></option>  
+          <% end %>
+        <% end %>
+      </select>
       <table class="row">
         <td class="first_column">
           <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="reading" value="<%= @sadhna_card.reading %>">
@@ -41,11 +51,17 @@
         <td class="second_column">
           <!-- <input type="text" readonly value=""> -->
           <select class="form-control" id="reading_type">
-            <option value="Mins">Mins</option>
-            <option value="Hrs">Hrs</option>
+            <% reading_types.each do |type| %>
+              <% if @sadhna_card.reading_type == type %>
+                <option selected value="<%=type%>"><%= type %></option>
+              <% else %>
+                <option value="<%=type%>"><%= type %></option>
+              <% end %>
+            <% end %>
           </select>
         </td>
       </table>
+
     </div>
 
     <div class="form-group">
@@ -134,3 +150,96 @@
   }
 
 </style>
+
+<script type="text/javascript">
+  
+$(document).ready(function(){
+  $('.timepicker').timepicker()
+  $('#save_card').click(function(e){
+    data = {
+      rounds: $("#japa_rounds").val(),
+
+    }
+  });
+
+  $("#update").click(function(e){
+
+    if (!$('input#date').val()) {
+      alert("Date can't be empty")
+      return
+    }
+
+    data = {
+      date: $('input#date').val(),
+      japa_rounds: $('input#japa_rounds').val(),
+      service: $('input#service').val(),
+      hearing: $('input#hearing').val(),
+      reading: $('input#reading').val(),
+      service_type: $('#service_type').val(),
+      hearing_type: $('#hearing_type').val(),
+      reading_type: $('#reading_type').val(),
+      service_text: $('#service_text').val(),
+      reading_book: $('#reading_book').val(),
+      comments: $('#comments').val(),
+      chad: $('#chad').val(),
+      wake_up: $('input#wake_up').val(),
+      slept_at: $('input#slept_at').val(),
+      id: $("div#sc_id").text()
+    }
+
+
+    $.ajax({
+      url: "/sadhna_cards/" + data.id, 
+      method: "put",
+      data: data,
+      success: function(data){
+        window.location.href = "/sadhna_cards/" + data.id
+      },
+      failure: function(e){
+        alert(e)
+      }
+    });
+
+  })
+
+  $('#create').click(function(e){
+
+    if (!$('input#date').val()) {
+      alert("Date can't be empty")
+      return
+    }
+    
+    data = {
+      date: $('input#date').val(),
+      japa_rounds: $('input#japa_rounds').val(),
+      service: $('input#service').val(),
+      hearing: $('input#hearing').val(),
+      reading: $('input#reading').val(),
+      chad: $('#chad').val(),
+      service_type: $('#service_type').val(),
+      hearing_type: $('#hearing_type').val(),
+      reading_type: $('#reading_type').val(),
+      service_text: $('#service_text').val(),
+      reading_book: $('#reading_book').val(),
+      comments: $('#comments').val(),
+      wake_up: $('input#wake_up').val(),
+      slept_at: $('input#slept_at').val()
+    }
+
+    $.ajax({
+      url: "/sadhna_cards", 
+      method: "post",
+      data: data,
+      success: function(data){
+        window.location.href = "/sadhna_cards/" + data.id
+      },
+      error: function(e){
+        alert(e.responseJSON.error)
+      }
+    });
+
+  })
+
+});
+
+</script>

@@ -61,6 +61,11 @@ class UsersController < ApplicationController
     @unlocked_badges = []
     @locked_badges = []
 
+    japa_rounds = cards.where("japa_rounds > 0 and date > now() - Interval '30 days' ").pluck(:japa_rounds)
+    freq = japa_rounds.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+    usual_japa_rounds = japa_rounds.max_by { |v| freq[v] }
+    # usual_japa_rounds = 16
+
     @level_1_badges = [
       ["Chanted 108 total Japa Rounds", cards.sum(:japa_rounds) > 108],
       ["Read more than 24 hours", cards.pluck(:reading).sum(&:to_i) > 24*60],
@@ -70,7 +75,8 @@ class UsersController < ApplicationController
       ["Served more than 2 hours in one day", cards.where("CAST(service AS INT) > ?", 120).count > 0],
       ["Read more than 2 hours in one day", cards.where("CAST(reading AS INT) > ?", 120).count > 0],
       ["Heard more than 2 hours in one day", cards.where("CAST(hearing AS INT) > ?", 120).count > 0],
-      ["Recited 108 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 108]
+      ["Recited 108 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 108],
+      ["Chanted #{usual_japa_rounds} rounds every day in a week", chanted_minimum(user.sadhna_cards, usual_japa_rounds, 7)],
     ]
 
     @level_2_badges = [
@@ -78,7 +84,8 @@ class UsersController < ApplicationController
       ["Read more than 168 hours(1 week)", cards.pluck(:reading).sum(&:to_i) > 24*7*60],
       ["Heard more than 168 hours(1 week)", cards.pluck(:hearing).sum(&:to_i) > 24*7*60],
       ["Served more than 168 hours(1 week)", cards.pluck(:service).sum(&:to_i)> 24*7*60],
-      ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 1008]
+      ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 1008],
+      ["Chanted #{usual_japa_rounds} rounds every day in a month", chanted_minimum(user.sadhna_cards, usual_japa_rounds, 30)],
     ]
     
     @level_3_badges = [
@@ -86,16 +93,8 @@ class UsersController < ApplicationController
       ["Read more than 720 hours(1 month)", cards.pluck(:reading).sum(&:to_i) > 24*30*60],
       ["Heard more than 720 hours(1 month)", cards.pluck(:hearing).sum(&:to_i) > 24*30*60],
       ["Served more than 720 hours(1 month)", cards.pluck(:service).sum(&:to_i)> 24*30*60],
-      ["Recited 10008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 10008]
-    ]
-
-    complex_badges = [
-      ["Chanted x rounds every day in a week"], 
-      ["Chanted x rounds every day in a month"],
-      ["Chanted x rounds every day in a year"], 
-      ["Read atleast 30mins every day in a week"], 
-      ["Read atleast 30mins every day in a month"],
-      ["Read atleast 30mins every day in a year"]
+      ["Recited 10008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 10008],
+      ["Chanted #{usual_japa_rounds} rounds every day in a year", chanted_minimum(user.sadhna_cards, usual_japa_rounds, 365)],
     ]
 
     @level_1_badges.each do |badge|
@@ -168,6 +167,23 @@ class UsersController < ApplicationController
     @current_month_reading_hours = (@current_month_reading_hours/60).to_s + "h " +  (@current_month_reading_hours % 60).to_s + "m"
     @current_month_hearing_hours = (@current_month_hearing_hours/60).to_s + "h " +  (@current_month_hearing_hours % 60).to_s + "m"
     @current_month_sadhna_cards = current_month_sadhna_cards.count
+  end
+
+  def chanted_minimum(cards, rounds, days)
+    cards = cards.order(date: :desc)
+
+    count = 0
+    cards.each do |card|
+      if card.japa_rounds >= rounds
+        count += 1
+        if count == days
+          return true
+        end
+      else
+        count = 0
+      end
+    end
+    return false
   end
 
   def create

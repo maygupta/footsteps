@@ -145,6 +145,10 @@ class SadhnaCardsController < ApplicationController
     else
       params[:verses] = get_verses(params[:chad])
     end
+    if params[:reading_type] == "Hrs"
+      params[:reading] = params[:reading].to_i*60
+      params[:reading_type] == "Mins"
+    end
     { 
       :date => params[:date],
       :japa_rounds => params[:japa_rounds], 
@@ -154,9 +158,11 @@ class SadhnaCardsController < ApplicationController
       :service => if params[:service_type] == "Mins" then params[:service] else params[:service].to_i*60 end, 
       :chad => params[:chad], 
       :verses => params[:verses], 
-      :reading => if params[:reading_type] == "Mins" then params[:reading] else params[:reading].to_i*60 end, 
+      :reading => params[:reading],
+      :reading_type => params[:reading_type],
       :service_text => params[:service_text],
       :comments => params[:comments],
+      :reading_book => params[:reading_book],
     }
   end
 
@@ -191,7 +197,10 @@ class SadhnaCardsController < ApplicationController
     else
       params[:verses] = get_verses(params[:chad])
     end
-
+    if params[:reading_type] == "Hrs"
+      params[:reading] = params[:reading].to_i*60
+      params[:reading_type] == "Mins"
+    end
     { 
       :date => params[:date],
       :japa_rounds => params[:japa_rounds], 
@@ -201,10 +210,12 @@ class SadhnaCardsController < ApplicationController
       :service => params[:service_type] == "Mins" ? params[:service] : params[:service].to_i*60, 
       :chad => params[:chad], 
       :verses => params[:verses], 
-      :reading => params[:reading_type] == "Mins" ? params[:reading] : params[:reading].to_i*60,
+      :reading => params[:reading],
+      :reading_type => params[:reading_type],
       :user_id => current_user.id,
       :service_text => params[:service_text],
       :comments => params[:comments],
+      :reading_book => params[:reading_book],
     }
   end
 end

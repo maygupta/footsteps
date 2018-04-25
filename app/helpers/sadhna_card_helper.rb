@@ -43,4 +43,25 @@ module SadhnaCardHelper
     Date.today
   end
 
+  def reading_types
+    ["Mins",
+      "Hrs",
+      "Pages"
+    ]
+  end
+
+  def books
+    [
+      "Srimad Bhagavatam", 
+      "Bhagavad Gita", 
+      "Sri Caitanya Caritamrta", 
+      "Nectar of Devotion", 
+      "Nectar of Instruction",
+      "Science of Self Realization",
+      "Krsna, The Supreme Personality of Godhead", 
+      "Teachings of Lord Caitanya",
+      "Sri Isopanisad"
+    ]
+  end
+
 end

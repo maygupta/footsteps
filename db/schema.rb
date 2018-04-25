@@ -140,6 +140,8 @@ ActiveRecord::Schema.define(version: 20170202094643) do
     t.string   "comments"
     t.integer  "deity_worship"
     t.integer  "devotee_associaton"
+    t.string   "reading_type"
+    t.string   "reading_book"
   end
 
   add_index "sadhna_cards", ["user_id"], name: "index_sadhna_cards_on_user_id", using: :btree
