@@ -82,7 +82,9 @@ class SadhnaCardsController < ApplicationController
     start = 1989
     while count < 50
       count += 1
-      @years.push(start + count)
+      if start+count <= @year.to_i
+        @years.push(start + count)
+      end
     end
 
   end

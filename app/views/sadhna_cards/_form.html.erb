@@ -17,9 +17,9 @@
 
     <label>Date</label>
     <% if @sadhna_card.id.present? %>
-      <input type="date" required value="<%= @sadhna_card.date %>" id="date"></input>
+      <input type="date" max="<%= today_date %>" required value="<%= @sadhna_card.date %>" id="date"></input>
     <% else %>
-      <input type="date" required value="<%= Time.zone.now.to_date %>" id="date"></input>
+      <input type="date" max="<%= today_date %>" required value="<%= Time.zone.now.to_date %>" id="date"></input>
     <% end %>
 
     <br>
@@ -28,7 +28,7 @@
     <form class="form-inline">
       <div class="form-group">
         <label for="japa_rounds">Japa rounds</label>
-        <input type="number" class="form-control" id="japa_rounds" value="<%= @sadhna_card.japa_rounds %>">
+        <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="japa_rounds" value="<%= @sadhna_card.japa_rounds %>">
       </div>
     </form>
 
@@ -36,7 +36,7 @@
       <label for="reading">Reading</label>
       <table class="row">
         <td class="first_column">
-          <input type="number" class="form-control" id="reading" value="<%= @sadhna_card.reading %>">
+          <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="reading" value="<%= @sadhna_card.reading %>">
         </td>
         <td class="second_column">
           <!-- <input type="text" readonly value=""> -->
@@ -52,7 +52,7 @@
       <label for="hearing">Hearing</label>
       <table class="row">
         <td class="first_column">
-          <input type="number" class="form-control" id="hearing" value="<%= @sadhna_card.hearing %>">
+          <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="hearing" value="<%= @sadhna_card.hearing %>">
         </td>
         <td class="second_column">
           <!-- <input type="text" readonly value=""> -->
@@ -69,7 +69,7 @@
       <table>
         <tr>
           <td class="first_column">
-            <input type="number" class="form-control" id="service" value="<%= @sadhna_card.service %>">
+            <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="service" value="<%= @sadhna_card.service %>">
           </td>
           <td class="second_column">
             <select class="form-control" id="service_type">

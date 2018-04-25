@@ -39,4 +39,8 @@ module SadhnaCardHelper
     ]
   end
 
+  def today_date
+    Date.today
+  end
+
 end

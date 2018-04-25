@@ -11,6 +11,12 @@ $(document).ready(function(){
   });
 
   $("#update").click(function(e){
+
+    if (!$('input#date').val()) {
+      alert("Date can't be empty")
+      return
+    }
+
     data = {
       date: $('input#date').val(),
       japa_rounds: $('input#japa_rounds').val(),
@@ -44,6 +50,12 @@ $(document).ready(function(){
   })
 
   $('#create').click(function(e){
+
+    if (!$('input#date').val()) {
+      alert("Date can't be empty")
+      return
+    }
+    
     data = {
       date: $('input#date').val(),
       japa_rounds: $('input#japa_rounds').val(),
