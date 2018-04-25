@@ -80,7 +80,11 @@
         </tr>
       </table>
 
-      <input placeholder="Service rendered" class="form-control" id="service_text" value="<%= @sadhna_card.service_text %>">
+      <% if @sadhna_card.service_text.present? %>
+        <input placeholder="Service rendered" class="form-control" id="service_text" value="<%= @sadhna_card.service_text %>">
+      <% else %>
+        <input placeholder="Service rendered" class="form-control" id="service_text">
+      <% end %>
       
     </div>
 
