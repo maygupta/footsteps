@@ -16,42 +16,49 @@ class SadhnaCardsController < ApplicationController
       @year =  Date.today.strftime("%Y")
     end
 
-    valid_columns = ["date", 
-      "japa_rounds", 
-      "reading", 
-      "chad",
-      "wakeup", 
-      "rest_time", 
-      "hearing", 
-      "service",
-      "verses"
-    ]
+    valid_columns = {
+      "date" => "Date", 
+      "japa_rounds" => "Japa Rounds", 
+      "reading" => "Reading Time",
+      "reading_book" => "Book Read",
+      "chad" => "CHAD (Chapter A Day)",
+      "wakeup" => "Wake Up time", 
+      "rest_time" => "Rest time", 
+      "hearing" => "Hearing Time", 
+      "service" => "Seva time",
+      "service_text" => "Service executed",
+      "comments" => "Comments"
+    }
 
     @sadhna_cards = current_user.sadhna_cards.where('extract(year  from date) = ? AND extract(month  from date) = ? 
       ', @year, @month).order(date: :desc)
 
     filename = "sadhna_" + current_user.id.to_s + "_" + @month.to_s + "_" + @year.to_s + ".csv"
     CSV.open(filename, "wb") do |csv|
-      csv << valid_columns
+      csv << valid_columns.values
       @sadhna_cards.each do |sc|
         values = []
-        sc.attributes.each do |k,v|
-          if valid_columns.include? k
-            if k == "reading" || k == "hearing" || k == "service"
-              if !v
-                v = 0
-              end
-              values.push(v + " mins")
-            elsif k == "rest_time" || k == "wakeup"
-              if v
-                values.push(v.strftime("%I:%M%p"))
-              else
-                values.push(nil)
-              end
+        valid_columns.keys.each do |col|
+          v = sc[col]
+          if col == "reading"
+            v = 0 if !v
+            type = if sc.reading_type.present? then sc.reading_type else "mins" end
+            values.push(v + " " + type)
+          elsif col == "hearing" || col == "service"
+            v = 0 if !v
+            values.push(v + " mins")
+          elsif col == "rest_time" || col == "wakeup"
+            if v
+              values.push(v.strftime("%I:%M%p"))
             else
-              values.push(v)
+              values.push(nil)
             end
+          elsif col == "chad"
+            values.push(get_chapter(v))
+          else
+            values.push(v)
           end
+
         end
 
         csv << values
