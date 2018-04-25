@@ -134,6 +134,12 @@ ActiveRecord::Schema.define(version: 20170202094643) do
     t.string   "service"
     t.integer  "user_id"
     t.integer  "verses"
+    t.string   "service_text"
+    t.integer  "slokas_read"
+    t.string   "sloka_text"
+    t.string   "comments"
+    t.integer  "deity_worship"
+    t.integer  "devotee_associaton"
   end
 
   add_index "sadhna_cards", ["user_id"], name: "index_sadhna_cards_on_user_id", using: :btree

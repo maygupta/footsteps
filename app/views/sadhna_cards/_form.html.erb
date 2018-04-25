@@ -17,9 +17,9 @@
 
     <label>Date</label>
     <% if @sadhna_card.id.present? %>
-      <input type="date" value="<%= @sadhna_card.date %>" id="date"></input>
+      <input type="date" required value="<%= @sadhna_card.date %>" id="date"></input>
     <% else %>
-      <input type="date" value="<%= Time.zone.now.to_date %>" id="date"></input>
+      <input type="date" required value="<%= Time.zone.now.to_date %>" id="date"></input>
     <% end %>
 
     <br>
@@ -66,18 +66,22 @@
 
     <div class="form-group">
       <label for="service">Service</label>
-      <table class="row">
-        <td class="first_column">
-          <input type="number" class="form-control" id="service" value="<%= @sadhna_card.service %>">
-        </td>
-        <td class="second_column">
-          <!-- <input type="text" readonly value=""> -->
-          <select class="form-control" id="service_type">
-            <option value="Mins">Mins</option>
-            <option value="Hrs">Hrs</option>
-          </select>
-        </td>
+      <table>
+        <tr>
+          <td class="first_column">
+            <input type="number" class="form-control" id="service" value="<%= @sadhna_card.service %>">
+          </td>
+          <td class="second_column">
+            <select class="form-control" id="service_type">
+              <option value="Mins">Mins</option>
+              <option value="Hrs">Hrs</option>
+            </select>
+          </td>
+        </tr>
       </table>
+
+      <input placeholder="Service rendered" class="form-control" id="service_text" value="<%= @sadhna_card.service_text %>">
+      
     </div>
 
     <div class="form-group">
@@ -113,6 +117,16 @@
           <input type="time" class=" form-control" id="slept_at">
       <% end %>
     </div>
+    <div class="form-group">
+      <textarea placeholder="Comments (optional)" class=" form-control" id="comments"><%= @sadhna_card.comments %></textarea>
+    </div>
 
   <% end %>
 </div>
+
+<style type="text/css">
+  #service_text {
+    margin-top: -10px;
+  }
+
+</style>

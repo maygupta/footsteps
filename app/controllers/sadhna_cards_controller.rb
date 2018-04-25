@@ -148,6 +148,8 @@ class SadhnaCardsController < ApplicationController
       :chad => params[:chad], 
       :verses => params[:verses], 
       :reading => if params[:reading_type] == "Mins" then params[:reading] else params[:reading].to_i*60 end, 
+      :service_text => params[:service_text],
+      :comments => params[:comments],
     }
   end
 
@@ -182,6 +184,7 @@ class SadhnaCardsController < ApplicationController
     else
       params[:verses] = get_verses(params[:chad])
     end
+
     { 
       :date => params[:date],
       :japa_rounds => params[:japa_rounds], 
@@ -192,7 +195,9 @@ class SadhnaCardsController < ApplicationController
       :chad => params[:chad], 
       :verses => params[:verses], 
       :reading => params[:reading_type] == "Mins" ? params[:reading] : params[:reading].to_i*60,
-      :user_id => current_user.id
+      :user_id => current_user.id,
+      :service_text => params[:service_text],
+      :comments => params[:comments],
     }
   end
 end

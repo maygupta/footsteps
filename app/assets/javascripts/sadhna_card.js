@@ -20,6 +20,8 @@ $(document).ready(function(){
       service_type: $('#service_type').val(),
       hearing_type: $('#hearing_type').val(),
       reading_type: $('#reading_type').val(),
+      service_text: $('#service_text').val(),
+      comments: $('#comments').val(),
       chad: $('#chad').val(),
       wake_up: $('input#wake_up').val(),
       slept_at: $('input#slept_at').val(),
@@ -52,6 +54,8 @@ $(document).ready(function(){
       service_type: $('#service_type').val(),
       hearing_type: $('#hearing_type').val(),
       reading_type: $('#reading_type').val(),
+      service_text: $('#service_text').val(),
+      comments: $('#comments').val(),
       wake_up: $('input#wake_up').val(),
       slept_at: $('input#slept_at').val()
     }
