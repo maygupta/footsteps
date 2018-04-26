@@ -7,7 +7,7 @@
         
         <span class="user-menu dropdown">
           
-          <span class="glyphicon glyphicon-align-justify dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="glyphicon glyphicon-align-justify dropdown-toggle" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
           </span>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="/users_account">
@@ -33,18 +33,25 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-    $(".user").click(function(e){
-      window.location.href = "/users/"
-    })
 
-    $(".badges").click(function(e){
-      window.location.href = "/badges/"
-    })
+    $(".dropdown-toggle").click(function(e){
+      $('.user-menu').find(".dropdown-menu").toggle()
+    });
+
   })
 
 </script>
 
 <style type="text/css">
+/*  .user-menu.dropdown:hover > .dropdown-menu {
+    display: block;    
+  }
+  @media (min-width: 979px) {
+    .user-menu.dropdown:hover > .dropdown-menu {
+      display: block;    
+    }
+  }*/
+
   .dropdown-item {
     display: block;
     width: 100%;
