@@ -40,13 +40,12 @@ module SadhnaCardHelper
   end
 
   def get_chapter(chad)
-    print chad
     chad_map.each do |x|
       if x[0] == chad
         return x[1]
       end
     end
-    return chad_map[0][0]
+    return nil
   end
 
   def today_date
