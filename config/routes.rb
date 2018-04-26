@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   root 'sadhna_cards#index'
 
   post    'update_rounds'  => 'users#update_rounds'
+  get '/users_account' => 'users#edit'
 
   post '/storeauthcode' => 'sessions#sign_in'
 
