@@ -35,7 +35,7 @@
     <div class="form-group">
       <label for="reading">Reading</label>
       <select class="form-control" id="reading_book">
-        <option>Select book</option>
+        <option value="">Select book</option>
         <% books.each do |book| %>
           <% if @sadhna_card.reading_book == book %>
             <option selected value="<%=book%>"><%= book %></option>
