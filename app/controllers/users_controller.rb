@@ -12,6 +12,10 @@ class UsersController < ApplicationController
     redirect_to :back
   end
 
+  def edit
+
+  end
+
   def index
     @total_rounds = 0
     @total_reading_hours = 0

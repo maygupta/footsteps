@@ -4,11 +4,26 @@
     <div class="header navbar-header">
       <a class="navbar-brand" href="/sadhna_cards">Sadhana Cards</a>
       <% if current_user.present? %>
-
-        <a href="/logout" class="user_icon">Logout</a>  
-        <span class="user_icon user glyphicon glyphicon-user"></span> 
-        <span class="user_icon badges glyphicon glyphicon-star"></span> 
         
+        <span class="user-menu dropdown">
+          
+          <span class="glyphicon glyphicon-align-justify dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          </span>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/users_account">
+             Account <span class="glyphicon glyphicon-user"></span>
+            </a>
+            <a class="dropdown-item" href="/users">
+             Stats <span class="glyphicon glyphicon-signal"></span>
+            </a>
+            <a class="dropdown-item" href="/badges">
+             Badges<span class="glyphicon glyphicon-star"></span>
+            </a>
+            <a class="dropdown-item" href="/logout">
+             Logout<span class="glyphicon glyphicon-off"></span>
+            </a>
+          </div>
+        </span>
         
       <% end %>
     </div>
@@ -28,3 +43,44 @@
   })
 
 </script>
+
+<style type="text/css">
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: .25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+  }
+
+  .user-menu {
+    float: right;
+    padding: 15px 0px;
+    font-size: 18px;
+    line-height: 20px;
+    height: 50px;
+
+  }
+
+  .user-menu .dropdown-menu {
+    left: -72px;
+    min-width: 120px;
+  }
+
+
+  .user-menu .dropdown-item {
+    text-decoration: none;
+    color: #333333;
+    margin-top: 5px;
+  }
+
+  .user-menu .glyphicon {
+    float: right;
+  }
+
+</style>
