@@ -1,0 +1,68 @@
+<%= render 'sadhna_cards/header' %>
+<div class="container">
+  <div class="pie" id="piechart1"></div>
+  <div class="pie" id="piechart2"></div>
+  <div class="pie" id="piechart3"></div>
+</div>
+
+<script type="text/javascript">
+
+  level_1 = <%= raw @level_1_badges_stats.to_json %>
+  level_2 = <%= raw @level_2_badges_stats.to_json %>
+  level_3 = <%= raw @level_3_badges_stats.to_json %>
+
+  // Load google charts
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  // Draw the chart and set the chart values
+  function drawChart(){
+    content1 = [
+      ['Won', 'Remaining'],
+      ['Won', level_1['won']], 
+      ['Remaining', level_1['remaining']]
+    ]
+    content2 = [
+      ['Won', 'Remaining'],
+      ['Won', level_2['won']], 
+      ['Remaining', level_2['remaining']]
+
+    ]
+    content3 = [
+      ['Won', 'Remaining'],
+      ['Won', level_3['won']], 
+      ['Remaining', level_3['remaining']]
+    ]
+
+    var data1 = google.visualization.arrayToDataTable(content1);
+    var data2 = google.visualization.arrayToDataTable(content2);
+    var data3 = google.visualization.arrayToDataTable(content3);
+
+    // Optional; add a title and set the width and height of the chart
+    var options1 = {'title':'Mathura Level Progress', pieHole: 0.4};
+    var options2 = {'title':'Gokula Level Progress', pieHole: 0.5};
+    var options3 = {'title':'Vrndavana Level Progress', pieHole: 0.5};
+
+    // Display the chart inside the <div> element with id="piechart"
+    var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
+    chart.draw(data1, options1);
+
+    // Display the chart inside the <div> element with id="piechart"
+    var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
+    chart2.draw(data2, options2);
+
+    // Display the chart inside the <div> element with id="piechart"
+    var chart3 = new google.visualization.PieChart(document.getElementById('piechart3'));
+    chart3.draw(data3, options3);
+  }
+
+</script>
+
+<style type="text/css">
+  .pie {
+    width: 400px;
+    height: 500px;
+  }
+
+
+</style>

@@ -5,7 +5,7 @@ class SadhnaCardsController < ApplicationController
     @sadhna_card = SadhnaCard.new
     @custom_method = "post"
     @custom_path = "/sadhna_cards"
-  end  
+  end
 
   def download
     if params[:month].present? and params[:year].present?
