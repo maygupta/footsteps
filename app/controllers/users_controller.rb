@@ -182,6 +182,37 @@ class UsersController < ApplicationController
     @current_month_sadhna_cards = current_month_sadhna_cards.count
   end
 
+  def report
+    if params[:month].present? and params[:year].present?
+      @month = params[:month]
+      @year = params[:year]
+    else
+      @month = Date.today.strftime("%m")
+      @year =  Date.today.strftime("%Y")
+    end
+
+
+    valid_columns = {
+      "date" => "Date", 
+      "japa_rounds" => "Japa Rounds", 
+      "reading" => "Reading Time",
+      "reading_book" => "Book Read",
+      "chad" => "CHAD (Chapter A Day)",
+      "wakeup" => "Wake Up time", 
+      "rest_time" => "Rest time", 
+      "hearing" => "Hearing Time", 
+      "service" => "Seva time",
+      "service_text" => "Service executed",
+      "comments" => "Comments"
+    }
+
+    @sadhna_cards = current_user.sadhna_cards.where('extract(year  from date) = ? AND extract(month  from date) = ? 
+      ', @year, @month).order(date: :asc)
+
+
+    @sadhna_cards_by_week = @sadhna_cards.each_slice(7).to_a
+  end
+
   def chanted_minimum(cards, rounds, days)
     unless rounds.present?
       return false
