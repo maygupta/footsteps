@@ -9,8 +9,8 @@
 <div class="title">Sādhanā Card</div>
 <div class="sc_header">
   <div class="flex">
-    <span class="name">Name: <%= current_user.name %> </span>
-    <span class="name">Month/Year: <%= @month %> / <%= @year %> </span>
+    <span class="table-header">Name: <%= current_user.name %> </span>
+    <span class="table-header">Month/Year: <%= @month %> / <%= @year %> </span>
   </div>
 
   <% @sadhna_cards.each_slice(7).to_a.each do |cards| %>
@@ -98,7 +98,7 @@
   }
 
   .name1 {
-    width: 100%;
+    width: 12.5%;
     padding: 10px 10px 10px 10px;
     border: 1px solid grey;
     font-weight: bold;
@@ -107,7 +107,7 @@
   }
 
   .name1-header {
-    width: 100%;
+    width: 12.5%;
     padding: 10px 10px 10px 10px;
     border: 1px solid grey;
     background-color: #eaeaea;
@@ -116,7 +116,7 @@
   }
 
   .cell-header {
-    width: 30%;
+    width: 12.5%;
     padding: 10px 10px 10px 10px;
     border: 1px solid grey;
     background-color: #eaeaea;
@@ -125,14 +125,14 @@
   }
 
   .cell {
-    width: 30%;
+    width: 12.5%;
     padding: 10px 10px 10px 10px;
     border: 1px solid grey;
     font-weight: bold;
   }
 
 
-  .name {
+  .table-header {
     width: 50%;
     padding: 10px 10px 10px 10px;
     border: 1px solid grey;
