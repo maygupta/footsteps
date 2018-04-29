@@ -183,6 +183,13 @@ class UsersController < ApplicationController
   end
 
   def report
+    user = User.find(params[:id])
+
+    if current_user != user && current_user.id != 5
+      render "_error"
+      return
+    end
+
     if params[:month].present? and params[:year].present?
       @month = params[:month]
       @year = params[:year]
@@ -193,7 +200,7 @@ class UsersController < ApplicationController
 
 
     valid_columns = {
-      "date" => "Date", 
+      "date" => "Date",
       "japa_rounds" => "Japa Rounds", 
       "reading" => "Reading Time",
       "reading_book" => "Book Read",
