@@ -160,12 +160,13 @@ ActiveRecord::Schema.define(version: 20170202094643) do
     t.string   "address"
     t.string   "country"
     t.string   "phone_number"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "email"
     t.string   "encrypted_password"
     t.string   "salt"
     t.integer  "target_rounds"
+    t.string   "role",               default: "user"
   end
 
 end

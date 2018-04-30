@@ -1,21 +1,35 @@
 <%= render 'sadhna_cards/header' %>
 
 <div class="container">
-  <form class="form-inline" action="/update_rounds" method="post">
-  	<label>Name</label>
-  	<div class="field"><%=current_user.name%></div>
-  	<label>Email</label>
-  	<div class="field"><%=current_user.email%></div>
+  <form class="form" action="/update_rounds" method="post">
+    <div class="form-group">
+  	 <label for="name">Name</label>
+     <div><input name="name" type="text" class="form-control" value="<%=current_user.name%>"></input></div>
+    </div>
 
-    <label>Target rounds per day</label>
-    <input 
-      name="target_rounds" 
-      value="<%= current_user.target_rounds %>" 
-      placeholder="Rounds" 
-      type="number" 
-      min="0" 
-      oninput="validity.valid||(value='');" 
-      id="target_rounds"/>
+    <div class="form-group">
+      <div>
+      	<label>Email</label>
+      	<div class="field"><%=current_user.email%></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Target rounds per day</label>
+      <div>
+        <input 
+          class="form-control"
+          name="target_rounds" 
+          value="<%= current_user.target_rounds %>" 
+          placeholder="Rounds" 
+          type="number" 
+          min="0" 
+          oninput="validity.valid||(value='');" 
+          id="target_rounds">
+        </input>
+      </div>
+    </div>
+    <hr>
     <button class="btn btn-primary">Update</button>
   </form>
 </div>
