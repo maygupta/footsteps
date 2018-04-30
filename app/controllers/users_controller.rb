@@ -153,9 +153,9 @@ class UsersController < ApplicationController
   end
 
   def report
-    user = User.find(params[:id])
+    @user = User.find(params[:id])
 
-    if current_user != user && current_user.role != 'admin'
+    if current_user != @user && current_user.role != 'admin'
       render "_error"
       return
     end
@@ -183,7 +183,7 @@ class UsersController < ApplicationController
       "comments" => "Comments"
     }
 
-    @sadhna_cards = user.sadhna_cards.where('extract(year  from date) = ? AND extract(month  from date) = ? 
+    @sadhna_cards = @user.sadhna_cards.where('extract(year  from date) = ? AND extract(month  from date) = ? 
       ', @year, @month).order(date: :asc)
 
 
