@@ -13,12 +13,17 @@
             <a class="dropdown-item" href="/users_account">
              Account <span class="glyphicon glyphicon-user"></span>
             </a>
-            <a class="dropdown-item" href="/users">
+            <a class="dropdown-item" href="/users/<%= current_user.id %>">
              Stats <span class="glyphicon glyphicon-signal"></span>
             </a>
             <a class="dropdown-item" href="/badges">
              Badges<span class="glyphicon glyphicon-star"></span>
             </a>
+            <% if current_user.role == 'admin' %>
+              <a class="dropdown-item" href="/users">
+               Admin<span class="glyphicon glyphicon-cog"></span>
+              </a>
+            <% end %>
             <hr>
             <a class="dropdown-item logout" href="/logout">
              Logout<span class="glyphicon glyphicon-off"></span>

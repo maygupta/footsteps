@@ -6,7 +6,35 @@
 
 	<div class="container">
 
-    <h3><%= current_user.name %> Sadhna Details %></h3>
+    <h4><%= @user.name %> Sadhana Details </h4>
+
+    <% if current_user.role == 'admin' %>
+	    <div class="form-group">
+	      <label for="month">Month:</label>
+	      <select class="form-control" id="month">
+	        <% @months.each do |month| %>
+	          <% if month[0].to_s == @month.to_s %>
+	            <option selected value="<%=month[0]%>"><%=month[1]%></option>
+	          <% else %>
+	            <option value="<%=month[0]%>"><%=month[1]%></option>
+	          <% end %>
+	        <% end %>
+	      </select>
+	    </div>
+	    <div class="form-group">
+	      <label for="year">Year:</label>
+	      <select class="form-control" id="year">
+	        <% @years.each do |year| %>
+	          <% if year.to_s == @year.to_s %>
+	            <option selected value="<%=year%>"><%=year%></option>
+	          <% else %>
+	            <option value="<%=year%>"><%=year%></option>
+	          <% end %>
+	        <% end %>
+	      </select>
+	    </div>
+	    <button id="load" class="btn btn-primary">Get Sadhana Report</button>
+	<% end %>
 
 	  <ul class="sc_list list-group">
 	    <label><%= @month_name %> - <%= @year %> Sadhna</label>
@@ -118,3 +146,13 @@
 
 	</div>
 <% end %>
+
+<script type="text/javascript">
+	$("#load").click(function(){
+		month = $("#month").val()
+		year = $("#year").val()
+
+		window.location = "/users/" + '<%= @user.id %>' + '/report?month=' + month + "&year=" + year
+	})
+
+</script>
