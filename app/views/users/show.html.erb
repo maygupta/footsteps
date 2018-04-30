@@ -36,7 +36,8 @@
 	    <button id="load" class="btn btn-primary">Get Sadhana Report</button>
 	<% end %>
 
-	  <!-- <ul class="sc_list list-group">
+	<% if current_user == @user %>
+	  <ul class="sc_list list-group">
 	    <label><%= @month_name %> - <%= @year %> Sadhna</label>
 	      <li class="list-group-item">
 	        <table>
@@ -88,7 +89,8 @@
 	          </td>
 	        </table>
 	      </li>        
-	  </ul> -->
+	  </ul> 
+	<% end %>
 
 	  <ul class="sc_list list-group">
 	    <label>All Time Sadhna</label>
