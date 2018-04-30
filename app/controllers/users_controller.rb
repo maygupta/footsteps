@@ -2,10 +2,11 @@ class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token  
 
   def new
-    @user = User.new 
+    @user = User.new
   end
 
   def update_rounds
+    current_user.name = params[:name]
     current_user.target_rounds = params[:target_rounds]
     current_user.save
 
@@ -66,7 +67,7 @@ class UsersController < ApplicationController
 
   def badges
     user = current_user
-    if params[:id].present? && current_user.id == 5
+    if params[:id].present? && current_user.role == 'admin'
       user = User.find(params[:id])
     end
       
@@ -185,7 +186,7 @@ class UsersController < ApplicationController
   def report
     user = User.find(params[:id])
 
-    if current_user != user && current_user.id != 5
+    if current_user != user && current_user.role != 'admin'
       render "_error"
       return
     end

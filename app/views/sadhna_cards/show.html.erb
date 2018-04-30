@@ -1,6 +1,6 @@
 <%= render 'header' %>
 <div class="container">
-  <% if current_user == @sadhna_card.user || current_user.email == 'nsit.mayankgupta@gmail.com' %>
+  <% if current_user == @sadhna_card.user || current_user.role == 'admin' %>
     <h3>Sadhana Card <%= @sadhna_card.date %></h3>
     <div id="sc_id" class="hidden"><%= @sadhna_card.id %></div>
     <br>
