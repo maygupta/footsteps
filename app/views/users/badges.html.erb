@@ -30,9 +30,10 @@
   
 
   <ul class="sc_list list-group">
+        
     <label class="level_1">Level Mathura Badges</label>
     <hr>
-    <label class="level_1">Badges Awarded</label>
+    <label>Badges Awarded</label>
       <% @unlocked_badges.each do |badge| %>
         <% if @level_1_badges.include?(badge) %>
           <li class="list-group-item unlocked">
@@ -47,8 +48,7 @@
           </li>
         <% end %>
       <% end %>
-    <hr>
-    <label class="level_1">Badges In Progress</label>
+    <label>Badges In Progress</label>
       <% @locked_badges.each do |badge| %>
         <% if @level_1_badges.include?(badge) %>
           <li class="list-group-item locked">
@@ -67,7 +67,23 @@
     <br>
       
     <label class="level_2">Level Gokula Badges</label>
-
+    <hr>
+    <label>Badges Awarded</label>
+      <% @unlocked_badges.each do |badge| %>
+        <% if @level_2_badges.include?(badge) %>
+          <li class="list-group-item unlocked">
+            <table>
+              <td>
+                <%= badge[0] %>
+              </td>
+              <td>
+                <span class="level_2 glyphicon glyphicon-star"></span>
+              </td>
+            </table>
+          </li>
+        <% end %>
+      <% end %>
+    <label>Badges In Progress</label>
       <% @locked_badges.each do |badge| %>
         <% if @level_2_badges.include?(badge) %>
           <li class="list-group-item locked">
@@ -85,8 +101,25 @@
       
      <br>
      <br>
-      <label class="level_3">Level Vrndavana Badges</label>
-
+    
+    <label class="level_3">Level Vrndavana Badges</label>
+    <hr>
+    <label>Badges Awarded</label>
+      <% @unlocked_badges.each do |badge| %>
+        <% if @level_3_badges.include?(badge) %>
+          <li class="list-group-item unlocked">
+            <table>
+              <td>
+                <%= badge[0] %>
+              </td>
+              <td>
+                <span class="level_3 glyphicon glyphicon-star"></span>
+              </td>
+            </table>
+          </li>
+        <% end %>
+      <% end %>
+    <label>Badges In Progress</label>
       <% @locked_badges.each do |badge| %>
         <% if @level_3_badges.include?(badge) %>
           <li class="list-group-item locked">
