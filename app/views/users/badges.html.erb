@@ -30,9 +30,10 @@
   
 
   <ul class="sc_list list-group">
-        
+
+            
     <h4 class="level_1">Level Mathura Badges</h4>
-    <hr>
+
     <label>Badges Awarded</label>
       <% @unlocked_badges.each do |badge| %>
         <% if @level_1_badges.include?(badge) %>
@@ -48,6 +49,7 @@
           </li>
         <% end %>
       <% end %>
+    <br>
     <label>Badges In Progress</label>
       <% @locked_badges.each do |badge| %>
         <% if @level_1_badges.include?(badge) %>
@@ -63,11 +65,10 @@
           </li>
         <% end %>
       <% end %>
-    <br>
-    <br>
+    
+    <hr>
       
     <h4 class="level_2">Level Gokula Badges</h4>
-    <hr>
     <label>Badges Awarded</label>
       <% @unlocked_badges.each do |badge| %>
         <% if @level_2_badges.include?(badge) %>
@@ -83,6 +84,7 @@
           </li>
         <% end %>
       <% end %>
+        <br>
     <label>Badges In Progress</label>
       <% @locked_badges.each do |badge| %>
         <% if @level_2_badges.include?(badge) %>
@@ -98,12 +100,10 @@
           </li>
         <% end %>
       <% end %>
-      
-     <br>
-     <br>
+      <hr>
     
     <h4 class="level_3">Level Vrndavana Badges</h4>
-    <hr>
+
     <label>Badges Awarded</label>
       <% @unlocked_badges.each do |badge| %>
         <% if @level_3_badges.include?(badge) %>
@@ -119,6 +119,7 @@
           </li>
         <% end %>
       <% end %>
+        <br>
     <label>Badges In Progress</label>
       <% @locked_badges.each do |badge| %>
         <% if @level_3_badges.include?(badge) %>
