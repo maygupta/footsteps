@@ -8,7 +8,7 @@
 
     <h4><%= @user.name %> Sadhana Details </h4>
 
-    <% if current_user.role == 'admin' %>
+    
 	    <div class="form-group">
 	      <label for="month">Month:</label>
 	      <select class="form-control" id="month">
@@ -33,10 +33,10 @@
 	        <% end %>
 	      </select>
 	    </div>
-	    <button id="load" class="btn btn-primary">Get Sadhana Report</button>
-	<% end %>
+	    <button id="load" class="btn btn-primary">Show Stats</button>
+	    <button id="download" class="btn btn-primary">Download Sadhana Report</button>
 
-	  <!-- <ul class="sc_list list-group">
+	  <ul class="sc_list list-group">
 	    <label><%= @month_name %> - <%= @year %> Sadhna</label>
 	      <li class="list-group-item">
 	        <table>
@@ -88,7 +88,7 @@
 	          </td>
 	        </table>
 	      </li>        
-	  </ul> -->
+	  </ul>
 
 	  <ul class="sc_list list-group">
 	    <label>All Time Sadhna</label>
@@ -149,6 +149,13 @@
 
 <script type="text/javascript">
 	$("#load").click(function(){
+		month = $("#month").val()
+		year = $("#year").val()
+
+		window.location = "/users/" + '<%= @user.id %>' + '?month=' + month + "&year=" + year
+	})
+
+	$("#download").click(function(){
 		month = $("#month").val()
 		year = $("#year").val()
 

@@ -108,14 +108,21 @@ class UsersController < ApplicationController
     @current_month_service_hours = 0
     @current_month_sadhna_cards = 0
 
-    @month_name = Date.today.strftime("%B")
-    @month = Date.today.strftime("%m")
-    @year =  Date.today.strftime("%Y")
-
     @months = [["01", "Jan"], ["02", "Feb"], ["03", "March"], ["04", "April"], 
     ["05", "May"], ["06", "June"], ["07", "July"], ["08", "August"], ["09", "Sept"], 
     ["10", "Oct"], ["11", "Nov"], ["12", "Dec"]]
-    @years = []
+    
+    if params[:month].present? and params[:year].present?
+      @month = params[:month]
+      @year = params[:year]
+      @month_name = @months.select {|x| x[0] == @month}[0][1]
+    else
+      @month = Date.today.strftime("%m")
+      @month_name = Date.today.strftime("%B")
+      @year =  Date.today.strftime("%Y")
+    end
+
+        @years = []
     count = 0
     start = 1989
     while count < 50
