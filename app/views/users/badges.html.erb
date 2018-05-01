@@ -2,7 +2,7 @@
 
 <div class="badges container">
 
-    <ul class="sc_list list-group">
+<!--     <ul class="sc_list list-group">
       <label>Badges Awarded</label>
       <% if @unlocked_badges.count > 0 %>
         <% @unlocked_badges.each do |badge| %>
@@ -26,12 +26,29 @@
       <% else %>
         <li class="list-group-item unlocked"> No badges awarded yet</li>
       <% end %>
-    </ul>
+    </ul> -->
   
 
   <ul class="sc_list list-group">
     <label class="level_1">Level Mathura Badges</label>
-    <br>
+    <hr>
+    <label class="level_1">Badges Awarded</label>
+      <% @unlocked_badges.each do |badge| %>
+        <% if @level_1_badges.include?(badge) %>
+          <li class="list-group-item unlocked">
+            <table>
+              <td>
+                <%= badge[0] %>
+              </td>
+              <td>
+                <span class="level_1 glyphicon glyphicon-star"></span>
+              </td>
+            </table>
+          </li>
+        <% end %>
+      <% end %>
+    <hr>
+    <label class="level_1">Badges In Progress</label>
       <% @locked_badges.each do |badge| %>
         <% if @level_1_badges.include?(badge) %>
           <li class="list-group-item locked">
@@ -48,6 +65,7 @@
       <% end %>
     <br>
     <br>
+      
     <label class="level_2">Level Gokula Badges</label>
 
       <% @locked_badges.each do |badge| %>
