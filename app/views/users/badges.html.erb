@@ -33,23 +33,26 @@
 
             
     <h4 class="level_1">Level Mathura Badges</h4>
-
-    <label>Badges Awarded</label>
-      <% @unlocked_badges.each do |badge| %>
-        <% if @level_1_badges.include?(badge) %>
-          <li class="list-group-item unlocked">
-            <table>
-              <td>
-                <%= badge[0] %>
-              </td>
-              <td>
-                <span class="level_1 glyphicon glyphicon-star"></span>
-              </td>
-            </table>
-          </li>
-        <% end %>
-      <% end %>
     <br>
+
+    <% if @level_1_badges.count {|x| x[1]} > 0 %>
+          <label>Badges Awarded</label>
+            <% @unlocked_badges.each do |badge| %>
+              <% if @level_1_badges.include?(badge) %>
+                <li class="list-group-item unlocked">
+                  <table>
+                    <td>
+                      <%= badge[0] %>
+                    </td>
+                    <td>
+                      <span class="level_1 glyphicon glyphicon-star"></span>
+                    </td>
+                  </table>
+                </li>
+              <% end %>
+            <% end %>
+          <br>
+    <% end %>
     <label>Badges In Progress</label>
       <% @locked_badges.each do |badge| %>
         <% if @level_1_badges.include?(badge) %>
@@ -69,22 +72,25 @@
     <hr>
       
     <h4 class="level_2">Level Gokula Badges</h4>
-    <label>Badges Awarded</label>
-      <% @unlocked_badges.each do |badge| %>
-        <% if @level_2_badges.include?(badge) %>
-          <li class="list-group-item unlocked">
-            <table>
-              <td>
-                <%= badge[0] %>
-              </td>
-              <td>
-                <span class="level_2 glyphicon glyphicon-star"></span>
-              </td>
-            </table>
-          </li>
-        <% end %>
-      <% end %>
-        <br>
+    <br>
+    <% if @level_2_badges.count {|x| x[1]} > 0 %>
+            <label>Badges Awarded</label>
+            <% @unlocked_badges.each do |badge| %>
+              <% if @level_2_badges.include?(badge) %>
+                <li class="list-group-item unlocked">
+                  <table>
+                    <td>
+                      <%= badge[0] %>
+                    </td>
+                    <td>
+                      <span class="level_2 glyphicon glyphicon-star"></span>
+                    </td>
+                  </table>
+                </li>
+              <% end %>
+            <% end %>
+    <% end %>
+    <br>
     <label>Badges In Progress</label>
       <% @locked_badges.each do |badge| %>
         <% if @level_2_badges.include?(badge) %>
@@ -103,23 +109,25 @@
       <hr>
     
     <h4 class="level_3">Level Vrndavana Badges</h4>
-
-    <label>Badges Awarded</label>
-      <% @unlocked_badges.each do |badge| %>
-        <% if @level_3_badges.include?(badge) %>
-          <li class="list-group-item unlocked">
-            <table>
-              <td>
-                <%= badge[0] %>
-              </td>
-              <td>
-                <span class="level_3 glyphicon glyphicon-star"></span>
-              </td>
-            </table>
-          </li>
-        <% end %>
-      <% end %>
-        <br>
+    <br>
+    <% if @level_3_badges.count {|x| x[1]} > 0 %>  
+          <label>Badges Awarded</label>
+            <% @unlocked_badges.each do |badge| %>
+              <% if @level_3_badges.include?(badge) %>
+                <li class="list-group-item unlocked">
+                  <table>
+                    <td>
+                      <%= badge[0] %>
+                    </td>
+                    <td>
+                      <span class="level_3 glyphicon glyphicon-star"></span>
+                    </td>
+                  </table>
+                </li>
+              <% end %>
+            <% end %>
+    <% end %>
+    <br>
     <label>Badges In Progress</label>
       <% @locked_badges.each do |badge| %>
         <% if @level_3_badges.include?(badge) %>
