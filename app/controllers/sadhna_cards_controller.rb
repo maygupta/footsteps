@@ -154,7 +154,7 @@ class SadhnaCardsController < ApplicationController
     end
     if params[:reading_type] == "Hrs"
       params[:reading] = params[:reading].to_i*60
-      params[:reading_type] == "Mins"
+      params[:reading_type] = "Mins"
     end
     { 
       :date => params[:date],
@@ -206,7 +206,7 @@ class SadhnaCardsController < ApplicationController
     end
     if params[:reading_type] == "Hrs"
       params[:reading] = params[:reading].to_i*60
-      params[:reading_type] == "Mins"
+      params[:reading_type] = "Mins"
     end
     { 
       :date => params[:date],
