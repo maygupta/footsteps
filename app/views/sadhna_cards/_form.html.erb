@@ -27,7 +27,7 @@
 
     <form class="form-inline">
       <div class="form-group">
-        <label for="japa_rounds">Japa rounds</label>
+        <label for="japa_rounds">Japa Rounds Chanted</label>
         <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="japa_rounds" value="<%= @sadhna_card.japa_rounds %>">
       </div>
     </form>
@@ -97,9 +97,9 @@
       </table>
 
       <% if @sadhna_card.service_text.present? %>
-        <input placeholder="Service rendered" class="form-control" id="service_text" value="<%= @sadhna_card.service_text %>">
+        <textarea placeholder="Services rendered" class="form-control" id="service_text"><%= @sadhna_card.service_text %></textarea>
       <% else %>
-        <input placeholder="Service rendered" class="form-control" id="service_text">
+        <textarea placeholder="Service rendered" class="form-control" id="service_text"></textarea>
       <% end %>
       
     </div>
@@ -122,7 +122,7 @@
       </table>
     </div>
     <div class="form-group">
-      <label for="wake_up">Wake Up</label>
+      <label for="wake_up">Woke Up At</label>
       <% if @sadhna_card.wakeup.present? %>
         <input type="time" class="form-control" id="wake_up" value="<%= @sadhna_card.wakeup.strftime("%H:%M") %>">
       <% else %>
@@ -130,7 +130,7 @@
       <% end %>
     </div>
     <div class="form-group">
-      <label for="slept_at">Slept at</label>
+      <label for="slept_at">Slept At</label>
       <% if @sadhna_card.rest_time.present? %>
         <input type="time" class=" form-control" id="slept_at" value="<%= @sadhna_card.rest_time.strftime("%H:%M") %>">
       <% else %>
@@ -138,6 +138,7 @@
       <% end %>
     </div>
     <div class="form-group">
+      <label for="comments">Comments</label>
       <textarea placeholder="Comments (optional)" class=" form-control" id="comments"><%= @sadhna_card.comments %></textarea>
     </div>
 

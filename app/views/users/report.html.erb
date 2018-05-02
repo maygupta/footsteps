@@ -34,7 +34,7 @@
     </div>
 
     <div class="flex">
-      <span class="name1">Wake Up Time
+      <span class="name1">Woke Up At
       <div>(Jīva Jāgo)</div>
       </span>
       <% cards.each do |c| %>
@@ -43,7 +43,7 @@
     </div>
 
     <div class="flex">
-      <span class="name1">Japa 
+      <span class="name1">Japa
         <div>(Number of Rounds)</div></span>
       <% cards.each do |c| %>
         <span class="cell"><%= c.japa_rounds %> </span>
@@ -83,7 +83,7 @@
     </div>
 
     <div class="flex">
-      <span class="name1">Rest Time</span>
+      <span class="name1">Slept At</span>
       <% cards.each do |c| %>
         <span class="cell"><%= if c.rest_time then c.rest_time.strftime("%I:%M%p") else nil end %> </span>
       <% end %>
