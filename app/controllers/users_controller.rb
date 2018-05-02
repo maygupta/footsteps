@@ -100,7 +100,7 @@ class UsersController < ApplicationController
     @total_reading_hours = 0
     @total_hearing_hours = 0
     @total_service_hours = 0
-    @total_service_pages = 0
+    @total_reading_pages = 0
     @total_sadhna_cards = 0
 
     @current_month_rounds = 0
