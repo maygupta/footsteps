@@ -5,7 +5,24 @@ class SessionsController < ApplicationController
   end
 
   def create
+    if params[:commit] == "Sign Up"
+      user = User.find_by(email: params[:session][:email].downcase)
+      if user.present?
+        @message = 'Account with this email already exists'
+        render '_error'
+        return
+      end
+    else
+      user = User.find_by(email: params[:session][:email].downcase)
+      if !user
+        @message = 'No account exists with provided email, Please sign up!'
+        render '_error'
+        return
+      end
+    end
+
     user = User.find_by(email: params[:session][:email].downcase)
+
     if !user
       @user = User.new(email: params[:session][:email], 
         encrypted_password: params[:session][:password],
@@ -20,7 +37,9 @@ class SessionsController < ApplicationController
         redirect_to '/', :flash => { :notice  => "Welcome #{user.email}" }
       else
         # Create an error message.
-        redirect_to '/', :flash => { :error  => "'Invalid email/password combination' " }
+        @message = 'Invalid email/password combination'
+        render '_error'
+        return
       end
     end
   end
