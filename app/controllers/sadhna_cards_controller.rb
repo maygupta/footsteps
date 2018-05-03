@@ -97,6 +97,24 @@ class SadhnaCardsController < ApplicationController
   end
 
   def create
+    unless params[:date].present?
+      render :json => {:error => "Date cannot be empty"}, :status => 422
+      return
+    end
+
+    if !params[:japa_rounds].present? && !params[:reading].present? && !params[:hearing].present? &&
+       !params[:service].present? && !params[:wake_up].present? && !params[:slept_at].present? &&
+       params[:chad] == "0"
+      render :json => {:error => "Please enter atleast one field in Sadhana Card"}, :status => 422
+      return
+    end
+
+
+    if params[:date].to_date > Date.today
+      render :json => {:error => "Cannot enter future date Sadhana Card"}, :status => 422
+      return
+    end
+
     existing_sc = SadhnaCard.where(:date => params[:date], :user_id => current_user.id)
     if existing_sc.count > 0
       render :json => {:error => "Sadhana Card with this date exists"}, :status => 422
@@ -122,6 +140,7 @@ class SadhnaCardsController < ApplicationController
   end
 
   def update
+
     @sadhna_card = SadhnaCard.find(params[:id])
    
     if @sadhna_card.update(sadhna_card_update_params)
