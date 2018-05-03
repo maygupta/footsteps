@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if params[:email].blank? || params[:password].blank?
+    if params[:session][:email].blank? || params[:session][:password].blank?
       @message = "Email or Password can't be empty"
       render '_error'
       return
