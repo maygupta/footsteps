@@ -36,22 +36,34 @@ class UsersController < ApplicationController
       target_rounds = 16
     end
 
+    read_mins = 0
+    read_pages = 0
+    sb_pages = 0
+    
+    cards.each do |c|
+      c.sadhna_card_books.each do |b|
+        if b.unit == 'Mins'
+          read_mins += b.qty
+        elsif b.unit == 'Hrs'
+          read_mins += b.qty*60
+        else
+          read_pages += b.qty
+        end
+      end
+    end
+
     @level_1_badges = [
       ["Chanted 108 total Japa Rounds", cards.sum(:japa_rounds) > 108],
-      ["Read more than 24 hours", cards.where(:reading_type => 'Mins').pluck(:reading).sum(&:to_i) > 24*60],
+      ["Read more than 24 hours", read_mins > 24*60],
       ["Heard more than 24 hours", cards.pluck(:hearing).sum(&:to_i) > 24*60],
       ["Served more than 24 hours", cards.pluck(:service).sum(&:to_i) > 24*60],
-      ["Chanted more than 16 rounds in one day", cards.where("japa_rounds > 16").count > 0],
-      ["Served more than 2 hours in one day", cards.where("CAST(service AS INT) > ?", 120).count > 0],
-      ["Read more than 2 hours in one day", cards.where("CAST(reading AS INT) > ?", 120).count > 0],
-      ["Heard more than 2 hours in one day", cards.where("CAST(hearing AS INT) > ?", 120).count > 0],
       ["Recited 108 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 108],
       ["Chanted #{target_rounds} rounds every day in a week", chanted_minimum(user.sadhna_cards, target_rounds, 7)],
     ]
 
     @level_2_badges = [
       ["Chanted 1008 total Japa Rounds", cards.sum(:japa_rounds) > 1008],
-      ["Read more than 168 hours(1 week)", cards.where(:reading_type => 'Mins').pluck(:reading).sum(&:to_i) > 24*7*60],
+      ["Read more than 168 hours(1 week)", read_mins > 24*7*60],
       ["Heard more than 168 hours(1 week)", cards.pluck(:hearing).sum(&:to_i) > 24*7*60],
       ["Served more than 168 hours(1 week)", cards.pluck(:service).sum(&:to_i)> 24*7*60],
       ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 1008],
@@ -60,7 +72,7 @@ class UsersController < ApplicationController
     
     @level_3_badges = [
       ["Chanted 10008 total Japa Rounds", cards.sum(:japa_rounds) > 10008],
-      ["Read more than 720 hours(1 month)", cards.where(:reading_type => 'Mins').pluck(:reading).sum(&:to_i) > 24*30*60],
+      ["Read more than 720 hours(1 month)", read_mins > 24*30*60],
       ["Heard more than 720 hours(1 month)", cards.pluck(:hearing).sum(&:to_i) > 24*30*60],
       ["Served more than 720 hours(1 month)", cards.pluck(:service).sum(&:to_i)> 24*30*60],
       ["Recited 10008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 10008],
@@ -142,10 +154,14 @@ class UsersController < ApplicationController
       @total_rounds += sc.japa_rounds
       @total_service_hours +=  if sc.service.present? then sc.service.to_i else 0 end
       @total_hearing_hours += if sc.hearing.present? then sc.hearing.to_i else 0 end
-      if sc.reading_type == 'Mins'
-        @total_reading_hours += if sc.reading.present? then sc.reading.to_i else 0 end
-      else
-        @total_reading_pages += if sc.reading.present? then sc.reading.to_i else 0 end
+      sc.sadhna_card_books.each do |book|
+        if book.unit == 'Mins'
+          @total_reading_hours += if book.qty.present? then book.qty.to_i else 0 end
+        elsif book.unit == 'Hrs'
+          @total_reading_hours += if book.qty.present? then book.qty.to_i*60 else 0 end
+        else
+          @total_reading_pages += if book.qty.present? then book.qty.to_i else 0 end
+        end
       end
     end
     @total_service_hours = (@total_service_hours/60).to_s + "h " +  (@total_service_hours % 60).to_s + "m"
@@ -157,10 +173,14 @@ class UsersController < ApplicationController
       @current_month_rounds += sc.japa_rounds
       @current_month_service_hours +=  if sc.service.present? then sc.service.to_i else 0 end
       @current_month_hearing_hours += if sc.hearing.present? then sc.hearing.to_i else 0 end
-      if sc.reading_type == 'Mins'
-        @current_month_reading_hours += if sc.reading.present? then sc.reading.to_i else 0 end
-      else
-        @current_month_reading_pages += if sc.reading.present? then sc.reading.to_i else 0 end
+      sc.sadhna_card_books.each do |book|
+        if book.unit == 'Mins'
+          @current_month_reading_hours += if book.qty.present? then book.qty.to_i else 0 end
+        elsif book.unit == 'Hrs'
+          @current_month_reading_hours += if book.qty.present? then book.qty.to_i*60 else 0 end
+        else
+          @current_month_reading_pages += if book.qty.present? then book.qty.to_i else 0 end
+        end
       end
     end
     @current_month_service_hours = (@current_month_service_hours/60).to_s + "h " +  (@current_month_service_hours % 60).to_s + "m"
