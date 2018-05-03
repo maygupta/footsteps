@@ -94,9 +94,9 @@
   </div>
 
   <div id="book3">
-    <% exists = @sadhna_card.sadhna_card_books[0].present? 
+    <% exists = @sadhna_card.sadhna_card_books[2].present? 
        if exists
-          sc_book = @sadhna_card.sadhna_card_books[0]
+          sc_book = @sadhna_card.sadhna_card_books[2]
 
         else
           sc_book = SadhnaCardBook.new
