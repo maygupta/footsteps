@@ -135,6 +135,8 @@ class SadhnaCardsController < ApplicationController
 
   def show
     @sadhna_card = SadhnaCard.find(params[:id])
+    print @sadhna_card.sadhna_card_books[0].qty
+    print @sadhna_card.sadhna_card_books[0].qty.to_i
   end
 
   def edit
@@ -146,7 +148,7 @@ class SadhnaCardsController < ApplicationController
 
     @sadhna_card = SadhnaCard.find(params[:id])
     
-    @sadhna_card.sadhna_card_books.destroy
+    @sadhna_card.sadhna_card_books.destroy_all
 
     params[:books].each do |id, book|
       @book = SadhnaCardBook.create(:book => book[:name], :qty => book[:qty], :unit => book[:unit])
