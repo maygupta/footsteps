@@ -1,0 +1,193 @@
+<% if @sadhna_card.present? and @sadhna_card.sadhna_card_books.present? %>
+
+  <% count = 0 %>
+  <% @sadhna_card.sadhna_card_books.each do |sc_book| %>
+
+  <% count += 1 %>
+  <div id="book_<%=count%>">
+    
+    <label>Book<%=count%></label>
+    
+    <table class="row">
+      <td class="column_1">
+        <select class="form-control" id="reading_book_<%=count%>" >
+          <option value="">Select book</option>
+          <% books.each do |book| %>
+            <% if sc_book.book == book %>
+              <option selected value="<%=book%>"><%= book %></option>  
+            <% else %>
+              <option value="<%=book%>"><%= book %></option>  
+            <% end %>
+          <% end %>
+        </select>
+      </td>
+      <td class="column_4">
+      </td>
+      <td class="column_2">
+        <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="reading_<%=count%>" value="<%=sc_book.qty%>">
+      </td>
+      <td class="column_3">
+        <select class="form-control" id="reading_type_<%=count%>">
+          <% reading_types.each do |type| %>
+            <% if sc_book.unit == type %>
+              <option selected value="<%=type%>"><%= type %></option>
+            <% else %>
+              <option value="<%=type%>"><%= type %></option>
+            <% end %>
+          <% end %>
+        </select>
+      </td>
+    </table>
+    
+  </div>
+
+  <%end%>
+
+<% else %>
+  
+  <div id="book1">
+    
+    <label>Book1</label>
+    <span class="glyphicon glyphicon-plus-sign add"></span>
+    
+    <table class="row">
+      <td class="column_1">
+        <select class="form-control" id="reading_book_1">
+          <option value="">Select book</option>
+          <% books.each do |book| %>
+            <option value="<%=book%>"><%= book %></option>  
+          <% end %>
+        </select>
+      </td>
+      <td class="column_4">
+      </td>
+      <td class="column_2">
+        <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="reading_1">
+      </td>
+      <td class="column_3">
+        <select class="form-control" id="reading_type_1">
+          <% reading_types.each do |type| %>
+            <option value="<%=type%>"><%= type %></option>
+          <% end %>
+        </select>
+      </td>
+    </table>
+    
+  </div>
+
+  <div id="book2">
+    
+    <label>Book 2</label>
+    <span class="glyphicon glyphicon-plus-sign add"></span>
+    <span class="glyphicon glyphicon-minus-sign remove"></span>
+    
+    <table class="row">
+      <td class="column_1">
+        <select class="form-control" id="reading_book_2">
+          <option value="">Select book</option>
+          <% books.each do |book| %>
+            <option value="<%=book%>"><%= book %></option>  
+          <% end %>
+        </select>
+      </td>
+      <td class="column_4">
+      </td>
+      <td class="column_2">
+        <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="reading_2">
+      </td>
+      <td class="column_3">
+        <select class="form-control" id="reading_type_2">
+          <% reading_types.each do |type| %>
+            <option value="<%=type%>"><%= type %></option>
+          <% end %>
+        </select>
+      </td>
+    </table>
+  </div>
+
+  <div id="book3">
+    
+    <label>Book 3</label>
+    <span class="glyphicon glyphicon-minus-sign remove"></span>
+    
+    <table class="row">
+      <td class="column_1">
+        <select class="form-control" id="reading_book_3">
+          <option value="">Select book</option>
+          <% books.each do |book| %>
+            <option value="<%=book%>"><%= book %></option>  
+          <% end %>
+        </select>
+      </td>
+      <td class="column_4">
+      </td>
+      <td class="column_2">
+        <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="reading_3">
+      </td>
+      <td class="column_3">
+        <select class="form-control" id="reading_type_3">
+          <% reading_types.each do |type| %>
+            <option value="<%=type%>"><%= type %></option>
+          <% end %>
+        </select>
+      </td>
+    </table>
+  </div>
+
+
+<% end %>
+
+<script type="text/javascript">
+  $("#book2").hide()
+  $("#book3").hide()
+
+  $(".add").click(function(){
+    book_id = $(this).parent().attr('id')
+    next = get_next_book(book_id)
+    $(next).show()
+    $(this).hide()
+
+    minus = $(this).parent().find('.remove').hide()
+  })
+
+  $(".remove").click(function(){
+    book_id = $(this).parent().attr('id')
+    
+    $('#' + book_id).hide()
+
+    prev_book = get_prev_book(book_id)
+
+    $(prev_book).find('.add').show()
+    $(prev_book).find('.remove').show()
+  })
+
+  get_next_book = function(book_id) {
+    if (book_id == 'book1')
+      return '#book2'
+    if (book_id == 'book2')
+      return '#book3'
+  }
+
+  get_prev_book = function(book_id) {
+    if (book_id == 'book2')
+      return '#book1'
+    if (book_id == 'book3')
+      return '#book2'
+  }
+
+</script>
+
+<style type="text/css">
+  .column_1 {
+    width: 50%;
+  }
+  .column_2 {
+    width: 15%;
+  }
+  .column_3 {
+    width: 25%;
+  }
+  .column_4 {
+    width: 5%;
+  }
+</style>

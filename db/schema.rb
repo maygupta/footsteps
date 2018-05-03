@@ -121,6 +121,15 @@ ActiveRecord::Schema.define(version: 20170202094643) do
 
   add_index "recommendations", ["user_id"], name: "index_recommendations_on_user_id", using: :btree
 
+  create_table "sadhna_card_books", force: :cascade do |t|
+    t.string   "book"
+    t.integer  "qty"
+    t.string   "unit"
+    t.integer  "sadhna_card_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "sadhna_cards", force: :cascade do |t|
     t.date     "date"
     t.integer  "japa_rounds"
