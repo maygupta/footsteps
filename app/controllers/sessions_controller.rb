@@ -5,6 +5,12 @@ class SessionsController < ApplicationController
   end
 
   def create
+    if params[:email].blank? || params[:password].blank?
+      @message = "Email or Password can't be empty"
+      render '_error'
+      return
+    end
+
     if params[:commit] == "Sign Up"
       user = User.find_by(email: params[:session][:email].downcase)
       if user.present?
