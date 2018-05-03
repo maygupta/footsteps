@@ -55,7 +55,7 @@
         <div> (Number of pages or minutes) </div></span>
       <% cards.each do |c| %>
         <span class="cell">
-          <%= ret = if c.reading_book.present? then c.reading_book + " " else "" end %>
+          <%= ret = if c.reading_book.present? then c.reading_book.delete("[]\"") + " " else "" end %>
           <div>
           <%=
               ret = "("

@@ -34,10 +34,9 @@
 
     <div class="form-group">
       <label for="reading">Reading</label>
-      <select class="form-control" id="reading_book">
-        <option value="">Select book</option>
+      <select class="form-control" id="reading_book" multiple>
         <% books.each do |book| %>
-          <% if @sadhna_card.reading_book == book %>
+          <% if @sadhna_card.reading_book.present? and @sadhna_card.reading_book.include?(book) %>
             <option selected value="<%=book%>"><%= book %></option>
           <% else %>
             <option value="<%=book%>"><%= book %></option>  
