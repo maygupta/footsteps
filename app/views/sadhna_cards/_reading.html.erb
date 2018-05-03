@@ -1,0 +1,207 @@
+
+  
+  <div id="book1">
+    <% exists = @sadhna_card.sadhna_card_books[0].present? 
+       if exists
+          sc_book = @sadhna_card.sadhna_card_books[0]
+
+        else
+          sc_book = SadhnaCardBook.new
+        end
+    %>
+    <label>Book1</label>
+    <span class="glyphicon glyphicon-plus-sign add"></span>
+    
+    <table class="row">
+      <td class="column_1">
+        <select class="form-control" id="reading_book_1">
+          <option value="">Select book</option>
+          <% books.each do |book| %>
+            <% if sc_book.book == book %>
+              <option selected value="<%=book%>"><%= book %></option>  
+            <% else %>
+              <option value="<%=book%>"><%= book %></option>  
+            <% end %>
+          <% end %>
+        </select>
+      </td>
+      <td class="column_4">
+      </td>
+      <td class="column_2">
+        <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="reading_1" 
+        value="<%= sc_book.qty.to_i %>">
+      </td>
+      <td class="column_3">
+        <select class="form-control" id="reading_type_1">
+          <% reading_types.each do |type| %>
+          <% if sc_book.unit == type %>
+            <option selected value="<%=type%>"><%= type %></option>  
+          <% else %>
+            <option value="<%=type%>"><%= type %></option>
+          <% end %>
+          <% end %>
+        </select>
+      </td>
+    </table>
+    
+  </div>
+
+  <div id="book2">
+    <% exists = @sadhna_card.sadhna_card_books[1].present? 
+       if exists
+          sc_book = @sadhna_card.sadhna_card_books[1]
+
+        else
+          sc_book = SadhnaCardBook.new
+        end
+    %>
+    <label>Book2</label>
+    <span class="glyphicon glyphicon-plus-sign add"></span>
+    <span class="glyphicon glyphicon-minus-sign remove"></span>
+    
+    <table class="row">
+      <td class="column_1">
+        <select class="form-control" id="reading_book_2">
+          <option value="">Select book</option>
+          <% books.each do |book| %>
+            <% if sc_book.book == book %>
+              <option selected value="<%=book%>"><%= book %></option>  
+            <% else %>
+              <option value="<%=book%>"><%= book %></option>  
+            <% end %>
+          <% end %>
+        </select>
+      </td>
+      <td class="column_4">
+      </td>
+      <td class="column_2">
+        <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="reading_2" 
+        value="<%= sc_book.qty.to_i %>">
+      </td>
+      <td class="column_3">
+        <select class="form-control" id="reading_type_2">
+          <% reading_types.each do |type| %>
+          <% if sc_book.unit == type %>
+            <option selected value="<%=type%>"><%= type %></option>  
+          <% else %>
+            <option value="<%=type%>"><%= type %></option>
+          <% end %>
+          <% end %>
+        </select>
+      </td>
+    </table>
+    
+  </div>
+
+  <div id="book3">
+    <% exists = @sadhna_card.sadhna_card_books[0].present? 
+       if exists
+          sc_book = @sadhna_card.sadhna_card_books[0]
+
+        else
+          sc_book = SadhnaCardBook.new
+        end
+    %>
+    <label>Book3</label>
+    <span class="glyphicon glyphicon-minus-sign remove"></span>
+    
+    <table class="row">
+      <td class="column_1">
+        <select class="form-control" id="reading_book_3">
+          <option value="">Select book</option>
+          <% books.each do |book| %>
+            <% if sc_book.book == book %>
+              <option selected value="<%=book%>"><%= book %></option>  
+            <% else %>
+              <option value="<%=book%>"><%= book %></option>  
+            <% end %>
+          <% end %>
+        </select>
+      </td>
+      <td class="column_4">
+      </td>
+      <td class="column_2">
+        <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="reading_3" 
+        value="<%= sc_book.qty.to_i %>">
+      </td>
+      <td class="column_3">
+        <select class="form-control" id="reading_type_3">
+          <% reading_types.each do |type| %>
+          <% if sc_book.unit == type %>
+            <option selected value="<%=type%>"><%= type %></option>  
+          <% else %>
+            <option value="<%=type%>"><%= type %></option>
+          <% end %>
+          <% end %>
+        </select>
+      </td>
+    </table>
+    
+  </div>
+
+
+<script type="text/javascript">
+  length = <%= @sadhna_card.sadhna_card_books.count %>
+
+  $("#book2").hide()
+  $("#book3").hide()
+
+  $(".add").click(function(){
+    book_id = $(this).parent().attr('id')
+    next = get_next_book(book_id)
+    $(next).show()
+    $(this).hide()
+
+    minus = $(this).parent().find('.remove').hide()
+  })
+
+  $(".remove").click(function(){
+    book_id = $(this).parent().attr('id')
+    
+    $('#' + book_id).hide()
+
+    prev_book = get_prev_book(book_id)
+
+    $(prev_book).find('.add').show()
+    $(prev_book).find('.remove').show()
+  })
+
+  get_next_book = function(book_id) {
+    if (book_id == 'book1')
+      return '#book2'
+    if (book_id == 'book2')
+      return '#book3'
+  }
+
+  get_prev_book = function(book_id) {
+    if (book_id == 'book2')
+      return '#book1'
+    if (book_id == 'book3')
+      return '#book2'
+  }
+
+  if (length == 2) {
+    $("#book1").find('.add').click()
+  }
+
+  if (length == 3) {
+    $("#book1").find('.add').click()
+    $("#book2").find('.add').click()
+  }
+
+</script>
+
+<style type="text/css">
+  .column_1 {
+    width: 50%;
+  }
+  .column_2 {
+    width: 15%;
+  }
+  .column_3 {
+    width: 25%;
+  }
+  .column_4 {
+    width: 5%;
+  }
+</style>

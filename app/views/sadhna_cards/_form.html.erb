@@ -34,33 +34,7 @@
 
     <div class="form-group">
       <label for="reading">Reading</label>
-      <select class="form-control" id="reading_book" multiple>
-        <% books.each do |book| %>
-          <% if @sadhna_card.reading_book.present? and @sadhna_card.reading_book.include?(book) %>
-            <option selected value="<%=book%>"><%= book %></option>
-          <% else %>
-            <option value="<%=book%>"><%= book %></option>  
-          <% end %>
-        <% end %>
-      </select>
-      <table class="row">
-        <td class="first_column">
-          <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" id="reading" value="<%= @sadhna_card.reading %>">
-        </td>
-        <td class="second_column">
-          <!-- <input type="text" readonly value=""> -->
-          <select class="form-control" id="reading_type">
-            <% reading_types.each do |type| %>
-              <% if @sadhna_card.reading_type == type %>
-                <option selected value="<%=type%>"><%= type %></option>
-              <% else %>
-                <option value="<%=type%>"><%= type %></option>
-              <% end %>
-            <% end %>
-          </select>
-        </td>
-      </table>
-
+      <%= render 'reading' %>
     </div>
 
     <div class="form-group">
@@ -173,17 +147,41 @@ $(document).ready(function(){
       return
     }
 
+    books = [
+      {
+        'name': $("#reading_book_1").val(),
+        'qty': $("#reading_1").val(),
+        'unit': $("#reading_type_1").val(),
+      }
+    ]
+
+    if ($('#book2').is(":visible")) {
+      book2 = {
+        'name': $("#reading_book_2").val(),
+        'qty': $("#reading_2").val(),
+        'unit': $("#reading_type_2").val(),
+      }
+      books.push(book2)
+    }
+
+    if ($('#book3').is(":visible")) {
+      book3 = {
+        'name': $("#reading_book_3").val(),
+        'qty': $("#reading_3").val(),
+        'unit': $("#reading_type_3").val(),
+      }
+      books.push(book3)
+    }
+
     data = {
       date: $('input#date').val(),
       japa_rounds: $('input#japa_rounds').val(),
       service: $('input#service').val(),
       hearing: $('input#hearing').val(),
-      reading: $('input#reading').val(),
+      books: books,
       service_type: $('#service_type').val(),
       hearing_type: $('#hearing_type').val(),
-      reading_type: $('#reading_type').val(),
       service_text: $('#service_text').val(),
-      reading_book: $('#reading_book').val(),
       comments: $('#comments').val(),
       chad: $('#chad').val(),
       wake_up: $('input#wake_up').val(),
@@ -212,19 +210,43 @@ $(document).ready(function(){
       alert("Date can't be empty")
       return
     }
-    
+
+    books = [
+      {
+        'name': $("#reading_book_1").val(),
+        'qty': $("#reading_1").val(),
+        'unit': $("#reading_type_1").val(),
+      }
+    ]
+
+    if ($('#book2').is(":visible")) {
+      book2 = {
+        'name': $("#reading_book_2").val(),
+        'qty': $("#reading_2").val(),
+        'unit': $("#reading_type_2").val(),
+      }
+      books.push(book2)
+    }
+
+    if ($('#book3').is(":visible")) {
+      book3 = {
+        'name': $("#reading_book_3").val(),
+        'qty': $("#reading_3").val(),
+        'unit': $("#reading_type_3").val(),
+      }
+      books.push(book3)
+    }
+   
     data = {
       date: $('input#date').val(),
       japa_rounds: $('input#japa_rounds').val(),
       service: $('input#service').val(),
       hearing: $('input#hearing').val(),
-      reading: $('input#reading').val(),
+      books: books,
       chad: $('#chad').val(),
       service_type: $('#service_type').val(),
       hearing_type: $('#hearing_type').val(),
-      reading_type: $('#reading_type').val(),
       service_text: $('#service_text').val(),
-      reading_book: $('#reading_book').val(),
       comments: $('#comments').val(),
       wake_up: $('input#wake_up').val(),
       slept_at: $('input#slept_at').val()

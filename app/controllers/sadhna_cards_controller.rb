@@ -120,6 +120,10 @@ class SadhnaCardsController < ApplicationController
       render :json => {:error => "Sadhana Card with this date exists"}, :status => 422
     else
       @sadhna_card = SadhnaCard.new(sadhna_card_params)
+      params[:books].each do |id, book|
+        @book = SadhnaCardBook.create(:book => book[:name], :qty => book[:qty], :unit => book[:unit])
+        @sadhna_card.sadhna_card_books.push(@book)
+      end
    
       if @sadhna_card.save
         render :json => {id: @sadhna_card.id}, :status => :ok
@@ -131,10 +135,11 @@ class SadhnaCardsController < ApplicationController
 
   def show
     @sadhna_card = SadhnaCard.find(params[:id])
+    print @sadhna_card.sadhna_card_books[0].qty
+    print @sadhna_card.sadhna_card_books[0].qty.to_i
   end
 
   def edit
-
     @sadhna_card = SadhnaCard.find(params[:id])
     print @sadhna_card.wakeup.to_time
   end
@@ -142,7 +147,14 @@ class SadhnaCardsController < ApplicationController
   def update
 
     @sadhna_card = SadhnaCard.find(params[:id])
-   
+    
+    @sadhna_card.sadhna_card_books.destroy_all
+
+    params[:books].each do |id, book|
+      @book = SadhnaCardBook.create(:book => book[:name], :qty => book[:qty], :unit => book[:unit])
+      @sadhna_card.sadhna_card_books.push(@book)
+    end
+
     if @sadhna_card.update(sadhna_card_update_params)
       render :json => {id: @sadhna_card.id}, :status => :ok
     else
@@ -183,12 +195,9 @@ class SadhnaCardsController < ApplicationController
       :rest_time => params[:slept_at],
       :service => if params[:service_type] == "Mins" then params[:service] else params[:service].to_i*60 end, 
       :chad => params[:chad], 
-      :verses => params[:verses], 
-      :reading => params[:reading],
-      :reading_type => params[:reading_type],
+      :verses => params[:verses],
       :service_text => params[:service_text],
       :comments => params[:comments],
-      :reading_book => params[:reading_book],
     }
   end
 
@@ -236,12 +245,9 @@ class SadhnaCardsController < ApplicationController
       :service => params[:service_type] == "Mins" ? params[:service] : params[:service].to_i*60, 
       :chad => params[:chad], 
       :verses => params[:verses], 
-      :reading => params[:reading],
-      :reading_type => params[:reading_type],
       :user_id => current_user.id,
       :service_text => params[:service_text],
       :comments => params[:comments],
-      :reading_book => params[:reading_book],
     }
   end
 end
