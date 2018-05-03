@@ -55,15 +55,22 @@
         <div> (Number of pages or minutes) </div></span>
       <% cards.each do |c| %>
         <span class="cell">
-          <%= ret = if c.reading_book.present? then c.reading_book.delete("[]\"") + " " else "" end %>
-          <div>
-          <%=
-              ret = "("
-              ret += if c.reading.present? then c.reading + " " + if c.reading_type.present? then c.reading_type else "mins" end else nil end
-              ret += ")"
-              ret
-          %>
-          </div>
+          <% c.sadhna_card_books.each do |b| %>
+              <span>
+              <br>
+              <%= ret = if b.book.present? then b.book else "" end %>
+              
+              <br>
+              </span>
+            <%=
+                ret = "("
+                ret += if b.qty.present? then b.qty.to_s + " " + b.unit end
+                ret += ")"
+                ret
+            %>
+            <br>
+          <% end %>
+
         </span>
       <% end %>
     </div>
