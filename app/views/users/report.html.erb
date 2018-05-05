@@ -78,7 +78,23 @@
     <div class="flex">
       <span class="name1">CHAD</span>
       <% cards.each do |c| %>
-        <span class="cell"><%= get_chapter(c.chad) %> </span>
+        <% 
+          chad = get_chapter(c.chad) 
+          parts = nil
+          if chad.present? and chad.include? '('
+            parts = chad.split('(')
+            parts[1] = '(' + parts[1]
+          end
+        %>
+        <span class="cell">
+          <% if parts.present? %>
+            <%= parts[0] %>
+            <br>
+            <%= parts[1] %>
+          <% else %>
+            <%= chad %>
+          <% end %>
+        </span>
       <% end %>
     </div>
 
