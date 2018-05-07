@@ -53,21 +53,30 @@
             <% end %>
           <br>
     <% end %>
-    <label>Badges In Progress</label>
-      <% @locked_badges.each do |badge| %>
-        <% if @level_1_badges.include?(badge) %>
-          <li class="list-group-item locked">
-            <table>
-              <td>
-                <%= badge[0] %>
-              </td>
-              <td>
-                <span class="glyphicon glyphicon-star-empty"></span>
-              </td>
-            </table>
-          </li>
-        <% end %>
-      <% end %>
+    <% level_1_locked_badges = @level_1_badges & @locked_badges 
+       level_2_locked_badges = @level_2_badges & @locked_badges 
+       level_3_locked_badges = @level_3_badges & @locked_badges 
+    %>
+      
+    <% if level_1_locked_badges.count > 0 %>
+          <label>Badges In Progress</label>
+            <% @locked_badges.each do |badge| %>
+              <% if @level_1_badges.include?(badge) %>
+                <li class="list-group-item locked">
+                  <table>
+                    <td>
+                      <%= badge[0] %>
+                    </td>
+                    <td>
+                      <span class="glyphicon glyphicon-star-empty"></span>
+                    </td>
+                  </table>
+                </li>
+              <% end %>
+            <% end %>
+     <% else %>
+      <label>You have achieved all Mathura badges</label>
+     <% end %>
     
     <hr>
       
@@ -91,6 +100,7 @@
             <% end %>
     <% end %>
     <br>
+    <% if level_2_locked_badges.count > 0 %>
     <label>Badges In Progress</label>
       <% @locked_badges.each do |badge| %>
         <% if @level_2_badges.include?(badge) %>
@@ -106,6 +116,9 @@
           </li>
         <% end %>
       <% end %>
+      <% else %>
+      <label>You have achieved all Gokula badges</label>
+     <% end %>
       <hr>
     
     <h4 class="level_3">Vrndavana Badges</h4>
@@ -128,6 +141,7 @@
             <% end %>
     <% end %>
     <br>
+    <% if level_3_locked_badges.count > 0 %>
     <label>Badges In Progress</label>
       <% @locked_badges.each do |badge| %>
         <% if @level_3_badges.include?(badge) %>
@@ -143,6 +157,9 @@
           </li>
         <% end %>
       <% end %>
+   <% else %>
+      <label>You have achieved all Vrndavana badges</label>
+   <% end %>
   </ul>
 
 
