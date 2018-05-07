@@ -46,8 +46,8 @@ class UsersController < ApplicationController
           read_mins += b.qty
         elsif b.unit == 'Hrs'
           read_mins += b.qty*60
-        else
-          read_pages += b.qty
+        elseif b.book = books[0]
+          sb_pages += b.qty
         end
       end
     end
@@ -55,6 +55,7 @@ class UsersController < ApplicationController
     @level_1_badges = [
       ["Chanted 108 total Japa Rounds", cards.sum(:japa_rounds) > 108],
       ["Read more than 24 hours", read_mins > 24*60],
+      ["Read more than 500 pages of #{books[0]}", sb_pages > 500],
       ["Heard more than 24 hours", cards.pluck(:hearing).sum(&:to_i) > 24*60],
       ["Served more than 24 hours", cards.pluck(:service).sum(&:to_i) > 24*60],
       ["Recited 108 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 108],
@@ -64,6 +65,7 @@ class UsersController < ApplicationController
     @level_2_badges = [
       ["Chanted 1008 total Japa Rounds", cards.sum(:japa_rounds) > 1008],
       ["Read more than 168 hours(1 week)", read_mins > 24*7*60],
+      ["Read more than 5000 pages of #{books[0]}", sb_pages > 5000],
       ["Heard more than 168 hours(1 week)", cards.pluck(:hearing).sum(&:to_i) > 24*7*60],
       ["Served more than 168 hours(1 week)", cards.pluck(:service).sum(&:to_i)> 24*7*60],
       ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 1008],
@@ -72,6 +74,7 @@ class UsersController < ApplicationController
     
     @level_3_badges = [
       ["Chanted 10008 total Japa Rounds", cards.sum(:japa_rounds) > 10008],
+      ["Completed #{books[0]}", sb_pages >= 14625],
       ["Read more than 720 hours(1 month)", read_mins > 24*30*60],
       ["Heard more than 720 hours(1 month)", cards.pluck(:hearing).sum(&:to_i) > 24*30*60],
       ["Served more than 720 hours(1 month)", cards.pluck(:service).sum(&:to_i)> 24*30*60],
