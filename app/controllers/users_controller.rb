@@ -46,7 +46,7 @@ class UsersController < ApplicationController
           read_mins += b.qty
         elsif b.unit == 'Hrs'
           read_mins += b.qty*60
-        elseif b.book = books[0]
+        elseif b.book == books[0]
           sb_pages += b.qty
         end
       end
