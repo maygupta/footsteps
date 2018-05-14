@@ -119,6 +119,7 @@ class UsersController < ApplicationController
     @total_service_hours = 0
     @total_reading_pages = 0
     @total_sadhna_cards = 0
+    @total_chad_verses = 0
 
     @current_month_rounds = 0
     @current_month_reading_hours = 0
@@ -126,6 +127,7 @@ class UsersController < ApplicationController
     @current_month_hearing_hours = 0
     @current_month_service_hours = 0
     @current_month_sadhna_cards = 0
+    @current_chad_verses = 0
 
     @months = [["01", "Jan"], ["02", "Feb"], ["03", "March"], ["04", "April"], 
     ["05", "May"], ["06", "June"], ["07", "July"], ["08", "August"], ["09", "Sept"], 
@@ -157,6 +159,7 @@ class UsersController < ApplicationController
 
     sadhna_cards.each do |sc|
       @total_rounds += sc.japa_rounds
+      @total_chad_verses += if sc.verses.present? then sc.verses else 0 end
       @total_service_hours +=  if sc.service.present? then sc.service.to_i else 0 end
       @total_hearing_hours += if sc.hearing.present? then sc.hearing.to_i else 0 end
       sc.sadhna_card_books.each do |book|
@@ -176,6 +179,7 @@ class UsersController < ApplicationController
 
     current_month_sadhna_cards.each do |sc|
       @current_month_rounds += sc.japa_rounds
+      @current_chad_verses += if sc.verses.present? then sc.verses else 0 end
       @current_month_service_hours +=  if sc.service.present? then sc.service.to_i else 0 end
       @current_month_hearing_hours += if sc.hearing.present? then sc.hearing.to_i else 0 end
       sc.sadhna_card_books.each do |book|
