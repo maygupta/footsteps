@@ -120,6 +120,7 @@ class UsersController < ApplicationController
     @total_reading_pages = 0
     @total_sadhna_cards = 0
     @total_chad_verses = 0
+    @total_days_gt_target = 0
 
     @current_month_rounds = 0
     @current_month_reading_hours = 0
@@ -128,6 +129,7 @@ class UsersController < ApplicationController
     @current_month_service_hours = 0
     @current_month_sadhna_cards = 0
     @current_chad_verses = 0
+    @current_days_gt_target = 0
 
     @months = [["01", "Jan"], ["02", "Feb"], ["03", "March"], ["04", "April"], 
     ["05", "May"], ["06", "June"], ["07", "July"], ["08", "August"], ["09", "Sept"], 
@@ -143,7 +145,7 @@ class UsersController < ApplicationController
       @year =  Date.today.strftime("%Y")
     end
 
-        @years = []
+    @years = []
     count = 0
     start = 1989
     while count < 50
@@ -156,9 +158,13 @@ class UsersController < ApplicationController
     sadhna_cards = @user.sadhna_cards
     current_month_sadhna_cards = @user.sadhna_cards.where('extract(year from date) = ? AND extract(month  from date) = ? 
       ', @year, @month)
+    target_rounds = if @user.target_rounds.present? then @user.target_rounds else 16 end
 
     sadhna_cards.each do |sc|
       @total_rounds += sc.japa_rounds
+      if sc.japa_rounds > target_rounds
+        @total_days_gt_target += 1
+      end
       @total_chad_verses += if sc.verses.present? then sc.verses else 0 end
       @total_service_hours +=  if sc.service.present? then sc.service.to_i else 0 end
       @total_hearing_hours += if sc.hearing.present? then sc.hearing.to_i else 0 end
@@ -179,6 +185,9 @@ class UsersController < ApplicationController
 
     current_month_sadhna_cards.each do |sc|
       @current_month_rounds += sc.japa_rounds
+      if sc.japa_rounds > target_rounds
+        @current_days_gt_target += 1
+      end
       @current_chad_verses += if sc.verses.present? then sc.verses else 0 end
       @current_month_service_hours +=  if sc.service.present? then sc.service.to_i else 0 end
       @current_month_hearing_hours += if sc.hearing.present? then sc.hearing.to_i else 0 end
