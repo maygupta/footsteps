@@ -77,10 +77,10 @@ class UsersController < ApplicationController
     @level_3_badges = [
       ["Chanted 10008 total Japa Rounds", cards.sum(:japa_rounds) > 10008, cards.sum(:japa_rounds)/108],
       ["Completed #{books[0]}", sb_pages >= 14625, sb_pages/146.25],
-      ["Read more than 720 hours(1 month)", read_mins > 24*30*60, read_mins/24*30*0.6],
+      ["Read more than 720 hours(1 month)", read_mins > 24*30*60, read_mins/(24*30*0.6)],
       ["Heard more than 720 hours(1 month)", cards.pluck(:hearing).sum(&:to_i) > 24*30*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*30*60)],
       ["Served more than 720 hours(1 month)", cards.pluck(:service).sum(&:to_i)> 24*30*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*30*60)],
-      ["Recited 10008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 10008, cards.pluck(:verses).sum(&:to_i) / 108],
+      ["Recited 10008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 10008, cards.pluck(:verses).sum(&:to_i)/108],
       ["Chanted #{target_rounds} rounds every day for 365 days", chanted_minimum(user.sadhna_cards, target_rounds, 365) >= 365, chanted_minimum(user.sadhna_cards, target_rounds, 365)*100/365],
     ]
 
