@@ -259,7 +259,9 @@ class UsersController < ApplicationController
           return count
         end
       else
-        max_count = count if count > max_count then count else 0 end
+        if count > max_count
+          max_count = count
+        end
         count = 0
       end
     end
