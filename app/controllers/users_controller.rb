@@ -67,7 +67,7 @@ class UsersController < ApplicationController
     @level_2_badges = [
       ["Chanted 1008 total Japa Rounds", cards.sum(:japa_rounds) > 1008, cards.sum(:japa_rounds)/10.08],
       ["Read more than 168 hours(1 week)", read_mins > 24*7*60, read_mins/(24*7*0.6)],
-      ["Read more than 5000 pages of #{books[0]}", sb_pages > 5000, sb_page/50],
+      ["Read more than 5000 pages of #{books[0]}", sb_pages > 5000, sb_pages/50],
       ["Heard more than 168 hours(1 week)", cards.pluck(:hearing).sum(&:to_i) > 24*7*60, cards.pluck(:hearing).sum(&:to_i)/(24*7*0.6)],
       ["Served more than 168 hours(1 week)", cards.pluck(:service).sum(&:to_i)> 24*7*60, cards.pluck(:service).sum(&:to_i)/(24*7*0.6)],
       ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 1008, cards.pluck(:verses).sum(&:to_i)/10.08],
