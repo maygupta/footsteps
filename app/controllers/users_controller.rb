@@ -55,7 +55,7 @@ class UsersController < ApplicationController
     end
 
     @level_1_badges = [
-      ["Chanted 108 total Japa Rounds", cards.sum(:japa_rounds) > 108],
+      ["Chanted 108 total Japa Rounds", cards.sum(:japa_rounds) > 108, cards.sum(:japa_rounds)*100/108],
       ["Read more than 24 hours", read_mins > 24*60],
       ["Read more than 500 pages of #{books[0]}", sb_pages > 500],
       ["Heard more than 24 hours", cards.pluck(:hearing).sum(&:to_i) > 24*60],
@@ -65,7 +65,7 @@ class UsersController < ApplicationController
     ]
 
     @level_2_badges = [
-      ["Chanted 1008 total Japa Rounds", cards.sum(:japa_rounds) > 1008],
+      ["Chanted 1008 total Japa Rounds", cards.sum(:japa_rounds) > 1008, cards.sum(:japa_rounds)*100/1008],
       ["Read more than 168 hours(1 week)", read_mins > 24*7*60],
       ["Read more than 5000 pages of #{books[0]}", sb_pages > 5000],
       ["Heard more than 168 hours(1 week)", cards.pluck(:hearing).sum(&:to_i) > 24*7*60],
@@ -75,7 +75,7 @@ class UsersController < ApplicationController
     ]
     
     @level_3_badges = [
-      ["Chanted 10008 total Japa Rounds", cards.sum(:japa_rounds) > 10008],
+      ["Chanted 10008 total Japa Rounds", cards.sum(:japa_rounds) > 10008, cards.sum(:japa_rounds)*100/10008],
       ["Completed #{books[0]}", sb_pages >= 14625],
       ["Read more than 720 hours(1 month)", read_mins > 24*30*60],
       ["Heard more than 720 hours(1 month)", cards.pluck(:hearing).sum(&:to_i) > 24*30*60],
