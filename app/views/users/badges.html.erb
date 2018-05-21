@@ -44,6 +44,11 @@
                     <td>
                       <%= badge[0] %>
                     </td>
+                    <% if badge[2].present? %>
+                    <td>
+                      <span class="level_1"> <%= badge[2] % %> </span>
+                    </td>
+                    <% end %>
                     <td>
                       <span class="level_1 glyphicon glyphicon-star"></span>
                     </td>
