@@ -44,11 +44,9 @@
                     <td>
                       <%= badge[0] %>
                     </td>
-                    <% if badge[2].present? %>
-                      <td>
-                        <span class="level_1"> <%= badge[2] %> % </span>
-                      </td>
-                    <% end %>
+                    <td>
+                        <span class="level_1"> 100% </span>
+                    </td>
                     <td>
                       <span class="level_1 glyphicon glyphicon-star"></span>
                     </td>
@@ -72,6 +70,11 @@
                     <td>
                       <%= badge[0] %>
                     </td>
+                    <% if badge[2].present? %>
+                      <td>
+                        <span class="level_1"> <%= badge[2] %>% </span>
+                      </td>
+                    <% end %>
                     <td>
                       <span class="glyphicon glyphicon-star-empty"></span>
                     </td>
@@ -179,6 +182,9 @@
     
   .level_3{
     color: blue;
+  }
+  .badges td {
+    width: 80% !important;
   }
 
   
