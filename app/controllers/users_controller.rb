@@ -269,6 +269,10 @@ class UsersController < ApplicationController
         count = 0
       end
     end
+    if count > max_count
+      max_count = count
+    end
+
     print "max_count=#{max_count}"
     return max_count
   end
