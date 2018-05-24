@@ -62,8 +62,8 @@ class UsersController < ApplicationController
       ["Chanted 108 total Japa Rounds", cards.sum(:japa_rounds) > 108, cards.sum(:japa_rounds)/1.08],
       ["Read more than 24 hours", read_mins > 24*60, read_mins*100/(24*60)],
       ["Read more than 500 pages of #{books[0]}", sb_pages > 500, sb_pages*100/500],
-      ["Heard more than 24 hours", cards.pluck(:hearing).sum(&:to_i) > 24*60, cards.pluck(:hearing).sum(&:to_i)/24*0.6],
-      ["Served more than 24 hours", cards.pluck(:service).sum(&:to_i) > 24*60, cards.pluck(:service).sum(&:to_i)/24*0.6],
+      ["Heard more than 24 hours", cards.pluck(:hearing).sum(&:to_i) > 24*60, cards.pluck(:hearing).sum(&:to_i)/(24*0.6)],
+      ["Served more than 24 hours", cards.pluck(:service).sum(&:to_i) > 24*60, cards.pluck(:service).sum(&:to_i)/(24*0.6)],
       ["Recited 108 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 108, cards.pluck(:verses).sum(&:to_i)/1.08],
       ["Chanted #{target_rounds} rounds every day for 7 days", chanted_minimum(user.sadhna_cards, target_rounds, 7) >= 7, chanted_minimum(user.sadhna_cards, target_rounds, 7)*100/7],
     ]
