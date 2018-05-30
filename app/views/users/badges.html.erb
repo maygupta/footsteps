@@ -2,33 +2,6 @@
 
 <div class="badges container">
 
-<!--     <ul class="sc_list list-group">
-      <label>Badges Awarded</label>
-      <% if @unlocked_badges.count > 0 %>
-        <% @unlocked_badges.each do |badge| %>
-          <li class="list-group-item unlocked">
-            <table>
-              <td>
-                <%= badge[0] %>
-              </td>
-              <td>
-                <% if @level_1_badges.include?(badge) %>
-                  <span class="level_1 glyphicon glyphicon-star"></span>
-                <% elsif @level_2_badges.include?(badge) %>
-                  <span class="level_2 glyphicon glyphicon-star"></span>
-                <% else %>
-                  <span class="level_3 glyphicon glyphicon-star"></span>
-                <% end %>
-              </td>
-            </table>
-          </li>
-        <% end %>
-      <% else %>
-        <li class="list-group-item unlocked"> No badges awarded yet</li>
-      <% end %>
-    </ul> -->
-  
-
   <ul class="sc_list list-group">
 
             
@@ -43,9 +16,6 @@
                   <table>
                     <td>
                       <%= badge[0] %>
-                    </td>
-                    <td>
-                        <span class="level_1"> 100% </span>
                     </td>
                     <td>
                       <span class="level_1 glyphicon glyphicon-star"></span>
@@ -72,12 +42,9 @@
                     </td>
                     <% if badge[2].present? %>
                       <td>
-                        <span class="level_1"> <%= badge[2].round(0) %>% </span>
+                        <span class="perc"> <%= badge[2].round(0) %>% </span>
                       </td>
                     <% end %>
-                    <td>
-                      <span class="glyphicon glyphicon-star-empty"></span>
-                    </td>
                   </table>
                 </li>
               <% end %>
@@ -98,10 +65,7 @@
                   <table>
                     <td>
                       <%= badge[0] %>
-                    </td>
-                    <td>
-                        <span class="level_2"> 100% </span>
-                    </td>                     
+                    </td>                   
                     <td>
                       <span class="level_2 glyphicon glyphicon-star"></span>
                     </td>
@@ -122,12 +86,9 @@
               </td>
               <% if badge[2].present? %>
                 <td>
-                  <span class="level_2"> <%= badge[2].round(0) %>% </span>
+                  <span class="perc"> <%= badge[2].round(0) %>% </span>
                 </td>
               <% end %>      
-              <td>
-                <span class="glyphicon glyphicon-star-empty"></span>
-              </td>
             </table>
           </li>
         <% end %>
@@ -147,10 +108,7 @@
                   <table>
                     <td>
                       <%= badge[0] %>
-                    </td>
-                    <td>
-                        <span class="level_3"> 100% </span>
-                    </td>                     
+                    </td>                   
                     <td>
                       <span class="level_3 glyphicon glyphicon-star"></span>
                     </td>
@@ -171,12 +129,9 @@
               </td>
               <% if badge[2].present? %>
                 <td>
-                  <span class="level_3"> <%= badge[2].round(0) %>% </span>
+                  <span class="perc"> <%= badge[2].round(0) %>% </span>
                 </td>
-              <% end %>               
-              <td>
-                <span class="glyphicon glyphicon-star-empty"></span>
-              </td>
+              <% end %>
             </table>
           </li>
         <% end %>
@@ -192,15 +147,15 @@
     color: green;
   }
   .perc {
-      color: green !important;      
+      color: orange !important;      
   }
 
   .level_2{
-    color: red;
+    color: red ;
   }
     
   .level_3{
-    color: blue;
+    color: blue ;
   }
   .badges td {
     padding-right: 5px;
