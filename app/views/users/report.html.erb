@@ -118,7 +118,15 @@
         <span class="cell"><%= if c.hearing.present? then c.hearing + " mins" else "0 mins" end %> </span>
       <% end %>
     </div>
+  
 
+    <div class="flex">
+      <span class="name1">Notes</span>
+      <% cards.each do |c| %>
+        <span class="cell">c.comments </span>
+      <% end %>
+    </div>
+  
   <% end %>
   </div>
 
