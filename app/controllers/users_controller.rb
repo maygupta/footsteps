@@ -59,32 +59,32 @@ class UsersController < ApplicationController
     end
 
     @level_1_badges = [
-      ["Chanted 108 total Japa Rounds", cards.sum(:japa_rounds) > 108, cards.sum(:japa_rounds)/1.08],
-      ["Read more than 24 hours", read_mins > 24*60, read_mins*100/(24*60)],
-      ["Read more than 500 pages of #{books[0]}", sb_pages > 500, sb_pages*100/500],
-      ["Heard more than 24 hours", cards.pluck(:hearing).sum(&:to_i) > 24*60, cards.pluck(:hearing).sum(&:to_i)/(24*0.6)],
-      ["Served more than 24 hours", cards.pluck(:service).sum(&:to_i) > 24*60, cards.pluck(:service).sum(&:to_i)/(24*0.6)],
-      ["Recited 108 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 108, cards.pluck(:verses).sum(&:to_i)/1.08],
+      ["Chanted 108 total Japa Rounds", cards.sum(:japa_rounds) >= 108, cards.sum(:japa_rounds)/1.08],
+      ["Read for 24 hours", read_mins >= 24*60, read_mins*100/(24*60)],
+      ["Read 500 pages of #{books[0]}", sb_pages >= 500, sb_pages*100/500],
+      ["Heard for 24 hours", cards.pluck(:hearing).sum(&:to_i) >= 24*60, cards.pluck(:hearing).sum(&:to_i)/(24*0.6)],
+      ["Served for 24 hours", cards.pluck(:service).sum(&:to_i) >= 24*60, cards.pluck(:service).sum(&:to_i)/(24*0.6)],
+      ["Recited 108 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 108, cards.pluck(:verses).sum(&:to_i)/1.08],
       ["Chanted #{target_rounds} rounds every day for 7 days", chanted_minimum(user.sadhna_cards, target_rounds, 7) >= 7, chanted_minimum(user.sadhna_cards, target_rounds, 7)*100/7],
     ]
 
     @level_2_badges = [
-      ["Chanted 1008 total Japa Rounds", cards.sum(:japa_rounds) > 1008, cards.sum(:japa_rounds)/10.08],
-      ["Read more than 168 hours(1 week)", read_mins > 24*7*60, read_mins/(24*7*0.6)],
-      ["Read more than 5000 pages of #{books[0]}", sb_pages > 5000, sb_pages/50],
-      ["Heard more than 168 hours(1 week)", cards.pluck(:hearing).sum(&:to_i) > 24*7*60, cards.pluck(:hearing).sum(&:to_i)/(24*7*0.6)],
-      ["Served more than 168 hours(1 week)", cards.pluck(:service).sum(&:to_i)> 24*7*60, cards.pluck(:service).sum(&:to_i)/(24*7*0.6)],
-      ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 1008, cards.pluck(:verses).sum(&:to_i)/10.08],
+      ["Chanted 1008 total Japa Rounds", cards.sum(:japa_rounds) >= 1008, cards.sum(:japa_rounds)/10.08],
+      ["Read for 168 hours(1 week)", read_mins >= 24*7*60, read_mins/(24*7*0.6)],
+      ["Read 5000 pages of #{books[0]}", sb_pages >= 5000, sb_pages/50],
+      ["Heard for 168 hours(1 week)", cards.pluck(:hearing).sum(&:to_i) >= 24*7*60, cards.pluck(:hearing).sum(&:to_i)/(24*7*0.6)],
+      ["Served for 168 hours(1 week)", cards.pluck(:service).sum(&:to_i)>= 24*7*60, cards.pluck(:service).sum(&:to_i)/(24*7*0.6)],
+      ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 1008, cards.pluck(:verses).sum(&:to_i)/10.08],
       ["Chanted #{target_rounds} rounds every day for 30 days", chanted_minimum(user.sadhna_cards, target_rounds, 30) >= 30, chanted_minimum(user.sadhna_cards, target_rounds, 30)*100/30],
     ]
     
     @level_3_badges = [
-      ["Chanted 10008 total Japa Rounds", cards.sum(:japa_rounds) > 10008, cards.sum(:japa_rounds)/108],
+      ["Chanted 10008 total Japa Rounds", cards.sum(:japa_rounds) >= 10008, cards.sum(:japa_rounds)/108],
       ["Completed #{books[0]}", sb_pages >= 14625, sb_pages/146.25],
-      ["Read more than 720 hours(1 month)", read_mins > 24*30*60, read_mins/(24*30*0.6)],
-      ["Heard more than 720 hours(1 month)", cards.pluck(:hearing).sum(&:to_i) > 24*30*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*30*60)],
-      ["Served more than 720 hours(1 month)", cards.pluck(:service).sum(&:to_i)> 24*30*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*30*60)],
-      ["Recited 10008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)> 10008, cards.pluck(:verses).sum(&:to_i)/108],
+      ["Read for 720 hours(1 month)", read_mins >= 24*30*60, read_mins/(24*30*0.6)],
+      ["Heard for 720 hours(1 month)", cards.pluck(:hearing).sum(&:to_i) >= 24*30*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*30*60)],
+      ["Served for 720 hours(1 month)", cards.pluck(:service).sum(&:to_i)>= 24*30*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*30*60)],
+      ["Recited 10008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 10008, cards.pluck(:verses).sum(&:to_i)/108],
       ["Chanted #{target_rounds} rounds every day for 365 days", chanted_minimum(user.sadhna_cards, target_rounds, 365) >= 365, chanted_minimum(user.sadhna_cards, target_rounds, 365)*100/365],
     ]
 
