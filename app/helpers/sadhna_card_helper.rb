@@ -78,7 +78,12 @@ module SadhnaCardHelper
       "Teachings of Lord Kapila",
       "Our Family Business",
       "Life Comes from Life",
-      "On the Way to Krsna"
+      "On the Way to Krsna",
+      "Journey Home",
+      "Journey Within",
+      "Broken Names",
+      "Watering the seed",
+      "Back to Godhead"
     ]
   end
 
