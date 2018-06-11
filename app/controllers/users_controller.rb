@@ -299,7 +299,7 @@ class UsersController < ApplicationController
     max_count = 0
     count = 0
     cards.each do |card|
-      if card.chad.present?
+      if card.chad.present? and card.chad != "0"
         count += 1
         if count == days
           return count
