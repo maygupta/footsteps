@@ -109,7 +109,7 @@ class UsersController < ApplicationController
       book = user.target_book
       qty = user.target_book_qty
       unit = user.target_book_unit
-      max_count = read_min(user.sadhna_cards, book,unit,qty 365)
+      max_count = read_min(user.sadhna_cards, book,unit,qty,365)
       
       @level_1_badges.push(["Read #{qty} #{unit} of #{book} every day for 7 days", max_count >= 7, (max_count*100)/7])
       @level_2_badges.push(["Read #{qty} #{unit} of #{book} every day for 30 days", max_count >= 30, (max_count*100)/30])
