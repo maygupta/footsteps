@@ -111,10 +111,10 @@ class UsersController < ApplicationController
       unit = user.target_book_unit
       max_count = read_min(user.sadhna_cards, book,qty,unit, 365)
       
-      @level_1_badges += ["Read #{qty} #{unit} of #{book} every day for 7 days", max_count >= 7, (max_count*100)/7]
-      @level_2_badges += ["Read #{qty} #{unit} of #{book} every day for 30 days", max_count >= 30, (max_count*100)/30]
-      @level_3_badges += ["Read #{qty} #{unit} of #{book} every day for 90 days", max_count >= 90, (max_count*100)/90]
-      @level_4_badges += ["Read #{qty} #{unit} of #{book} every day for 365 days", max_count >= 365, (max_count*100)/365]
+      @level_1_badges.push(["Read #{qty} #{unit} of #{book} every day for 7 days", max_count >= 7, (max_count*100)/7])
+      @level_2_badges.push(["Read #{qty} #{unit} of #{book} every day for 30 days", max_count >= 30, (max_count*100)/30])
+      @level_3_badges.push(["Read #{qty} #{unit} of #{book} every day for 90 days", max_count >= 90, (max_count*100)/90])
+      @level_4_badges.push(["Read #{qty} #{unit} of #{book} every day for 365 days", max_count >= 365, (max_count*100)/365])
       
     end
 
