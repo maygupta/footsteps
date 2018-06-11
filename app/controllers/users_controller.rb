@@ -68,7 +68,7 @@ class UsersController < ApplicationController
       ["Heard for 24 hours", cards.pluck(:hearing).sum(&:to_i) >= 24*60, cards.pluck(:hearing).sum(&:to_i)/(24*0.6)],
       ["Served for 24 hours", cards.pluck(:service).sum(&:to_i) >= 24*60, cards.pluck(:service).sum(&:to_i)/(24*0.6)],
       ["Recited 108 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 108, cards.pluck(:verses).sum(&:to_i)/1.08],
-      ["Read CHAD every day for 7 days", chad_min(user.sadhna_cards, 7), chad_min(user.sadhna_cards, 7)*100/7],
+      ["Read CHAD every day for 7 days", chad_min(user.sadhna_cards, 7) >= 7, chad_min(user.sadhna_cards, 7)*100/7],
       ["Chanted #{target_rounds} rounds every day for 7 days", chanted_minimum(user.sadhna_cards, target_rounds, 7) >= 7, chanted_minimum(user.sadhna_cards, target_rounds, 7)*100/7],
     ]
 
@@ -79,7 +79,7 @@ class UsersController < ApplicationController
       ["Heard for 168 hours(1 week)", cards.pluck(:hearing).sum(&:to_i) >= 24*7*60, cards.pluck(:hearing).sum(&:to_i)/(24*7*0.6)],
       ["Served for 168 hours(1 week)", cards.pluck(:service).sum(&:to_i)>= 24*7*60, cards.pluck(:service).sum(&:to_i)/(24*7*0.6)],
       ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 1008, cards.pluck(:verses).sum(&:to_i)/10.08],
-      ["Read CHAD every day for 30 days", chad_min(user.sadhna_cards, 30), chad_min(user.sadhna_cards, 30)*100/30],
+      ["Read CHAD every day for 30 days", chad_min(user.sadhna_cards, 30) >= 30, chad_min(user.sadhna_cards, 30)*100/30],
       ["Chanted #{target_rounds} rounds every day for 30 days", chanted_minimum(user.sadhna_cards, target_rounds, 30) >= 30, chanted_minimum(user.sadhna_cards, target_rounds, 30)*100/30],
     ]
     
@@ -90,7 +90,7 @@ class UsersController < ApplicationController
       ["Heard for 720 hours(1 month)", cards.pluck(:hearing).sum(&:to_i) >= 24*30*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*30*60)],
       ["Served for 720 hours(1 month)", cards.pluck(:service).sum(&:to_i)>= 24*30*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*30*60)],
       ["Recited 10008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 10008, cards.pluck(:verses).sum(&:to_i)/108],
-      ["Read CHAD every day for 365 days", chad_min(user.sadhna_cards, 365), chad_min(user.sadhna_cards, 365)*100/365],
+      ["Read CHAD every day for 365 days", chad_min(user.sadhna_cards, 365) >= 365, chad_min(user.sadhna_cards, 365)*100/365],
       ["Chanted #{target_rounds} rounds every day for 365 days", chanted_minimum(user.sadhna_cards, target_rounds, 365) >= 365, chanted_minimum(user.sadhna_cards, target_rounds, 365)*100/365],
     ]
 
