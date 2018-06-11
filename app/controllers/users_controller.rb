@@ -295,9 +295,12 @@ class UsersController < ApplicationController
     if sc_book.present?
       p sc_book, book, unit, qty
       sc_book.each do |x|
-        p book, x.book, x.book == book
-        p unit, x.unit, x.unit == unit
-        p qty, x.qty, x.qty >= qty
+        p book, x.book, (x.book == book)
+        p unit, x.unit, (x.unit == unit)
+        p qty, x.qty 
+        p x.class
+        p qty.class
+        p (x.qty >= qty)
         if x.book == book and x.unit == unit and x.qty >= qty
           return true
         end
