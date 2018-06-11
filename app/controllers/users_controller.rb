@@ -268,11 +268,13 @@ class UsersController < ApplicationController
     if !book or !qty or !unit
       return false
     end
+    p cards, book, unit, qty, days
     cards = cards.order(date: :desc)
     max_count = 0
     count = 0
     cards.each do |card|
       if has_book(card.sadhna_card_books, book, unit, qty)
+        p count, max_count
         count += 1
         if count == days
           return count
