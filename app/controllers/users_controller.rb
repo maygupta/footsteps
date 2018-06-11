@@ -10,6 +10,9 @@ class UsersController < ApplicationController
   def update_rounds
     current_user.name = params[:name]
     current_user.target_rounds = params[:target_rounds]
+    current_user.target_book = params[:target_book]
+    current_user.target_book_qty = params[:target_book_qty]
+    current_user.target_book_unit = params[:target_book_unit]
     current_user.save
 
     redirect_to :back
@@ -65,6 +68,7 @@ class UsersController < ApplicationController
       ["Heard for 24 hours", cards.pluck(:hearing).sum(&:to_i) >= 24*60, cards.pluck(:hearing).sum(&:to_i)/(24*0.6)],
       ["Served for 24 hours", cards.pluck(:service).sum(&:to_i) >= 24*60, cards.pluck(:service).sum(&:to_i)/(24*0.6)],
       ["Recited 108 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 108, cards.pluck(:verses).sum(&:to_i)/1.08],
+      ["Read CHAD every day for 7 days", chad_min(user.sadhna_cards, 7), chad_min(user.sadhna_cards, 7)*100/7],
       ["Chanted #{target_rounds} rounds every day for 7 days", chanted_minimum(user.sadhna_cards, target_rounds, 7) >= 7, chanted_minimum(user.sadhna_cards, target_rounds, 7)*100/7],
     ]
 
@@ -75,6 +79,7 @@ class UsersController < ApplicationController
       ["Heard for 168 hours(1 week)", cards.pluck(:hearing).sum(&:to_i) >= 24*7*60, cards.pluck(:hearing).sum(&:to_i)/(24*7*0.6)],
       ["Served for 168 hours(1 week)", cards.pluck(:service).sum(&:to_i)>= 24*7*60, cards.pluck(:service).sum(&:to_i)/(24*7*0.6)],
       ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 1008, cards.pluck(:verses).sum(&:to_i)/10.08],
+      ["Read CHAD every day for 30 days", chad_min(user.sadhna_cards, 30), chad_min(user.sadhna_cards, 30)*100/30],
       ["Chanted #{target_rounds} rounds every day for 30 days", chanted_minimum(user.sadhna_cards, target_rounds, 30) >= 30, chanted_minimum(user.sadhna_cards, target_rounds, 30)*100/30],
     ]
     
@@ -85,6 +90,7 @@ class UsersController < ApplicationController
       ["Heard for 720 hours(1 month)", cards.pluck(:hearing).sum(&:to_i) >= 24*30*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*30*60)],
       ["Served for 720 hours(1 month)", cards.pluck(:service).sum(&:to_i)>= 24*30*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*30*60)],
       ["Recited 10008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 10008, cards.pluck(:verses).sum(&:to_i)/108],
+      ["Read CHAD every day for 365 days", chad_min(user.sadhna_cards, 365), chad_min(user.sadhna_cards, 365)*100/365],
       ["Chanted #{target_rounds} rounds every day for 365 days", chanted_minimum(user.sadhna_cards, target_rounds, 365) >= 365, chanted_minimum(user.sadhna_cards, target_rounds, 365)*100/365],
     ]
 
@@ -247,6 +253,69 @@ class UsersController < ApplicationController
 
 
     @sadhna_cards_by_week = @sadhna_cards.each_slice(7).to_a
+  end
+
+  def read_min(cards, book, unit, qty, days)
+    if !book or !qty or !unit
+      return false
+    end
+    cards = cards.order(date: :desc)
+    max_count = 0
+    count = 0
+    cards.each do |card|
+      if has_book(card.sadhna_card_books, book, unit, qty)
+        count += 1
+        if count == days
+          return count
+        end
+      else
+        if count > max_count
+          max_count = count
+        end
+        count = 0
+      end
+    end
+    if count > max_count
+      max_count = count
+    end
+
+    return max_count
+  end
+
+  def has_book(sc_book, book, unit, qty)
+    if sc_book.present?
+      sc_book.each do |x|
+        if x.book == book and x.unit == unit and x.qty >= qty
+          return true
+        end
+      end
+    end
+
+    return false
+  end
+
+  def chad_min(cards, days)
+    cards = cards.order(date: :desc)
+    max_count = 0
+    count = 0
+    cards.each do |card|
+      if card.chad.present?
+        count += 1
+        if count == days
+          return count
+        end
+      else
+        if count > max_count
+          max_count = count
+        end
+        count = 0
+      end
+    end
+    if count > max_count
+      max_count = count
+    end
+
+    return max_count
   end
 
   def chanted_minimum(cards, rounds, days)

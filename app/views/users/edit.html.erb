@@ -29,6 +29,52 @@
         </input>
       </div>
     </div>
+
+    <div class="form-group">
+      <label>Target Book Reading per day</label>
+      <table class="row">
+        <tr>
+          <td class="">
+            <select class="form-control" id="target_book" name="target_book">
+              <option value="">Select book</option>
+              <% books.each do |book| %>
+                <% if current_user.target_book.present? and current_user.target_book == book %>
+                  <option selected value="<%=book%>"><%= book %></option>  
+                <% else %>
+                  <option value="<%=book%>"><%= book %></option>  
+                <% end %>
+              <% end %>
+            </select>
+          </td>
+        </tr>
+      </table>
+
+      <table class="row">
+          <td class="column_1">
+            <input 
+              class=""
+              name="target_book_qty" 
+              value="<%= current_user.target_book_qty %>" 
+              placeholder="Reading" 
+              type="number" 
+              min="0" 
+              oninput="validity.valid||(value='');" 
+              id="target_book_qty">
+            </input>
+          </td>
+          <td>
+            <select class="form-control" id="target_book_unit" name="target_book_unit">
+              <% ["Mins", "Hrs", "Pages"].each do |unit| %>
+                <% if current_user.target_book_unit.present? and current_user.target_book_unit == unit %>
+                  <option selected value="<%=unit%>"><%= unit %></option>  
+                <% else %>
+                  <option value="<%=unit%>"><%= unit %></option>  
+                <% end %>
+              <% end %>
+            </select>
+          </td>
+      </table>
+    </div>
     <hr>
     <button class="btn btn-primary">Update</button>
   </form>
@@ -38,4 +84,7 @@
 	.field {
 		margin-bottom: 15px;
 	}
+  .column_1 {
+    width: 70%;
+  }
 </style>

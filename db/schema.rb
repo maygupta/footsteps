@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 20170202094643) do
     t.string   "comments"
     t.integer  "deity_worship"
     t.integer  "devotee_associaton"
-    t.string   "reading_type"
+    t.string   "reading_type",       default: "Mins"
     t.string   "reading_book"
   end
 
@@ -176,6 +176,9 @@ ActiveRecord::Schema.define(version: 20170202094643) do
     t.string   "salt"
     t.integer  "target_rounds"
     t.string   "role",               default: "user"
+    t.string   "target_book"
+    t.string   "target_book_unit"
+    t.integer  "target_book_qty"
   end
 
 end
