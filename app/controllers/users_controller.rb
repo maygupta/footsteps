@@ -74,50 +74,59 @@ class UsersController < ApplicationController
 
     @level_2_badges = [
       ["Chanted 1008 total Japa Rounds", cards.sum(:japa_rounds) >= 1008, cards.sum(:japa_rounds)/10.08],
-      ["Read for 168 hours(1 week)", read_mins >= 24*7*60, read_mins/(24*7*0.6)],
+      ["Read for 108 hours", read_mins >= 108*60, read_mins/(108*0.6)],
       ["Read 2000 pages of #{books[0]}", sb_pages >= 2000, sb_pages/20],
-      ["Heard for 168 hours(1 week)", cards.pluck(:hearing).sum(&:to_i) >= 24*7*60, cards.pluck(:hearing).sum(&:to_i)/(24*7*0.6)],
-      ["Served for 168 hours(1 week)", cards.pluck(:service).sum(&:to_i)>= 24*7*60, cards.pluck(:service).sum(&:to_i)/(24*7*0.6)],
+      ["Heard for 108 hours", cards.pluck(:hearing).sum(&:to_i) >= 108*60, cards.pluck(:hearing).sum(&:to_i)/(108*0.6)],
+      ["Served for 108 hours", cards.pluck(:service).sum(&:to_i)>= 108*60, cards.pluck(:service).sum(&:to_i)/(108*0.6)],
       ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 1008, cards.pluck(:verses).sum(&:to_i)/10.08],
       ["Read CHAD every day for 30 days", chad_min(user.sadhna_cards, 30) >= 30, chad_min(user.sadhna_cards, 30)*100/30],
       ["Chanted #{target_rounds} rounds every day for 30 days", chanted_minimum(user.sadhna_cards, target_rounds, 30) >= 30, chanted_minimum(user.sadhna_cards, target_rounds, 30)*100/30],
     ]
     
     @level_3_badges = [
-      ["Chanted 10008 total Japa Rounds", cards.sum(:japa_rounds) >= 10008, cards.sum(:japa_rounds)/108],
+      ["Chanted 3000 total Japa Rounds", cards.sum(:japa_rounds) >= 3000, cards.sum(:japa_rounds)/30],
+      ["Read 5000 pages of #{books[0]}", sb_pages >= 5000, sb_pages/50],
+      ["Read for 360 hours", read_mins >= 24*15*60, read_mins/(24*15*0.6)],
+      ["Heard for 360 hours", cards.pluck(:hearing).sum(&:to_i) >= 24*15*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*15*60)],
+      ["Served for 360 hours", cards.pluck(:service).sum(&:to_i)>= 24*15*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*15*60)],
+      ["Recited 3000 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 3000, cards.pluck(:verses).sum(&:to_i)/30],
+      ["Read CHAD every day for 90 days", chad_min(user.sadhna_cards, 90) >= 90, chad_min(user.sadhna_cards, 90)*100/90],
+      ["Chanted #{target_rounds} rounds every day for 90 days", chanted_minimum(user.sadhna_cards, target_rounds, 90) >= 90, chanted_minimum(user.sadhna_cards, target_rounds, 90)*100/90],
+    ]
+    
+    @level_4_badges = [
+      ["Chanted 10,000 total Japa Rounds", cards.sum(:japa_rounds) >= 10000, cards.sum(:japa_rounds)/100],
       ["Completed #{books[0]}", sb_pages >= 14625, sb_pages/146.25],
-      ["Read for 720 hours(1 month)", read_mins >= 24*30*60, read_mins/(24*30*0.6)],
-      ["Heard for 720 hours(1 month)", cards.pluck(:hearing).sum(&:to_i) >= 24*30*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*30*60)],
-      ["Served for 720 hours(1 month)", cards.pluck(:service).sum(&:to_i)>= 24*30*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*30*60)],
-      ["Recited 10008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 10008, cards.pluck(:verses).sum(&:to_i)/108],
+      ["Read for 720 hours", read_mins >= 24*30*60, read_mins/(24*30*0.6)],
+      ["Heard for 720 hours", cards.pluck(:hearing).sum(&:to_i) >= 24*30*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*30*60)],
+      ["Served for 720 hours", cards.pluck(:service).sum(&:to_i)>= 24*30*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*30*60)],
+      ["Recited 10,000 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 10000, cards.pluck(:verses).sum(&:to_i)/100],
       ["Read CHAD every day for 365 days", chad_min(user.sadhna_cards, 365) >= 365, chad_min(user.sadhna_cards, 365)*100/365],
       ["Chanted #{target_rounds} rounds every day for 365 days", chanted_minimum(user.sadhna_cards, target_rounds, 365) >= 365, chanted_minimum(user.sadhna_cards, target_rounds, 365)*100/365],
     ]
-
-    @level_1_badges.each do |badge|
-      if badge[1] == true
-        @unlocked_badges.push(badge)
-      else
-        @locked_badges.push(badge)
-      end
-    end
-
-    @level_2_badges.each do |badge|
-      if badge[1] == true
-        @unlocked_badges.push(badge)
-      else
-        @locked_badges.push(badge)
-      end
-    end
     
-    @level_3_badges.each do |badge|
-      if badge[1] == true
-        @unlocked_badges.push(badge)
-      else
-        @locked_badges.push(badge)
-      end
+    if user.target_book.present? and user.target_book_unit.present? and user.target_book_qty.present?
+      book = user.target_book
+      qty = user.target_book_qty
+      unit = user.target_book_unit
+      max_count = read_min(user.sadhna_cards, book,qty,unit, 365)
+      
+      @level_1_badges += ["Read #{qty} #{unit} of #{book} every day for 7 days", max_count >= 7, (max_count*100)/7]
+      @level_2_badges += ["Read #{qty} #{unit} of #{book} every day for 30 days", max_count >= 30, (max_count*100)/30]
+      @level_3_badges += ["Read #{qty} #{unit} of #{book} every day for 90 days", max_count >= 90, (max_count*100)/90]
+      @level_4_badges += ["Read #{qty} #{unit} of #{book} every day for 365 days", max_count >= 365, (max_count*100)/365]
+      
     end
 
+    [@level_1_badges, @level_2_badges, @level_3_badges, @level_4_badges].each do |badges|
+      badges.each do |badge|
+        if badge[1] == true
+          @unlocked_badges.push(badge)
+        else
+          @locked_badges.push(badge)
+        end
+      end
+    end
   end
 
   def show
