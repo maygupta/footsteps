@@ -295,6 +295,7 @@ class UsersController < ApplicationController
 
   def has_book(sc_book, book, unit, qty)
     if sc_book.present?
+      p sc_book, book, unit, qty
       sc_book.each do |x|
         if x.book == book and x.unit == unit and x.qty >= qty
           return true
