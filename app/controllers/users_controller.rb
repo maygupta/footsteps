@@ -297,7 +297,7 @@ class UsersController < ApplicationController
       sc_book.each do |x|
         p book, x.book, x.book == book
         p unit, x.unit, x.unit == unit
-        p qty, x.qty, x.qty == qty
+        p qty, x.qty, x.qty >= qty
         if x.book == book and x.unit == unit and x.qty >= qty
           return true
         end
