@@ -109,7 +109,7 @@ class UsersController < ApplicationController
       book = user.target_book
       qty = user.target_book_qty
       unit = user.target_book_unit
-      max_count = read_min(user.sadhna_cards, book,qty,unit, 365)
+      max_count = read_min(user.sadhna_cards, book,unit,qty 365)
       
       @level_1_badges.push(["Read #{qty} #{unit} of #{book} every day for 7 days", max_count >= 7, (max_count*100)/7])
       @level_2_badges.push(["Read #{qty} #{unit} of #{book} every day for 30 days", max_count >= 30, (max_count*100)/30])
@@ -293,14 +293,7 @@ class UsersController < ApplicationController
 
   def has_book(sc_book, book, unit, qty)
     if sc_book.present?
-      p sc_book, book, unit, qty
       sc_book.each do |x|
-        p book, x.book, (x.book == book)
-        p unit, x.unit, (x.unit == unit)
-        p qty, x.qty 
-        p x.class
-        p qty.class
-        p (x.qty >= qty)
         if x.book == book and x.unit == unit and x.qty >= qty
           return true
         end
