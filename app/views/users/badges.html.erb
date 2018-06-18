@@ -36,7 +36,7 @@
         <% end %>
           
     
-        <% if level_x_locked_badges.count > 0 %>
+        <% if @level_x_locked_badges.count > 0 %>
           <label>Badges In Progress</label>
             <% @locked_badges.each do |badge| %>
               <% if badges.include?(badge) %>
