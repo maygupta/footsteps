@@ -75,7 +75,7 @@ class UsersController < ApplicationController
     @level_2_badges = [
       ["Chanted 1008 total Japa Rounds", cards.sum(:japa_rounds) >= 1008, cards.sum(:japa_rounds)/10.08],
       ["Read for 108 hours", read_mins >= 108*60, read_mins/(108*0.6)],
-      ["Read 2000 pages of #{books[0]}", sb_pages >= 2000, sb_pages/20],
+      ["Read 1008 pages of #{books[0]}", sb_pages >= 1008, sb_pages/10.08],
       ["Heard for 108 hours", cards.pluck(:hearing).sum(&:to_i) >= 108*60, cards.pluck(:hearing).sum(&:to_i)/(108*0.6)],
       ["Served for 108 hours", cards.pluck(:service).sum(&:to_i)>= 108*60, cards.pluck(:service).sum(&:to_i)/(108*0.6)],
       ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 1008, cards.pluck(:verses).sum(&:to_i)/10.08],
@@ -85,7 +85,7 @@ class UsersController < ApplicationController
     
     @level_3_badges = [
       ["Chanted 3000 total Japa Rounds", cards.sum(:japa_rounds) >= 3000, cards.sum(:japa_rounds)/30],
-      ["Read 5000 pages of #{books[0]}", sb_pages >= 5000, sb_pages/50],
+      ["Read 3000 pages of #{books[0]}", sb_pages >= 3000, sb_pages/30],
       ["Read for 360 hours", read_mins >= 24*15*60, read_mins/(24*15*0.6)],
       ["Heard for 360 hours", cards.pluck(:hearing).sum(&:to_i) >= 24*15*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*15*60)],
       ["Served for 360 hours", cards.pluck(:service).sum(&:to_i)>= 24*15*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*15*60)],
