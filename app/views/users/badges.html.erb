@@ -7,9 +7,13 @@
             
     <h4 class="level_1">Vaikuntha Badges</h4>
     <br>
-
+    <% level_1_locked_badges = @level_1_badges & @locked_badges 
+       level_2_locked_badges = @level_2_badges & @locked_badges 
+       level_3_locked_badges = @level_3_badges & @locked_badges 
+       level_4_locked_badges = @level_4_badges & @locked_badges 
+    %>
     <% if @level_1_badges.count {|x| x[1]} > 0 %>
-          <label>Badges Awarded</label>
+          <label>Badges Awarded (<%= @level_1_badges.count - level_1_locked_badges.count %>)</label>
             <% @unlocked_badges.each do |badge| %>
               <% if @level_1_badges.include?(badge) %>
                 <li class="list-group-item unlocked">
@@ -26,11 +30,7 @@
             <% end %>
           <br>
     <% end %>
-    <% level_1_locked_badges = @level_1_badges & @locked_badges 
-       level_2_locked_badges = @level_2_badges & @locked_badges 
-       level_3_locked_badges = @level_3_badges & @locked_badges 
-       level_4_locked_badges = @level_4_badges & @locked_badges 
-    %>
+
       
     <% if level_1_locked_badges.count > 0 %>
           <label>Badges In Progress</label>
@@ -59,7 +59,7 @@
     <h4 class="level_2">Mathura Badges</h4>
     <br>
     <% if @level_2_badges.count {|x| x[1]} > 0 %>
-            <label>Badges Awarded</label>
+          <label>Badges Awarded (<%= @level_2_badges.count - level_2_locked_badges.count %>)</label>
             <% @unlocked_badges.each do |badge| %>
               <% if @level_2_badges.include?(badge) %>
                 <li class="list-group-item unlocked">
@@ -102,7 +102,7 @@
     <h4 class="level_3">Vrndavana Badges</h4>
     <br>
     <% if @level_3_badges.count {|x| x[1]} > 0 %>  
-          <label>Badges Awarded</label>
+          <label>Badges Awarded (<%= @level_3_badges.count - level_3_locked_badges.count %>)</label>
             <% @unlocked_badges.each do |badge| %>
               <% if @level_3_badges.include?(badge) %>
                 <li class="list-group-item unlocked">
@@ -145,7 +145,7 @@
     <h4 class="level_4">Govardhana Badges</h4>
     <br>
     <% if @level_4_badges.count {|x| x[1]} > 0 %>
-            <label>Badges Awarded</label>
+          <label>Badges Awarded (<%= @level_4_badges.count - level_4_locked_badges.count %>)</label>
             <% @unlocked_badges.each do |badge| %>
               <% if @level_4_badges.include?(badge) %>
                 <li class="list-group-item unlocked">
