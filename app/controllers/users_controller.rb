@@ -60,6 +60,8 @@ class UsersController < ApplicationController
         end
       end
     end
+    chad_min_val = chad_min(user.sadhna_cards, 365)
+    chant_min_val = chanted_minimum(user.sadhna_cards, target_rounds, 365)
 
     @level_1_badges = [
       ["Chanted 108 total Japa Rounds", cards.sum(:japa_rounds) >= 108, cards.sum(:japa_rounds)/1.08],
@@ -68,8 +70,8 @@ class UsersController < ApplicationController
       ["Heard for 24 hours", cards.pluck(:hearing).sum(&:to_i) >= 24*60, cards.pluck(:hearing).sum(&:to_i)/(24*0.6)],
       ["Served for 24 hours", cards.pluck(:service).sum(&:to_i) >= 24*60, cards.pluck(:service).sum(&:to_i)/(24*0.6)],
       ["Recited 108 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 108, cards.pluck(:verses).sum(&:to_i)/1.08],
-      ["Read CHAD every day for 7 days", chad_min(user.sadhna_cards, 7) >= 7, chad_min(user.sadhna_cards, 7)*100/7],
-      ["Chanted #{target_rounds} rounds every day for 7 days", chanted_minimum(user.sadhna_cards, target_rounds, 7) >= 7, chanted_minimum(user.sadhna_cards, target_rounds, 7)*100/7],
+      ["Read CHAD every day for 7 days", chad_min_val >= 7, (chad_min_val*100)/7],
+      ["Chanted #{target_rounds} rounds every day for 7 days", chant_min_val >= 7, (chant_min_val*100)/7],
     ]
 
     @level_2_badges = [
@@ -79,8 +81,8 @@ class UsersController < ApplicationController
       ["Heard for 108 hours", cards.pluck(:hearing).sum(&:to_i) >= 108*60, cards.pluck(:hearing).sum(&:to_i)/(108*0.6)],
       ["Served for 108 hours", cards.pluck(:service).sum(&:to_i)>= 108*60, cards.pluck(:service).sum(&:to_i)/(108*0.6)],
       ["Recited 1008 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 1008, cards.pluck(:verses).sum(&:to_i)/10.08],
-      ["Read CHAD every day for 30 days", chad_min(user.sadhna_cards, 30) >= 30, chad_min(user.sadhna_cards, 30)*100/30],
-      ["Chanted #{target_rounds} rounds every day for 30 days", chanted_minimum(user.sadhna_cards, target_rounds, 30) >= 30, chanted_minimum(user.sadhna_cards, target_rounds, 30)*100/30],
+      ["Read CHAD every day for 30 days", chad_min_val >= 30, (chad_min_val*100)/30],
+      ["Chanted #{target_rounds} rounds every day for 30 days", chant_min_val >= 30, (chant_min_val*100)/30],
     ]
     
     @level_3_badges = [
@@ -90,8 +92,8 @@ class UsersController < ApplicationController
       ["Heard for 360 hours", cards.pluck(:hearing).sum(&:to_i) >= 24*15*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*15*60)],
       ["Served for 360 hours", cards.pluck(:service).sum(&:to_i)>= 24*15*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*15*60)],
       ["Recited 3000 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 3000, cards.pluck(:verses).sum(&:to_i)/30],
-      ["Read CHAD every day for 90 days", chad_min(user.sadhna_cards, 90) >= 90, chad_min(user.sadhna_cards, 90)*100/90],
-      ["Chanted #{target_rounds} rounds every day for 90 days", chanted_minimum(user.sadhna_cards, target_rounds, 90) >= 90, chanted_minimum(user.sadhna_cards, target_rounds, 90)*100/90],
+      ["Read CHAD every day for 90 days", chad_min_val >= 90, (chad_min_val*100)/90],
+      ["Chanted #{target_rounds} rounds every day for 90 days", chant_min_val >= 90, (chant_min_val*100)/90],
     ]
     
     @level_4_badges = [
@@ -101,8 +103,8 @@ class UsersController < ApplicationController
       ["Heard for 720 hours", cards.pluck(:hearing).sum(&:to_i) >= 24*30*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*30*60)],
       ["Served for 720 hours", cards.pluck(:service).sum(&:to_i)>= 24*30*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*30*60)],
       ["Recited 10,000 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 10000, cards.pluck(:verses).sum(&:to_i)/100],
-      ["Read CHAD every day for 365 days", chad_min(user.sadhna_cards, 365) >= 365, chad_min(user.sadhna_cards, 365)*100/365],
-      ["Chanted #{target_rounds} rounds every day for 365 days", chanted_minimum(user.sadhna_cards, target_rounds, 365) >= 365, chanted_minimum(user.sadhna_cards, target_rounds, 365)*100/365],
+      ["Read CHAD every day for 365 days", chad_min_val >= 365, (chad_min_val*100)/365],
+      ["Chanted #{target_rounds} rounds every day for 365 days", chant_min_val >= 365, (chant_min_val*100)/365],
     ]
     
     if user.target_book.present? and user.target_book_unit.present? and user.target_book_qty.present?
@@ -351,7 +353,6 @@ class UsersController < ApplicationController
       max_count = count
     end
 
-    print "max_count=#{max_count}"
     return max_count
   end
 
