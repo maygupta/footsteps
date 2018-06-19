@@ -15,7 +15,7 @@
       [@level_1_badges, @level_2_badges, @level_3_badges, @level_4_badges].each do |badges| 
         @level_x_locked_badges = badges & @locked_badges
     %>
-        <h4 class="level_<%=@count+1%>"><%= @names[@count] %> Badges</h4>      
+        <h4 class="level_<%= @count+1 %>"><%= @names[@count] %> Badges</h4>      
         <br>
         <% if badges.count {|x| x[1]} > 0 %>
           <label>Badges Awarded (<%= badges.count - @level_x_locked_badges.count %>)</label>
