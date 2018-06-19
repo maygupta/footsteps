@@ -27,7 +27,7 @@
                       <%= badge[0] %>
                     </td>
                     <td>
-                      <span class="level_<% @count+1 %> glyphicon glyphicon-star"></span>
+                      <span class="level_<%= @count+1 %> glyphicon glyphicon-star"></span>
                     </td>
                   </table>
                 </li>
@@ -47,7 +47,7 @@
                     </td>
                     <% if badge[2].present? %>
                       <td>
-                        <span class="level_<%=@count+1%>"> <%= badge[2].round(0) %>% </span>
+                        <span class="level_<%= @count+1 %>"> <%= badge[2].round(0) %>% </span>
                       </td>
                     <% end %>
                   </table>
