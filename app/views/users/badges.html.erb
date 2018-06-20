@@ -3,14 +3,24 @@
 <div class="badges container">
 
   <ul class="sc_list list-group">
-
-            
-    <% level_1_locked_badges = @level_1_badges & @locked_badges 
-       level_2_locked_badges = @level_2_badges & @locked_badges 
-       level_3_locked_badges = @level_3_badges & @locked_badges 
-       level_4_locked_badges = @level_4_badges & @locked_badges 
-              
-      @names = ["Vaikuntha", "Mathura", "Vrndavana", "Govardhana"]
+  
+  <%        
+    @names = ["Vaikuntha", "Mathura", "Vrndavana", "Govardhana"]
+    points = [10,20,50,100]
+    total_points = 0
+    index = 0
+    [@level_1_badges, @level_2_badges, @level_3_badges, @level_4_badges].each do |badges| 
+        @level_x_locked_badges = badges & @locked_badges
+        if badges.count {|x| x[1]} > 0
+           total_points += points[index]*(badges.count - @level_x_locked_badges.count)
+        end
+        index += 1
+    end
+  %>  
+    
+  <h4 class='perc'> Total Points = <%= total_points %> </h4>
+    
+    <%
       @count = 0
       [@level_1_badges, @level_2_badges, @level_3_badges, @level_4_badges].each do |badges| 
         @level_x_locked_badges = badges & @locked_badges
@@ -18,7 +28,7 @@
         <h4 class="level_<%= @count+1 %>"><%= @names[@count] %> Badges</h4>      
         <br>
         <% if badges.count {|x| x[1]} > 0 %>
-          <label>Badges Awarded (<%= badges.count - @level_x_locked_badges.count %>)</label>
+          <label>Badges Awarded (<%= badges.count - @level_x_locked_badges.count %>)  Points (<%= points[@count]* (badges.count - @level_x_locked_badges.count) )</label>
           <% @unlocked_badges.each do |badge| %>
             <% if badges.include?(badge) %>
                 <li class="list-group-item unlocked">
