@@ -27,9 +27,9 @@
     %>
         <h4 class="level_<%= @count+1 %>"><%= @names[@count] %> Badges</h4>      
         <br>
-        <table class="table table-bordered">
+        <table class="table">
           <tr>
-            <td><label>Badges Awarded</label></td>
+            <td>Badges Awarded</td>
             <td><%= badges.count - @level_x_locked_badges.count %></td>
           </tr>
           <tr>
