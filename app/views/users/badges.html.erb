@@ -53,6 +53,7 @@
         </li>
         <br>
         <% if badges.count {|x| x[1]} > 0 %>
+          <label>Badges Awarded</label>
           <% @unlocked_badges.each do |badge| %>
             <% if badges.include?(badge) %>
                 <li class="list-group-item unlocked">
