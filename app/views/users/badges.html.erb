@@ -27,20 +27,31 @@
     %>
         <h4 class="level_<%= @count+1 %>"><%= @names[@count] %> Badges</h4>      
         <br>
-        <table class="table table-bordered">
-          <tr>
-            <td>Badges Awarded</td>
-            <td><%= badges.count - @level_x_locked_badges.count %></td>
-          </tr>
-          <tr>
-            <td>Points per badge</td>
-            <td><%= points[@count] %></td>
-          </tr>
-          <tr>
-            <td>Points earned</td>
-            <td><%= points[@count]* (badges.count - @level_x_locked_badges.count) %></td>
-          </tr>
-        </table>
+        <li class="list-group-item">
+          <table>
+            <tr>
+              <td>Badges Awarded</td>
+              <td><%= badges.count - @level_x_locked_badges.count %></td>
+            </tr>
+          </table>
+        </li>
+        <li class="list-group-item">
+          <table>
+            <tr>
+              <td>Points per badge</td>
+              <td><%= points[@count] %></td>
+            </tr>
+          </table>
+        </li>
+        <li class="list-group-item">
+          <table>
+            <tr>
+              <td>Points earned</td>
+              <td><%= points[@count]* (badges.count - @level_x_locked_badges.count) %></td>
+            </tr>
+          </table>
+        </li>
+        <br>
         <% if badges.count {|x| x[1]} > 0 %>
           <% @unlocked_badges.each do |badge| %>
             <% if badges.include?(badge) %>
