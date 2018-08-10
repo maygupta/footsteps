@@ -86,22 +86,33 @@ class UsersController < ApplicationController
     ]
     
     @level_3_badges = [
-      ["Chanted 3000 total Japa Rounds", cards.sum(:japa_rounds) >= 3000, cards.sum(:japa_rounds)/30],
-      ["Read 3000 pages of #{books[0]}", sb_pages >= 3000, sb_pages/30],
+      ["Chanted 2500 total Japa Rounds", cards.sum(:japa_rounds) >= 2500, cards.sum(:japa_rounds)/25],
+      ["Read 2500 pages of #{books[0]}", sb_pages >= 2500, sb_pages/25],
       ["Read for 360 hours", read_mins >= 24*15*60, read_mins/(24*15*0.6)],
       ["Heard for 360 hours", cards.pluck(:hearing).sum(&:to_i) >= 24*15*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*15*60)],
       ["Served for 360 hours", cards.pluck(:service).sum(&:to_i)>= 24*15*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*15*60)],
-      ["Recited 3000 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 3000, cards.pluck(:verses).sum(&:to_i)/30],
+      ["Recited 2500 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 2500, cards.pluck(:verses).sum(&:to_i)/25],
       ["Read CHAD every day for 90 days", chad_min_val >= 90, (chad_min_val*100)/90],
       ["Chanted #{target_rounds} rounds every day for 90 days", chant_min_val >= 90, (chant_min_val*100)/90],
     ]
     
     @level_4_badges = [
-      ["Chanted 10,000 total Japa Rounds", cards.sum(:japa_rounds) >= 10000, cards.sum(:japa_rounds)/100],
-      ["Completed #{books[0]}", sb_pages >= 14625, sb_pages/146.25],
+      ["Chanted 5000 total Japa Rounds", cards.sum(:japa_rounds) >= 6000, cards.sum(:japa_rounds)/60],
+      ["Read 5000 pages of #{books[0]}", sb_pages >= 6000, sb_pages/60],
       ["Read for 720 hours", read_mins >= 24*30*60, read_mins/(24*30*0.6)],
       ["Heard for 720 hours", cards.pluck(:hearing).sum(&:to_i) >= 24*30*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*30*60)],
       ["Served for 720 hours", cards.pluck(:service).sum(&:to_i)>= 24*30*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*30*60)],
+      ["Recited 5000 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 5000, cards.pluck(:verses).sum(&:to_i)/50],
+      ["Read CHAD every day for 180 days", chad_min_val >= 180, (chad_min_val*100)/180],
+      ["Chanted #{target_rounds} rounds every day for 180 days", chant_min_val >= 180, (chant_min_val*100)/180],
+    ]
+    
+    @level_5_badges = [
+      ["Chanted 10,000 total Japa Rounds", cards.sum(:japa_rounds) >= 10000, cards.sum(:japa_rounds)/100],
+      ["Completed #{books[0]}", sb_pages >= 14625, sb_pages/146.25],
+      ["Read for 1440 hours", read_mins >= 24*60*60, read_mins/(24*60*0.6)],
+      ["Heard for 1440 hours", cards.pluck(:hearing).sum(&:to_i) >= 24*60*60, cards.pluck(:hearing).sum(&:to_i) * 100 / (24*60*60)],
+      ["Served for 1440 hours", cards.pluck(:service).sum(&:to_i)>= 24*60*60, cards.pluck(:service).sum(&:to_i) * 100 / (24*60*60)],
       ["Recited 10,000 verses of Bhagavad Gita", cards.pluck(:verses).sum(&:to_i)>= 10000, cards.pluck(:verses).sum(&:to_i)/100],
       ["Read CHAD every day for 365 days", chad_min_val >= 365, (chad_min_val*100)/365],
       ["Chanted #{target_rounds} rounds every day for 365 days", chant_min_val >= 365, (chant_min_val*100)/365],
@@ -116,11 +127,12 @@ class UsersController < ApplicationController
       @level_1_badges.push(["Read #{qty} #{unit} of #{book} every day for 7 days", max_count >= 7, (max_count*100)/7])
       @level_2_badges.push(["Read #{qty} #{unit} of #{book} every day for 30 days", max_count >= 30, (max_count*100)/30])
       @level_3_badges.push(["Read #{qty} #{unit} of #{book} every day for 90 days", max_count >= 90, (max_count*100)/90])
-      @level_4_badges.push(["Read #{qty} #{unit} of #{book} every day for 365 days", max_count >= 365, (max_count*100)/365])
+      @level_4_badges.push(["Read #{qty} #{unit} of #{book} every day for 180 days", max_count >= 180, (max_count*100)/180])
+      @level_5_badges.push(["Read #{qty} #{unit} of #{book} every day for 365 days", max_count >= 365, (max_count*100)/365])
       
     end
 
-    [@level_1_badges, @level_2_badges, @level_3_badges, @level_4_badges].each do |badges|
+    [@level_1_badges, @level_2_badges, @level_3_badges, @level_4_badges, @level_5_badges].each do |badges|
       badges.each do |badge|
         if badge[1] == true
           @unlocked_badges.push(badge)
