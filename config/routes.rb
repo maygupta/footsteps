@@ -17,7 +17,12 @@ Rails.application.routes.draw do
   resources :darshans
   resources :medias
   resources :announcements
-  resources :sections
+  resources :sections do 
+    collection do
+      get :darshan
+      get :media
+    end
+  end
 
   resources :sadhna_cards do
     collection do
