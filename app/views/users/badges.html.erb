@@ -3,38 +3,78 @@
 <div class="badges container">
 
   <ul class="sc_list list-group">
-
-            
-    <h4 class="level_1">Mathura Badges</h4>
-    <br>
-
-    <% if @level_1_badges.count {|x| x[1]} > 0 %>
+  
+  <%        
+    @names = ["Vaikuntha", "Mathura", "Vrndavana", "Govardhana", "Radha-Kunda"]
+    points = [10,20,50,100,200]
+    total_points = 0
+    index = 0
+    [@level_1_badges, @level_2_badges, @level_3_badges, @level_4_badges, @level_5_badges].each do |badges| 
+        @level_x_locked_badges = badges & @locked_badges
+        if badges.count {|x| x[1]} > 0
+           total_points += points[index]*(badges.count - @level_x_locked_badges.count)
+        end
+        index += 1
+    end
+  %>  
+    
+  <h4 > Total Points = <%= total_points %> </h4>
+  <hr>
+    <%
+      @count = 0
+      [@level_1_badges, @level_2_badges, @level_3_badges, @level_4_badges, @level_5_badges].each do |badges| 
+        @level_x_locked_badges = badges & @locked_badges
+    %>
+        <h4 class="level_<%= @count+1 %>"><%= @names[@count] %> Badges</h4>      
+        <br>
+        <li class="list-group-item">
+          <table>
+            <tr>
+              <td>Badges Awarded</td>
+              <td><%= badges.count - @level_x_locked_badges.count %></td>
+            </tr>
+          </table>
+        </li>
+        <li class="list-group-item">
+          <table>
+            <tr>
+              <td>Points per badge</td>
+              <td><%= points[@count] %></td>
+            </tr>
+          </table>
+        </li>
+        <li class="list-group-item">
+          <table>
+            <tr>
+              <td>Points earned</td>
+              <td><%= points[@count]* (badges.count - @level_x_locked_badges.count) %></td>
+            </tr>
+          </table>
+        </li>
+        <br>
+        <% if badges.count {|x| x[1]} > 0 %>
           <label>Badges Awarded</label>
-            <% @unlocked_badges.each do |badge| %>
-              <% if @level_1_badges.include?(badge) %>
+          <% @unlocked_badges.each do |badge| %>
+            <% if badges.include?(badge) %>
                 <li class="list-group-item unlocked">
                   <table>
                     <td>
                       <%= badge[0] %>
                     </td>
                     <td>
-                      <span class="level_1 glyphicon glyphicon-star"></span>
+                      <span class="level_<%= @count+1 %> glyphicon glyphicon-star"></span>
                     </td>
                   </table>
                 </li>
-              <% end %>
             <% end %>
-          <br>
-    <% end %>
-    <% level_1_locked_badges = @level_1_badges & @locked_badges 
-       level_2_locked_badges = @level_2_badges & @locked_badges 
-       level_3_locked_badges = @level_3_badges & @locked_badges 
-    %>
-      
-    <% if level_1_locked_badges.count > 0 %>
+          <% end %>
+        <% end %>
+        <br>
+    
+        <% if @level_x_locked_badges.count > 0 %>
           <label>Badges In Progress</label>
             <% @locked_badges.each do |badge| %>
-              <% if @level_1_badges.include?(badge) %>
+              <% if badges.include?(badge) %>
                 <li class="list-group-item locked">
                   <table>
                     <td>
@@ -42,103 +82,22 @@
                     </td>
                     <% if badge[2].present? %>
                       <td>
-                        <span class="level_1"> <%= badge[2].round(0) %>% </span>
+                        <span class="level_<%= @count+1 %>"> <%= badge[2].round(0) %>% </span>
                       </td>
                     <% end %>
                   </table>
                 </li>
               <% end %>
             <% end %>
-     <% else %>
-      <label>You have achieved all Mathura badges</label>
-     <% end %>
-    
+        <% else %>
+          <label>You have achieved all <%= @names[@count] %> badges</label>
+        <% end %>
     <hr>
-      
-    <h4 class="level_2">Gokula Badges</h4>
-    <br>
-    <% if @level_2_badges.count {|x| x[1]} > 0 %>
-            <label>Badges Awarded</label>
-            <% @unlocked_badges.each do |badge| %>
-              <% if @level_2_badges.include?(badge) %>
-                <li class="list-group-item unlocked">
-                  <table>
-                    <td>
-                      <%= badge[0] %>
-                    </td>                   
-                    <td>
-                      <span class="level_2 glyphicon glyphicon-star"></span>
-                    </td>
-                  </table>
-                </li>
-              <% end %>
-            <% end %>
-    <% end %>
-    <br>
-    <% if level_2_locked_badges.count > 0 %>
-    <label>Badges In Progress</label>
-      <% @locked_badges.each do |badge| %>
-        <% if @level_2_badges.include?(badge) %>
-          <li class="list-group-item locked">
-            <table>
-              <td>
-                <%= badge[0] %>
-              </td>
-              <% if badge[2].present? %>
-                <td>
-                  <span class="level_2"> <%= badge[2].round(0) %>% </span>
-                </td>
-              <% end %>      
-            </table>
-          </li>
-        <% end %>
-      <% end %>
-      <% else %>
-      <label>You have achieved all Gokula badges</label>
-     <% end %>
-      <hr>
-    
-    <h4 class="level_3">Vrndavana Badges</h4>
-    <br>
-    <% if @level_3_badges.count {|x| x[1]} > 0 %>  
-          <label>Badges Awarded</label>
-            <% @unlocked_badges.each do |badge| %>
-              <% if @level_3_badges.include?(badge) %>
-                <li class="list-group-item unlocked">
-                  <table>
-                    <td>
-                      <%= badge[0] %>
-                    </td>                   
-                    <td>
-                      <span class="level_3 glyphicon glyphicon-star"></span>
-                    </td>
-                  </table>
-                </li>
-              <% end %>
-            <% end %>
-    <% end %>
-    <br>
-    <% if level_3_locked_badges.count > 0 %>
-    <label>Badges In Progress</label>
-      <% @locked_badges.each do |badge| %>
-        <% if @level_3_badges.include?(badge) %>
-          <li class="list-group-item locked">
-            <table>
-              <td>
-                <%= badge[0] %>
-              </td>
-              <% if badge[2].present? %>
-                <td>
-                  <span class="level_3"> <%= badge[2].round(0) %>% </span>
-                </td>
-              <% end %>
-            </table>
-          </li>
-        <% end %>
-      <% end %>
-   <% else %>
-      <label>You have achieved all Vrndavana badges</label>
-   <% end %>
+    <% 
+        @count += 1
+      end 
+    %>
+
   </ul>
 
 
@@ -155,10 +114,21 @@
   }
     
   .level_3{
-    color: blue !important;
+    color: DeepSkyBlue !important;
+  }
+  
+  .level_4{
+    color: DeepPink !important;
+  }
+  
+  .level_5{
+    color: Brown !important;
   }
   .badges td {
     width: 92% !important;
+  }
+  .right {
+    float: right;
   }
 
   
