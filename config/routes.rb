@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :darshans
   resources :medias
   resources :announcements
+  resources :sections
 
   resources :sadhna_cards do
     collection do
