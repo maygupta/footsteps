@@ -30,7 +30,7 @@ class SectionsController < ApplicationController
     
     @page = params[:page].present? ? params[:page] : 0
     @media_per_page = 2
-    render :json => section.media.where(:category => params[:category]).order(created_at: :desc).limit(10).offset(@page * @media_per_page).all, :status => 200
+    render :json => section.media.where(:category => params[:category]).order(created_at: :desc).limit(10).offset(@page * @media_per_page), :status => 200
   end
 
   def darshan
