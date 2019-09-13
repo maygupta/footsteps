@@ -25,7 +25,7 @@ class SectionsController < ApplicationController
     if params[:section_id].present?
       section = Section.find(params[:section_id])
     else
-      return :json => {'error'}, :status => 404
+      return :json => {'message': 'missing section_id'}, :status => 404
     end
 
     render :json => section.media.where(:category => params[:category]).all, :status => 200
