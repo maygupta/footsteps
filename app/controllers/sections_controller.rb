@@ -30,7 +30,7 @@ class SectionsController < ApplicationController
     
     @page = params[:page].present? ? params[:page] : 0
     @media_per_page = 2
-    render :json => section.media.where(:category => params[:category]).order(created_at: :desc).limit(10).offset(@page * @media_per_page), :status => 200
+    render :json => section.media.where(:category => params[:category]).order(created_at: :desc).limit(@media_per_page).offset(@page * @media_per_page), :status => 200
   end
 
   def darshan
@@ -44,7 +44,9 @@ class SectionsController < ApplicationController
       return :json => {'message': 'missing section_id'}, :status => 404
     end
 
-    render :json => section.darshan.all, :status => 200
+    @page = params[:page].present? ? params[:page] : 0
+    @darshan_per_page = 2
+    render :json => section.darshan.order(created_at: :desc).limit(@darshan_per_page).offset(@page * @darshan_per_page), :status => 200
   end
 
 end
