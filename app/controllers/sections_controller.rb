@@ -27,6 +27,9 @@ class SectionsController < ApplicationController
     else
       return :json => {'message': 'missing section_id'}, :status => 404
     end
+    
+    start_index = params[:start_index].present? ? params[:start_index] : 0
+    end_index = params[:end_index].present? ? params[:end_index] : -1
 
     render :json => section.media.where(:category => params[:category]).all, :status => 200
   end
