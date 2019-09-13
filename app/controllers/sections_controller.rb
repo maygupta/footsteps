@@ -39,8 +39,10 @@ class SectionsController < ApplicationController
     headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
     headers['Access-Control-Request-Method'] = '*'
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-    if params[:id].present?
-      section = Section.find(params[:id])
+    if params[:section_id].present?
+      section = Section.find(params[:section_id])
+    else
+      return :json => {'message': 'missing section_id'}, :status => 404
     end
 
     render :json => section.darshan.all, :status => 200
