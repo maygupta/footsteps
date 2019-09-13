@@ -29,7 +29,7 @@ class SectionsController < ApplicationController
     end
     
     @page = params[:page].present? ? params[:page].to_i : 0
-    @media_per_page = 2
+    @media_per_page = 5
     render :json => section.media.where(:category => params[:category]).order(created_at: :desc).limit(@media_per_page).offset(@page * @media_per_page), :status => 200
   end
 
@@ -45,7 +45,7 @@ class SectionsController < ApplicationController
     end
 
     @page = params[:page].present? ? params[:page].to_i : 0
-    @darshan_per_page = 2
+    @darshan_per_page = 5
     render :json => section.darshan.order(created_at: :desc).limit(@darshan_per_page).offset(@page * @darshan_per_page), :status => 200
   end
 
