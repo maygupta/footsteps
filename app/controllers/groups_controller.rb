@@ -12,6 +12,7 @@ class GroupsController < ApplicationController
       group.sections.each do |section|
         if section.darshan.count > 0
           ret.push(group)
+          break
         end
       end
     end
@@ -31,6 +32,7 @@ class GroupsController < ApplicationController
       group.sections.each do |section|
         if section.media.where(:category => 'lecture').count > 0
           ret.push(group)
+          break
         end
       end
     end
@@ -50,6 +52,7 @@ class GroupsController < ApplicationController
       group.sections.each do |section|
         if section.media.where(:category => 'video').count > 0
           ret.push(group)
+          break
         end
       end
     end
@@ -69,6 +72,7 @@ class GroupsController < ApplicationController
       group.sections.each do |section|
         if section.media.where(:category => 'kirtan').count > 0
           ret.push(group)
+          break
         end
       end
     end
@@ -84,6 +88,7 @@ class GroupsController < ApplicationController
 
   def show
     group = Group.find(params[:id])
-    render :json => group, :status => 200
+    render :json => {:group => group, :sections => group.sections}, :status => 200
   end
+
 end
