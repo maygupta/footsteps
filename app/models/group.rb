@@ -1,3 +1,3 @@
 class Group < ActiveRecord::Base
-  has_many :folder
+  has_many :section
 end
