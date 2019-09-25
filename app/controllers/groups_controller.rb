@@ -1,5 +1,7 @@
 class GroupsController < ApplicationController
 
+   skip_before_filter :require_login
+
   def image_groups
     headers['Access-Control-Allow-Origin'] = '*'
     headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
