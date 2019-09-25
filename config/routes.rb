@@ -17,7 +17,14 @@ Rails.application.routes.draw do
   resources :darshans
   resources :medias
   resources :announcements
-  resources :groups
+  resources :groups do
+    collection do
+      get :image_groups
+      get :audio_groups
+      get :kirtan_groups
+      get :video_groups
+    end
+  end
   resources :sections do 
     collection do
       get :darshan
