@@ -9,8 +9,14 @@ class GroupsController < ApplicationController
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
 
     ret = []
-
-    Group.all.each do |group|
+    
+    if params[:group_id].present?
+       group = Group.find(params[:group_id])
+       groups = [group]
+    else
+       groups = Group.all
+    end
+    groups.each do |group|
       group.sections.each do |section|
         if section.darshan.count > 0
           ret.push(group)
@@ -29,8 +35,14 @@ class GroupsController < ApplicationController
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
 
     ret = []
-
-    Group.all.each do |group|
+    if params[:group_id].present?
+       group = Group.find(params[:group_id])
+       groups = [group]
+    else
+       groups = Group.all
+    end
+     
+    groups.each do |group|
       group.sections.each do |section|
         if section.media.where(:category => 'lecture').count > 0
           ret.push(group)
@@ -50,7 +62,14 @@ class GroupsController < ApplicationController
 
     ret = []
 
-    Group.all.each do |group|
+    if params[:group_id].present?
+       group = Group.find(params[:group_id])
+       groups = [group]
+    else
+       groups = Group.all
+    end
+     
+    groups.each do |group|
       group.sections.each do |section|
         if section.media.where(:category => 'video').count > 0
           ret.push(group)
@@ -70,7 +89,14 @@ class GroupsController < ApplicationController
 
     ret = []
 
-    Group.all.each do |group|
+    if params[:group_id].present?
+       group = Group.find(params[:group_id])
+       groups = [group]
+    else
+       groups = Group.all
+    end
+     
+    groups.each do |group|
       group.sections.each do |section|
         if section.media.where(:category => 'kirtan').count > 0
           ret.push(group)
