@@ -12,17 +12,22 @@ class GroupsController < ApplicationController
     
     if params[:group_id].present?
        group = Group.find(params[:group_id])
-       groups = [group]
+       ret_sections = []
+       group.sections.each do |section|
+         if section.darshan.count > 0
+           ret_sections.push(section)
+         end
+       end
+       ret = {:group => group, :sections => ret_sections}
     else
-       groups = Group.all
-    end
-    groups.each do |group|
-      group.sections.each do |section|
-        if section.darshan.count > 0
-          ret.push(group)
-          break
-        end
-      end
+      Group.all.each do |group|
+         group.sections.each do |section|
+           if section.darshan.count > 0
+             ret.push(group)
+             break
+           end
+         end
+       end
     end
 
     render :json => ret, :status => 200
@@ -37,18 +42,22 @@ class GroupsController < ApplicationController
     ret = []
     if params[:group_id].present?
        group = Group.find(params[:group_id])
-       groups = [group]
+       ret_sections = []
+       group.sections.each do |section|
+         if section.media.where(:category => 'lecture').count > 0
+           ret_sections.push(section)
+         end
+       end
+       ret = {:group => group, :sections => ret_sections}
     else
-       groups = Group.all
-    end
-     
-    groups.each do |group|
-      group.sections.each do |section|
-        if section.media.where(:category => 'lecture').count > 0
-          ret.push(group)
-          break
-        end
-      end
+      Group.all.each do |group|
+         group.sections.each do |section|
+           if section.media.where(:category => 'lecture').count > 0
+             ret.push(group)
+             break
+           end
+         end
+       end
     end
 
     render :json => ret, :status => 200
@@ -64,18 +73,22 @@ class GroupsController < ApplicationController
 
     if params[:group_id].present?
        group = Group.find(params[:group_id])
-       groups = [group]
+       ret_sections = []
+       group.sections.each do |section|
+         if section.media.where(:category => 'video').count > 0
+           ret_sections.push(section)
+         end
+       end
+       ret = {:group => group, :sections => ret_sections}
     else
-       groups = Group.all
-    end
-     
-    groups.each do |group|
-      group.sections.each do |section|
-        if section.media.where(:category => 'video').count > 0
-          ret.push(group)
-          break
-        end
-      end
+      Group.all.each do |group|
+         group.sections.each do |section|
+           if section.media.where(:category => 'video').count > 0
+             ret.push(group)
+             break
+           end
+         end
+       end
     end
 
     render :json => ret, :status => 200
@@ -91,18 +104,22 @@ class GroupsController < ApplicationController
 
     if params[:group_id].present?
        group = Group.find(params[:group_id])
-       groups = [group]
+       ret_sections = []
+       group.sections.each do |section|
+         if section.media.where(:category => 'kirtan').count > 0
+           ret_sections.push(section)
+         end
+       end
+       ret = {:group => group, :sections => ret_sections}
     else
-       groups = Group.all
-    end
-     
-    groups.each do |group|
-      group.sections.each do |section|
-        if section.media.where(:category => 'kirtan').count > 0
-          ret.push(group)
-          break
-        end
-      end
+      Group.all.each do |group|
+         group.sections.each do |section|
+           if section.media.where(:category => 'kirtan').count > 0
+             ret.push(group)
+             break
+           end
+         end
+       end
     end
 
     render :json => ret, :status => 200
