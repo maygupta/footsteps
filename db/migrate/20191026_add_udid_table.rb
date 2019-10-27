@@ -1,4 +1,4 @@
-class AddUDIDTable < ActiveRecord::Migration
+class AddUdidTable < ActiveRecord::Migration
   def change
     create_table :udids do |t|
       t.string :name

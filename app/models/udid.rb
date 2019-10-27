@@ -1,3 +1,3 @@
-class UDID < ActiveRecord::Base
+class Udid < ActiveRecord::Base
   
 end

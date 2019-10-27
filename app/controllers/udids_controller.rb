@@ -1,4 +1,4 @@
-class UDIDsController < ApplicationController
+class UdidsController < ApplicationController
 
   def index
     headers['Access-Control-Allow-Origin'] = '*'
@@ -6,13 +6,13 @@ class UDIDsController < ApplicationController
     headers['Access-Control-Request-Method'] = '*'
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
 
-    udids = UDID.all
+    udids = Udid.all
     render :json => udids, :status => 200
   end
 
 
   def create
-    @udid = UDID.new(:name => params[:udid])
+    @udid = Udid.new(:name => params[:udid])
     if @name.save
       msg = "UDID created successfully"
       render :json => {message: msg}, :status => 200
