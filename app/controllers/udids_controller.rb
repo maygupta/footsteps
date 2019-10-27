@@ -1,5 +1,8 @@
 class UdidsController < ApplicationController
 
+  skip_before_action :verify_authenticity_token
+
+
   def index
     headers['Access-Control-Allow-Origin'] = '*'
     headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
