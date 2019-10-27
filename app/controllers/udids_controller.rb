@@ -17,7 +17,7 @@ class UdidsController < ApplicationController
 
   def create
     @udid = Udid.new(:name => params[:udid])
-    if @name.save
+    if @udid.save
       msg = "UDID created successfully"
       render :json => {message: msg}, :status => 200
     else
