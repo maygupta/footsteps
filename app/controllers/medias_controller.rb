@@ -21,12 +21,9 @@ class MediasController < ApplicationController
 
     ret = []
     if params[:query].present?
-      Group.all.each do |group|
-        group.sections.each do |section|
-          if section.media.where(:category => 'lecture').count > 0 and group.name.downcase().include? params[:query]
-            ret.push(group)
-            break
-          end
+      Medium.where(:category => 'lecture').each do |m|
+        if m.title.downcase().include? params[:query]
+          ret.push(m)
         end
       end
     end
