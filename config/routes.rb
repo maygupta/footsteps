@@ -16,8 +16,18 @@ Rails.application.routes.draw do
 
   resources :udids
 
-  resources :darshans
-  resources :medias
+  resources :darshans do
+    collection do
+      get :search
+    end
+  end
+
+  resources :medias do
+    collection do
+      get :search
+    end
+  end
+  
   resources :announcements
   resources :groups do
     collection do

@@ -51,12 +51,12 @@ class GroupsController < ApplicationController
        ret = {:group => group, :sections => ret_sections}
     else
       Group.all.each do |group|
-         group.sections.each do |section|
-           if section.media.where(:category => 'lecture').count > 0
-             ret.push(group)
-             break
-           end
-         end
+        group.sections.each do |section|
+          if section.media.where(:category => 'lecture').count > 0
+            ret.push(group)
+            break
+          end
+        end
        end
     end
 
