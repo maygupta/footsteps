@@ -22,7 +22,7 @@ class MediasController < ApplicationController
     ret = []
     if params[:query].present?
       Medium.where(:category => 'lecture').each do |m|
-        if m.name.downcase().include? params[:query]
+        if m.name.downcase().include? params[:query].downcase()
           ret.push(m)
         end
       end

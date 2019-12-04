@@ -20,7 +20,7 @@ class DarshansController < ApplicationController
     if params[:query].present?
       Group.all.each do |group|
         group.sections.each do |section|
-          if section.darshan.count > 0 and group.name.downcase().include? params[:query]
+          if section.darshan.count > 0 and group.name.downcase().include? params[:query].downcase()
             ret.push(group)
             break
           end
