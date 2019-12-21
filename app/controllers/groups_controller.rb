@@ -14,10 +14,12 @@ class GroupsController < ApplicationController
        group = Group.find(params[:group_id])
        ret_sections = []
        group.sections.order(created_at: :desc).each do |section|
+         print section.id
          if section.darshan.count > 0
            ret_sections.push(section)
          end
        end
+       print ret_sections
        ret = {:group => group, :sections => ret_sections}
     else
       Group.all.each do |group|
