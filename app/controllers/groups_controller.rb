@@ -13,7 +13,7 @@ class GroupsController < ApplicationController
     if params[:group_id].present?
        group = Group.find(params[:group_id])
        ret_sections = []
-       group.sections.each do |section|
+       group.sections.order(created_at: :desc).each do |section|
          if section.darshan.count > 0
            ret_sections.push(section)
          end
@@ -21,7 +21,7 @@ class GroupsController < ApplicationController
        ret = {:group => group, :sections => ret_sections}
     else
       Group.all.each do |group|
-         group.sections.each do |section|
+         group.sections.order(created_at: :desc).each do |section|
            if section.darshan.count > 0
              ret.push(group)
              break
