@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :slokas
+
   resources :udids
 
   resources :darshans do
