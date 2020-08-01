@@ -10,7 +10,7 @@ class IsvQuestionsController < ApplicationController
     headers['Access-Control-Request-Method'] = '*'
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
 
-    render :json => Question.all, :status => 200
+    render :json => IsvQuestion.all, :status => 200
   end
 
   def import_csv
