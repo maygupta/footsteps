@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :isv_questions do
     collection do
       get :import_csv
+      get :search
     end
   end
 
