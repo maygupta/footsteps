@@ -8,6 +8,9 @@ RailsAdmin.config do |config|
       ENV['ADMIN_USERNAME'] && password == ENV['ADMIN_PASSWORD']
     end
   end
+
+  config.sidescroll = true
+  
   # config.current_user_method(&:current_user)
 
   ## == Cancan ==
