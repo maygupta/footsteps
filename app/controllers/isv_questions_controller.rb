@@ -17,7 +17,8 @@ class IsvQuestionsController < ApplicationController
     csv_text = File.read('ask_reflect.csv')
     csv = CSV.parse(csv_text, :headers => true)
     csv.each do |row|
-      ques = IsvQuestion.new(:ask_time => row[0],
+      ask_time = DateTime.strptime(row[0], "%m/%d/%Y %H:%M:%S")
+      ques = IsvQuestion.new(:ask_time => ask_time,
         :name => row[1],
         :ask_type => row[2],
         :value => row[3])
