@@ -17,8 +17,13 @@ class IsvQuestionsController < ApplicationController
     csv_text = File.read('ask_reflect.csv')
     csv = CSV.parse(csv_text, :headers => true)
     csv.each do |row|
-      print row
+      ques = IsvQuestion.new(:ask_time => row[0],
+        :name => row[1],
+        :ask_type => row[2],
+        :value => row[3])
+      ques.save!
     end
+    render :json => csv, :status => 200
   end
 
 end
