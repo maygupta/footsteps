@@ -27,7 +27,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'typhoeus'
 gem 'will_paginate'
-gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'rails_admin'
 
 gem 'bootstrap-timepicker-rails'
