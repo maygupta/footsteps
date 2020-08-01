@@ -16,7 +16,11 @@ Rails.application.routes.draw do
 
   resources :slokas
 
-  resources :questions
+  resources :isv_questions do
+    collection do
+      get :import_csv
+    end
+  end
 
   resources :udids
 

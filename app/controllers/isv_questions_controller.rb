@@ -1,7 +1,7 @@
 require 'csv'
 
 
-class QuestionsController < ApplicationController
+class IsvQuestionsController < ApplicationController
   skip_before_filter :require_login
 
   def index
@@ -14,7 +14,7 @@ class QuestionsController < ApplicationController
   end
 
   def import_csv
-    csv_text = File.read('/Users/mayank/Downloads/ask_reflect.csv')
+    csv_text = File.read('ask_reflect.csv')
     csv = CSV.parse(csv_text, :headers => true)
     csv.each do |row|
       print row
