@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   resources :slokas
 
+  resources :questions
+
   resources :udids
 
   resources :darshans do
