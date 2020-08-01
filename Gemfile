@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 # gem 'google-api-client'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5'
+gem 'rails', '4.2.6'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.15'
 # Use SCSS for stylesheets
@@ -27,7 +27,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'typhoeus'
 gem 'will_paginate'
-gem 'rails_admin'
+gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'rails_admin' 
 
 gem 'bootstrap-timepicker-rails'
 gem 'bootstrap-sass', '~> 3.2.0'
