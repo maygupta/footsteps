@@ -85,7 +85,7 @@ Rails.application.routes.draw do
   resources :users
 
   # You can have the root of your site routed with "root"
-  root 'sadhna_cards#index'
+  root 'isv_questions#index'
 
   post    'update_rounds'  => 'users#update_rounds'
   get    '/users/:id/report'  => 'users#report'

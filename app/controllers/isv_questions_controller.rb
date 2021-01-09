@@ -2,7 +2,6 @@ require 'csv'
 
 
 class IsvQuestionsController < ApplicationController
-  skip_before_filter :require_login
 
   def index
     headers['Access-Control-Allow-Origin'] = '*'
@@ -10,7 +9,8 @@ class IsvQuestionsController < ApplicationController
     headers['Access-Control-Request-Method'] = '*'
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
 
-    render :json => IsvQuestion.all, :status => 200
+    @questions = IsvQuestion.all
+    @trending_questions = @questions[0..5]
   end
 
   def search
